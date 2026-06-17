@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LuZiD LaYeRs — Art · Technology · Vision</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080C06;
+    --black2: #0C100A;
+    --cyan: #6DB83F;
+    --violet: #3A7A2A;
+    --white: #F0FFF0;
+    --muted: rgba(220,255,200,.45);
+    --grad: linear-gradient(100deg, #7DC840, #2E7D32);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black); color: var(--white);
+    font-family: 'Raleway', system-ui, sans-serif; font-weight: 300;
+    overflow-x: hidden; line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .mono, .label, .eyebrow, .btn, .proj-tag, .tag, .price-hint, .svc .price-hint,
+  nav, .logo-text, .logo-sub, .foot-links, .port-more, .scroll-hint { font-family: 'Syne', sans-serif; }
+  .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  section { position: relative; z-index: 2; }
+  .pad { padding: 120px 0; }
+
+  /* animated background */
+  #bg { position: fixed; inset: 0; z-index: 0; opacity: .4; }
+  .veil { position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(120% 80% at 50% -10%, transparent, var(--black) 70%); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px; backdrop-filter: blur(12px);
+    background: rgba(10,10,13,.4); border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron'; font-weight: 900; }
+  .logo .ll {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--grad); display: grid; place-items: center;
+    font-size: 13px; color: #0A0A0D; font-weight: 900;
+    box-shadow: 0 0 24px rgba(0,229,255,.4);
+  }
+  .logo-text { font-size: 15px; letter-spacing: 1px; }
+  .logo-sub { font-family: 'Raleway'; font-weight: 400; font-size: 9px; letter-spacing: 3px; color: var(--muted); margin-top: -2px; }
+  .nav-links { display: flex; gap: 24px; align-items: center; font-weight: 600; font-size: 14px; }
+  .nav-links a { color: var(--muted); transition: .2s; }
+  .nav-links a:hover { color: var(--white); }
+  @media(max-width: 700px) { .nav-links a:not(:last-child) { display: none; } }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block; padding: 13px 28px; border-radius: 40px;
+    font-weight: 800; font-family: 'Orbitron'; font-size: 13px;
+    letter-spacing: .5px; cursor: pointer; transition: .25s; border: none;
+  }
+  .btn-primary { background: var(--grad); color: #0A0A0D; box-shadow: 0 0 30px rgba(0,229,255,.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(139,92,246,.6); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.18); color: var(--white); background: rgba(255,255,255,.03); }
+  .btn-ghost:hover { border-color: var(--cyan); }
+
+  /* HERO */
+  header {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding-top: 90px; position: relative; z-index: 2;
+  }
+  .eyebrow {
+    font-family: 'Orbitron'; font-size: 12px; letter-spacing: 5px;
+    color: var(--cyan); margin-bottom: 22px; text-transform: uppercase;
+  }
+  h1 { font-size: clamp(56px, 10vw, 140px); font-weight: 700; font-style: italic; line-height: .9; letter-spacing: -2px; }
+  .tagline { font-size: clamp(18px, 2.5vw, 26px); font-weight: 300; margin: 28px 0 14px; max-width: 680px; color: #dfe3ff; }
+  .sub { color: var(--muted); max-width: 540px; margin-bottom: 38px; font-size: 17px; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .scroll-hint {
+    margin-top: 60px; color: var(--muted); font-size: 12px;
+    letter-spacing: 3px; font-family: 'Orbitron'; animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  /* SECTION LABELS */
+  .label {
+    font-family: 'Orbitron'; font-size: 12px; letter-spacing: 4px;
+    color: var(--violet); text-transform: uppercase; margin-bottom: 16px;
+  }
+  h2 { font-size: clamp(32px, 5vw, 64px); font-weight: 700; font-style: italic; line-height: 1; letter-spacing: -.5px; }
+
+  /* ÜBER MICH */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center; margin-top: 60px;
+  }
+  @media(max-width: 760px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .about-img {
+    aspect-ratio: 4/5; border-radius: 20px; overflow: hidden;
+    background: linear-gradient(135deg, rgba(0,229,255,.1), rgba(139,92,246,.1));
+    border: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron'; font-size: 13px; letter-spacing: 3px; color: var(--muted);
+    /* BILD HIER: ersetze diesen Block durch <img src="img/dein-foto.jpg" style="width:100%;height:100%;object-fit:cover"> */
+  }
+  .about-img img { width: 100%; height: 100%; object-fit: cover; }
+  .about-text p { color: var(--muted); margin-bottom: 20px; font-size: 17px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .tag {
+    padding: 7px 16px; border-radius: 30px; font-family: 'Orbitron';
+    font-size: 11px; letter-spacing: 1.5px;
+    border: 1px solid rgba(0,229,255,.3); color: var(--cyan);
+  }
+
+  /* PROJEKTE */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px; margin-top: 54px;
+  }
+  .proj-card {
+    background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
+    border: 1px solid rgba(255,255,255,.08); border-radius: 20px;
+    overflow: hidden; transition: .3s; cursor: pointer;
+  }
+  .proj-card:hover { transform: translateY(-6px); border-color: rgba(0,229,255,.35); box-shadow: 0 20px 60px -20px rgba(0,229,255,.25); }
+  .proj-img {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(139,92,246,.15));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; color: var(--muted);
+    /* BILD HIER: ersetze durch <img src="img/projekt-vorschau.jpg" style="width:100%;height:100%;object-fit:cover"> */
+  }
+  .proj-img img { width: 100%; height: 100%; object-fit: cover; }
+  .proj-body { padding: 26px; }
+  .proj-tag {
+    font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px;
+    color: var(--violet); margin-bottom: 10px;
+  }
+  .proj-card h3 { font-size: 26px; font-weight: 700; font-style: italic; margin-bottom: 10px; }
+  .proj-card p { color: var(--muted); font-size: 15px; margin-bottom: 18px; }
+  .proj-link { font-family: 'Orbitron'; font-size: 12px; letter-spacing: 2px; color: var(--cyan); }
+  .proj-link:hover { text-decoration: underline; }
+
+  /* PORTFOLIO GRID */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px; margin-top: 54px;
+  }
+  .port-item {
+    aspect-ratio: 1; border-radius: 8px; overflow: hidden;
+    background: linear-gradient(135deg, rgba(0,229,255,.06), rgba(139,92,246,.1));
+    border: 1px solid rgba(255,255,255,.06); transition: .3s;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,.2);
+    /* BILD HIER: füge <img src="img/portfolio/..." style="width:100%;height:100%;object-fit:cover"> ein */
+  }
+  .port-item img { width: 100%; height: 100%; object-fit: cover; }
+  .port-item:hover { transform: scale(1.03); border-color: rgba(0,229,255,.3); }
+  .port-more {
+    text-align: center; margin-top: 40px; color: var(--muted);
+    font-family: 'Orbitron'; font-size: 12px; letter-spacing: 3px;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 22px; margin-top: 54px;
+  }
+  .svc {
+    border: 1px solid rgba(255,255,255,.08); border-radius: 18px;
+    padding: 30px; transition: .3s;
+  }
+  .svc:hover { border-color: rgba(139,92,246,.4); background: rgba(139,92,246,.04); }
+  .svc-ico { font-size: 32px; margin-bottom: 18px; }
+  .svc h3 { font-size: 24px; font-style: italic; margin-bottom: 12px; }
+  .svc p { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+  .svc .price-hint { font-family: 'Orbitron'; font-size: 12px; letter-spacing: 1px; color: var(--cyan); }
+
+  /* CONTACT */
+  .contact-box {
+    background: linear-gradient(135deg, rgba(0,229,255,.06), rgba(139,92,246,.08));
+    border: 1px solid rgba(255,255,255,.1); border-radius: 24px;
+    padding: 80px 60px; text-align: center; margin-top: 80px;
+  }
+  @media(max-width: 600px) { .contact-box { padding: 50px 24px; } }
+  .contact-box h2 { margin-bottom: 18px; }
+  .contact-box p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; font-size: 17px; }
+  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid rgba(255,255,255,.08); padding: 60px 0 40px; color: var(--muted); }
+  .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; align-items: center; }
+  .foot-links { display: flex; gap: 24px; font-size: 14px; }
+  .foot-links a:hover { color: var(--cyan); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="veil"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="ll">LL</div>
+    <div>
+      <div class="logo-text">LuZiD LaYeRs</div>
+      <div class="logo-sub">Art · Technology · Vision</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#projekte">Projekte</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#services">Services</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="wrap">
+  <div class="eyebrow reveal">Visual Artist · Software Developer · VJ</div>
+  <h1 class="reveal">
+    Turn Sound<br>Into <span class="grad-text">Living Worlds.</span>
+  </h1>
+  <p class="tagline reveal">
+    Andreas Deflorin — Ich baue Visuals, Echtzeit-Software und Erlebnisse die sich niemand vergisst.
+  </p>
+  <p class="sub reveal">
+    Eigene Software. Eigene Ästhetik. Kein Template. Basierend auf über 1.200 eigenen Arbeiten.
+  </p>
+  <div class="hero-cta reveal">
+    <a href="#projekte" class="btn btn-primary">Projekte entdecken</a>
+    <a href="#kontakt" class="btn btn-ghost">Kontakt</a>
+  </div>
+  <div class="scroll-hint reveal" style="margin-top:60px">↓ SCROLL</div>
+</header>
+
+<!-- ÜBER MICH -->
+<section class="wrap pad" id="about">
+  <div class="label reveal">Über mich</div>
+  <h2 class="reveal">Ich mache Bilder, die <span class="grad-text">sich bewegen.</span></h2>
+  <div class="about-grid">
+    <div class="about-img reveal">
+      <!-- FOTO EINFÜGEN: ersetze diesen div-Inhalt durch:
+           <img src="img/portrait.jpg" alt="Andreas Deflorin" style="width:100%;height:100%;object-fit:cover">
+      -->
+      FOTO HIER
+    </div>
+    <div class="about-text reveal">
+      <p>
+        Ich bin Andreas Deflorin — Visual Artist, VJ und Software-Entwickler aus dem Raum München.
+        Seit Jahren erschaffe ich audiovisuelle Welten: von Live-Visuals auf Bühnen bis zu selbst entwickelter Software
+        die in Echtzeit auf Musik reagiert.
+      </p>
+      <p>
+        Mein Werkzeug ist meine eigene Software. FusionWarp, meine macOS-App, verwandelt Audio in endlos
+        sich verändernde Visuals — GPU-beschleunigt, einzigartig bei jedem Durchlauf.
+      </p>
+      <p>
+        Unter dem Label <strong>LuZiD LaYeRs</strong> entstehen Software-Produkte, Visual-Performances
+        und künstlerische Installationen — alles aus einer Hand.
+      </p>
+      <div class="tags">
+        <span class="tag">Live Visuals</span>
+        <span class="tag">VJ</span>
+        <span class="tag">Projection Mapping</span>
+        <span class="tag">macOS Development</span>
+        <span class="tag">Metal GPU</span>
+        <span class="tag">MIDI</span>
+        <span class="tag">Oberbayern</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJEKTE -->
+<section id="projekte" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Projekte</div>
+  <h2 class="reveal">Was ich <span class="grad-text">gebaut habe.</span></h2>
+  <div class="projects-grid">
+
+    <!-- PROJEKT 1: FusionWarp -->
+    <div class="proj-card reveal">
+      <div class="proj-img">
+        <!-- BILD: <img src="img/fw-preview.jpg" alt="FusionWarp"> -->
+        FUSIONWARP PREVIEW
+      </div>
+      <div class="proj-body">
+        <div class="proj-tag">SOFTWARE · macOS</div>
+        <h3>FusionWarp</h3>
+        <p>Echtzeit Audio-Visual Engine. Musik wird zu lebendigen, endlos variierenden Welten. 4 Effect-Engines, MIDI, Projection Mapping.</p>
+        <a href="index.html" class="proj-link">Zur Produktseite →</a>
+      </div>
+    </div>
+
+    <!-- PROJEKT 2: krom-A -->
+    <div class="proj-card reveal">
+      <div class="proj-img">
+        <!-- BILD: <img src="img/kroma-preview.jpg" alt="krom-A"> -->
+        krom-A PREVIEW
+      </div>
+      <div class="proj-body">
+        <div class="proj-tag">SOFTWARE · Visual Synthesizer</div>
+        <h3>krom-A</h3>
+        <p>Modularer Visual Synthesizer mit 6 Engines und 15 Modulen. MPC Live III und Moog Messenger Integration. In Entwicklung.</p>
+        <span class="proj-link" style="color:var(--violet)">Coming Soon</span>
+      </div>
+    </div>
+
+    <!-- PROJEKT 3: Living Artwork -->
+    <div class="proj-card reveal">
+      <div class="proj-img">
+        <!-- BILD: <img src="img/living-artwork-preview.jpg" alt="Living Artwork"> -->
+        LIVING ARTWORK PREVIEW
+      </div>
+      <div class="proj-body">
+        <div class="proj-tag">KONZEPT · Kunst & Druck</div>
+        <h3>Living Artwork</h3>
+        <p>Physische Prints mit QR-Code — scan, und das Kunstwerk erwacht als Fusionwarp-Animation. Signatur-Editionen für Sammler.</p>
+        <span class="proj-link" style="color:var(--violet)">In Planung</span>
+      </div>
+    </div>
+
+    <!-- WEITERE PROJEKTE: kopiere eine .proj-card und fülle sie aus -->
+
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Portfolio</div>
+  <h2 class="reveal">Über 1.200 <span class="grad-text">eigene Arbeiten.</span></h2>
+  <div class="portfolio-grid">
+    <!--
+      BILDER EINFÜGEN: Ersetze jeden .port-item div durch:
+      <div class="port-item"><img src="img/portfolio/bild-001.jpg" alt=""></div>
+
+      Du kannst beliebig viele hinzufügen — das Grid passt sich automatisch an.
+    -->
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+    <div class="port-item reveal">BILD</div>
+  </div>
+  <div class="port-more reveal" style="margin-top:40px">
+    + mehr auf Anfrage
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Dienstleistungen</div>
+  <h2 class="reveal">Ich komme zu <span class="grad-text">deinem Event.</span></h2>
+  <div class="services-grid">
+    <div class="svc reveal">
+      <div class="svc-ico">🎛</div>
+      <h3>Live Visuals / VJ</h3>
+      <p>Audio-reaktive Echtzeit-Visuals für Clubs, Konzerte, Festivals. Mit eigener Software — einzigartiger Look, den sonst niemand hat.</p>
+      <div class="price-hint">ab 300 € / Auftritt</div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-ico">📐</div>
+      <h3>Projection Mapping</h3>
+      <p>Visuals auf Gebäude, Bühnen oder Objekte — perfekt ausgerichtet, dramatisch in der Wirkung. Für Events, Messen und Installationen.</p>
+      <div class="price-hint">ab 500 € / Projekt</div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-ico">🎬</div>
+      <h3>Visual-Loops & Bühnenvideos</h3>
+      <p>Individuelle Video-Loops und Bühnen-Visuals für DJs, Bands und Labels. Produktion nach Briefing, Lieferung als Datei-Package.</p>
+      <div class="price-hint">ab 200 € / Paket</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="kontakt" class="wrap pad" style="padding-top:0">
+  <div class="contact-box reveal">
+    <div class="label" style="justify-content:center;display:flex">Kontakt</div>
+    <h2>Lass uns etwas <span class="grad-text">erschaffen.</span></h2>
+    <p>Booking, Kollaborationen, Fragen zu Software oder einfach Hallo — ich freue mich.</p>
+    <div class="contact-links">
+      <a href="mailto:andreas.deflorin@luzidlayers.de" class="btn btn-primary">andreas.deflorin@luzidlayers.de</a>
+      <a href="https://instagram.com/fusionwarp.visuals" class="btn btn-ghost" target="_blank">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div style="font-family:'Orbitron';font-size:13px;font-weight:700">LuZiD LaYeRs</div>
+      <div class="foot-links">
+        <a href="index.html">FusionWarp</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+      <div style="font-size:13px">© 2026 Andreas Deflorin · Warngau</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Animated particle background
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initParticles() {
+  particles = [];
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + .3,
+      vx: (Math.random() - .5) * .3,
+      vy: (Math.random() - .5) * .3,
+      hue: Math.random() > .5 ? 105 : 130, // grass green or forest green
+      alpha: Math.random() * .6 + .2,
+    });
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.alpha})`;
+    ctx.fill();
+  });
+
+  // soft glow blobs
+  const t = Date.now() / 5000;
+  const blobs = [
+    { x: W * (.3 + .1 * Math.sin(t)), y: H * (.4 + .1 * Math.cos(t * 1.3)), c: '109,184,63' },
+    { x: W * (.7 + .1 * Math.cos(t * .8)), y: H * (.5 + .08 * Math.sin(t * 1.1)), c: '46,125,50' },
+  ];
+  blobs.forEach(b => {
+    const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, W * .35);
+    g.addColorStop(0, `rgba(${b.c},.12)`);
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  });
+
+  requestAnimationFrame(draw);
+}
+
+window.addEventListener('resize', () => { resize(); initParticles(); });
+resize(); initParticles(); draw();
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
