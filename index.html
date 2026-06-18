@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="fonts.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Michroma&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #080C06;
@@ -22,12 +22,13 @@
   html { scroll-behavior: smooth; }
   body {
     background: var(--black); color: var(--white);
-    font-family: 'Raleway', system-ui, sans-serif; font-weight: 300;
+    font-family: 'Rajdhani', system-ui, sans-serif; font-weight: 300;
     overflow-x: hidden; line-height: 1.6;
   }
-  h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; }
+  h1, h2, h3 { font-family: 'Michroma', sans-serif; }
   .mono, .label, .eyebrow, .btn, .proj-tag, .tag, .price-hint, .svc .price-hint,
-  nav, .logo-text, .logo-sub, .foot-links, .port-more, .scroll-hint { font-family: 'Syne', sans-serif; }
+  nav, .logo-sub, .foot-links, .port-more, .scroll-hint { font-family: 'Rajdhani', sans-serif; }
+  .logo-text { font-family: 'Syncopate', sans-serif; letter-spacing: 0.22em; overflow: visible; }
   .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
@@ -46,15 +47,15 @@
     padding: 18px 28px; backdrop-filter: blur(12px);
     background: rgba(10,10,13,.4); border-bottom: 1px solid rgba(255,255,255,.06);
   }
-  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Syne'; font-weight: 900; }
+  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Rajdhani'; font-weight: 900; }
   .logo .ll {
     width: 42px; height: 42px; border-radius: 50%;
     overflow: hidden; display: grid; place-items: center;
     box-shadow: 0 0 24px rgba(109,184,63,.5);
   }
   .logo .ll img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; }
-  .logo-text { font-size: 15px; letter-spacing: 1px; font-family: 'Syne'; font-weight: 700; }
-  .logo-sub { font-family: 'Syne'; font-weight: 400; font-size: 9px; letter-spacing: 3px; color: var(--muted); margin-top: -2px; }
+  .logo-text { font-size: 14px; letter-spacing: 0.22em; font-family: 'Syncopate', sans-serif; font-weight: 400; overflow: visible; white-space: nowrap; }
+  .logo-sub { font-family: 'Rajdhani'; font-weight: 400; font-size: 9px; letter-spacing: 3px; color: var(--muted); margin-top: -2px; }
   .nav-links { display: flex; gap: 24px; align-items: center; font-weight: 600; font-size: 14px; }
   .nav-links a { color: var(--muted); transition: .2s; }
   .nav-links a:hover { color: var(--white); }
@@ -63,7 +64,7 @@
   /* BUTTONS */
   .btn {
     display: inline-block; padding: 13px 28px; border-radius: 40px;
-    font-weight: 700; font-family: 'Syne'; font-size: 13px;
+    font-weight: 700; font-family: 'Rajdhani'; font-size: 13px;
     letter-spacing: .5px; cursor: pointer; transition: .25s; border: none;
   }
   .btn-primary { background: var(--grad); color: #080C06; box-shadow: 0 0 30px rgba(109,184,63,.3); }
@@ -77,7 +78,7 @@
     justify-content: center; padding-top: 90px; position: relative; z-index: 2;
   }
   .eyebrow {
-    font-family: 'Syne'; font-size: 12px; letter-spacing: 5px;
+    font-family: 'Rajdhani'; font-size: 12px; letter-spacing: 5px;
     color: var(--cyan); margin-bottom: 22px; text-transform: uppercase;
   }
   h1 {
@@ -91,13 +92,13 @@
   .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
   .scroll-hint {
     margin-top: 60px; color: var(--muted); font-size: 12px;
-    letter-spacing: 3px; font-family: 'Syne'; animation: pulse 2.4s infinite;
+    letter-spacing: 3px; font-family: 'Rajdhani'; animation: pulse 2.4s infinite;
   }
   @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
 
   /* SECTION LABELS */
   .label {
-    font-family: 'Syne'; font-size: 12px; letter-spacing: 4px;
+    font-family: 'Rajdhani'; font-size: 12px; letter-spacing: 4px;
     color: var(--cyan); text-transform: uppercase; margin-bottom: 16px;
     position: relative; display: inline-block;
   }
@@ -119,14 +120,14 @@
     background: linear-gradient(135deg, rgba(109,184,63,.08), rgba(46,125,50,.15));
     border: 1px solid rgba(109,184,63,.2);
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne'; font-size: 13px; letter-spacing: 3px; color: var(--muted);
+    font-family: 'Rajdhani'; font-size: 13px; letter-spacing: 3px; color: var(--muted);
     box-shadow: 0 0 60px -20px rgba(109,184,63,.2);
   }
   .about-img img { width: 100%; height: 100%; object-fit: cover; }
   .about-text p { color: var(--muted); margin-bottom: 20px; font-size: 17px; }
   .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
   .tag {
-    padding: 7px 16px; border-radius: 30px; font-family: 'Syne';
+    padding: 7px 16px; border-radius: 30px; font-family: 'Rajdhani';
     font-size: 11px; letter-spacing: 1.5px; font-weight: 600;
     border: 1px solid rgba(109,184,63,.35); color: var(--cyan);
     transition: .2s;
@@ -148,7 +149,7 @@
     width: 100%; aspect-ratio: 16/9;
     background: linear-gradient(135deg, rgba(109,184,63,.06), rgba(46,125,50,.14));
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne'; font-size: 11px; letter-spacing: 3px; color: var(--muted);
+    font-family: 'Rajdhani'; font-size: 11px; letter-spacing: 3px; color: var(--muted);
     overflow: hidden; position: relative;
   }
   .proj-img::after {
@@ -160,12 +161,12 @@
   .proj-img img { width: 100%; height: 100%; object-fit: cover; }
   .proj-body { padding: 26px; }
   .proj-tag {
-    font-family: 'Syne'; font-size: 10px; letter-spacing: 2px;
+    font-family: 'Rajdhani'; font-size: 10px; letter-spacing: 2px;
     color: var(--cyan); margin-bottom: 10px; opacity: .7;
   }
   .proj-card h3 { font-size: 26px; font-weight: 700; font-style: italic; margin-bottom: 10px; }
   .proj-card p { color: var(--muted); font-size: 15px; margin-bottom: 18px; }
-  .proj-link { font-family: 'Syne'; font-size: 12px; letter-spacing: 2px; color: var(--cyan); font-weight: 600; transition: .2s; }
+  .proj-link { font-family: 'Rajdhani'; font-size: 12px; letter-spacing: 2px; color: var(--cyan); font-weight: 600; transition: .2s; }
   .proj-link:hover { letter-spacing: 3px; }
 
   /* PORTFOLIO GRID */
@@ -179,13 +180,13 @@
     background: linear-gradient(135deg, rgba(109,184,63,.05), rgba(46,125,50,.1));
     border: 1px solid rgba(109,184,63,.1); transition: .4s cubic-bezier(.2,.7,.2,1);
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne'; font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,.2);
+    font-family: 'Rajdhani'; font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,.2);
     position: relative; cursor: pointer;
   }
   .port-overlay {
     position:absolute; inset:0; background:rgba(109,184,63,.15);
     display:flex; align-items:center; justify-content:center;
-    opacity:0; transition:.3s; font-family:'Syne'; font-size:11px;
+    opacity:0; transition:.3s; font-family:'Rajdhani'; font-size:11px;
     letter-spacing:2px; color:#fff; z-index:4;
   }
   .port-item:hover .port-overlay { opacity:1; }
@@ -209,7 +210,7 @@
   }
   .port-more {
     text-align: center; margin-top: 40px; color: var(--muted);
-    font-family: 'Syne'; font-size: 12px; letter-spacing: 3px;
+    font-family: 'Rajdhani'; font-size: 12px; letter-spacing: 3px;
   }
 
   /* SERVICES */
@@ -225,7 +226,7 @@
   .svc-ico { font-size: 32px; margin-bottom: 18px; }
   .svc h3 { font-size: 24px; font-style: italic; margin-bottom: 12px; }
   .svc p { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
-  .svc .price-hint { font-family: 'Syne'; font-size: 12px; letter-spacing: 1px; color: var(--cyan); font-weight: 600; }
+  .svc .price-hint { font-family: 'Rajdhani'; font-size: 12px; letter-spacing: 1px; color: var(--cyan); font-weight: 600; }
 
   /* CONTACT */
   .contact-box {
@@ -273,7 +274,7 @@
     width:100%; aspect-ratio:4/3; overflow:hidden;
     background:linear-gradient(135deg,rgba(109,184,63,.07),rgba(46,125,50,.12));
     display:flex; align-items:center; justify-content:center;
-    font-family:'Syne'; font-size:11px; letter-spacing:3px; color:var(--muted);
+    font-family:'Rajdhani'; font-size:11px; letter-spacing:3px; color:var(--muted);
     position:relative;
   }
   .product-img img {
@@ -289,13 +290,13 @@
   }
   .product-body { padding:26px; flex:1; display:flex; flex-direction:column; gap:10px; }
   .product-type {
-    font-family:'Syne'; font-size:10px; letter-spacing:2.5px;
+    font-family:'Rajdhani'; font-size:10px; letter-spacing:2.5px;
     color:var(--cyan); opacity:.75; text-transform:uppercase;
   }
   .product-card h3 { font-size:26px; font-weight:700; font-style:italic; line-height:1.1; }
   .product-card > .product-body > p { color:var(--muted); font-size:14px; line-height:1.6; flex:1; }
   .price {
-    font-family:'Syne'; font-size:22px; font-weight:700;
+    font-family:'Rajdhani'; font-size:22px; font-weight:700;
     background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
   }
   .price-sub { font-size:12px; color:var(--muted); font-weight:400; display:block; margin-top:-4px; }
@@ -305,7 +306,7 @@
   .btn-sm { padding:10px 20px; font-size:12px; }
   .format-tabs { display:flex; gap:8px; margin:18px 0 10px; flex-wrap:wrap; }
   .fmt-btn {
-    padding:8px 18px; border-radius:30px; font-family:'Syne'; font-size:12px;
+    padding:8px 18px; border-radius:30px; font-family:'Rajdhani'; font-size:12px;
     font-weight:700; letter-spacing:1px; cursor:pointer; border:1px solid rgba(255,255,255,.15);
     background:transparent; color:var(--muted); transition:.2s;
   }
@@ -324,14 +325,14 @@
     aspect-ratio:16/9; border-radius:16px; overflow:hidden;
     background:linear-gradient(135deg,rgba(109,184,63,.05),rgba(46,125,50,.15));
     display:flex; align-items:center; justify-content:center;
-    font-family:'Syne'; font-size:11px; letter-spacing:3px; color:var(--muted);
+    font-family:'Rajdhani'; font-size:11px; letter-spacing:3px; color:var(--muted);
     border:1px solid rgba(109,184,63,.2);
   }
   .screensaver-img img { width:100%; height:100%; object-fit:cover; border-radius:16px; }
   .s-prices { display:flex; gap:28px; margin:24px 0; flex-wrap:wrap; align-items:flex-end; }
   .s-price { text-align:center; }
-  .s-price .amount { font-family:'Syne'; font-size:30px; font-weight:800; display:block; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .s-price .slabel { font-family:'Syne'; font-size:10px; letter-spacing:2px; color:var(--muted); }
+  .s-price .amount { font-family:'Rajdhani'; font-size:30px; font-weight:800; display:block; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .s-price .slabel { font-family:'Rajdhani'; font-size:10px; letter-spacing:2px; color:var(--muted); }
   .s-divider { width:1px; height:40px; background:rgba(255,255,255,.1); align-self:center; }
 
   /* REVEAL */
@@ -346,7 +347,7 @@
 
 <!-- LIGHTBOX -->
 <div id="lightbox" style="position:fixed;inset:0;z-index:100;background:rgba(8,12,6,.96);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s;backdrop-filter:blur(20px)">
-  <span onclick="closeLB()" style="position:absolute;top:24px;right:28px;font-family:'Syne';font-size:28px;color:rgba(220,255,200,.45);cursor:pointer;line-height:1;transition:.2s">&#x2715;</span>
+  <span onclick="closeLB()" style="position:absolute;top:24px;right:28px;font-family:'Rajdhani';font-size:28px;color:rgba(220,255,200,.45);cursor:pointer;line-height:1;transition:.2s">&#x2715;</span>
   <div style="position:relative;display:inline-flex;align-items:center;justify-content:center">
     <img id="lb-img" src="" alt="" style="max-width:90vw;max-height:88vh;border-radius:10px;object-fit:contain;display:block">
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
@@ -800,7 +801,7 @@
     <div class="foot-grid">
       <div style="display:flex;align-items:center;gap:10px">
         <img src="img/logo.jpg" alt="" style="width:28px;height:28px;border-radius:50%;mix-blend-mode:screen;opacity:.8">
-        <span style="font-family:'Syne';font-size:13px;font-weight:700;letter-spacing:1px">LuZiD LaYeRs</span>
+        <span style="font-family:'Rajdhani';font-size:13px;font-weight:700;letter-spacing:1px">LuZiD LaYeRs</span>
       </div>
       <div class="foot-links">
         <a href="fusionwarp.html">FusionWarp</a>
