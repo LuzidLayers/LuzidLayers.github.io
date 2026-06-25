@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FuSioNWaRp — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Michroma&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{
+    height:100%;
+    background:#080C09;
+    color:#F0FFF4;
+    font-family:'Rajdhani',system-ui,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:32px;
+    text-align:center;
+    padding:40px 24px;
+  }
+  .logo-img{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+    mix-blend-mode:screen;
+    filter:drop-shadow(0 0 24px #39FF7A55);
+  }
+  .brand{
+    font-family:'Syncopate',sans-serif;
+    font-size:clamp(22px,5vw,38px);
+    font-weight:700;
+    letter-spacing:0.22em;
+    background:linear-gradient(100deg,#39FF7A,#C6F135);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .tagline{
+    font-family:'Michroma',sans-serif;
+    font-size:clamp(11px,2vw,15px);
+    letter-spacing:0.3em;
+    color:rgba(200,255,200,0.5);
+    text-transform:uppercase;
+    margin-top:-18px;
+  }
+  .divider{
+    width:60px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,#39FF7A,transparent);
+  }
+  .back{
+    font-family:'Rajdhani',sans-serif;
+    font-size:13px;
+    letter-spacing:0.15em;
+    color:rgba(200,255,200,0.35);
+    text-transform:uppercase;
+  }
+  .back a{
+    color:rgba(200,255,200,0.6);
+    text-decoration:none;
+    border-bottom:1px solid rgba(57,255,122,0.2);
+    padding-bottom:1px;
+    transition:color .2s;
+  }
+  .back a:hover{color:#39FF7A}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="logo-img" src="img/logo.jpg" alt="LuzidLayers Logo">
+  <div>
+    <div class="brand">FuSioNWaRp</div>
+    <div class="tagline">Seite im Aufbau</div>
+  </div>
+  <div class="divider"></div>
+  <div class="back"><a href="index.html">luzidlayers.de</a></div>
+</div>
+</body>
+</html>
