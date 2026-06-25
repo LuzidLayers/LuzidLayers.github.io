@@ -1,806 +1,88 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FuSioNWaRp — Turn Sound Into Living Worlds</title>
-<link rel="stylesheet" href="fonts.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FuSioNWaRp — Coming Soon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Michroma&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Michroma&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --black:#080C09; --black2:#0D120E;
-    --green:#39FF7A; --lime:#C6F135; --white:#F0FFF4;
-    --cyan:#39FF7A; --violet:#39FF7A;
-    --grad:linear-gradient(100deg,var(--green),var(--lime));
-    --muted:rgba(200,255,200,.5);
-    --accent:#2ECC71;
-  }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--black); color:var(--white);
-    font-family:'Rajdhani',system-ui,sans-serif; font-weight:300;
-    overflow-x:hidden; line-height:1.6;
+  html,body{
+    height:100%;
+    background:#080C09;
+    color:#F0FFF4;
+    font-family:'Rajdhani',system-ui,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
   }
-  h1,h2,h3,.mono{font-family:'Michroma',sans-serif}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
-  section{position:relative;z-index:2}
-
-  /* app screenshot section */
-  .screenshot-wrap{position:relative;margin:70px 0 0;border-radius:20px;overflow:hidden;
-    box-shadow:0 0 80px -20px rgba(57,255,122,.35);border:1px solid rgba(57,255,122,.2)}
-  .screenshot-wrap img{width:100%;display:block}
-  .screenshot-wrap .scr-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
-    font-family:'Michroma';font-size:11px;letter-spacing:3px;color:rgba(57,255,122,.7);
-    background:rgba(8,12,9,.6);padding:7px 18px;border-radius:30px;backdrop-filter:blur(6px);white-space:nowrap}
-
-  /* animated warp background */
-  #warp{position:fixed;inset:0;z-index:0;opacity:.55}
-  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(180deg,rgba(8,12,9,.15) 0%,rgba(8,12,9,.45) 60%,var(--black) 100%)}
-
-  /* nav */
-  nav{position:fixed;top:0;left:0;right:0;z-index:30;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:18px 28px;backdrop-filter:blur(12px);
-    background:rgba(10,10,13,.35);border-bottom:1px solid rgba(255,255,255,.06)}
-  .logo{display:flex;align-items:center;gap:12px;font-family:'Michroma';font-weight:900;letter-spacing:1px}
-  .logo .fw{width:38px;height:38px;border-radius:10px;background:var(--grad);
-    display:grid;place-items:center;font-size:15px;color:#05060a;box-shadow:0 0 24px rgba(0,229,255,.4)}
-  .nav-links{display:flex;gap:24px;align-items:center;font-weight:600;font-size:14px}
-  .nav-links a{color:var(--muted);transition:.2s}.nav-links a:hover{color:var(--white)}
-
-  /* language selector */
-  .lang-select{font-family:'Michroma';font-size:11px;font-weight:700;letter-spacing:.5px;
-    background:rgba(255,255,255,.06);color:var(--white);border:1px solid rgba(255,255,255,.18);
-    border-radius:30px;padding:7px 14px;cursor:pointer;outline:none;appearance:none;
-    -webkit-appearance:none;text-align:center}
-  .lang-select option{background:#101018;color:var(--white)}
-
-  .btn{display:inline-block;padding:13px 26px;border-radius:40px;font-weight:800;font-family:'Michroma';
-    font-size:13px;letter-spacing:.5px;cursor:pointer;transition:.25s;border:none}
-  .btn-primary{background:var(--grad);color:#05060a;box-shadow:0 0 30px rgba(0,229,255,.35)}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(139,92,246,.6)}
-  .btn-ghost{border:1px solid rgba(255,255,255,.18);color:var(--white);background:rgba(255,255,255,.03)}
-  .btn-ghost:hover{border-color:var(--cyan)}
-  @media(max-width:760px){.nav-links a:not(.lang-wrap){display:none}}
-
-  /* hero */
-  header{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;padding-bottom:60px}
-  .eyebrow{font-family:'Michroma';font-size:12px;letter-spacing:5px;color:var(--green);margin-bottom:22px;text-transform:uppercase;opacity:.9}
-  h1{font-size:clamp(46px,9vw,120px);font-weight:900;line-height:.95;letter-spacing:-1px;color:var(--white)}
-  .tagline{font-size:clamp(20px,3vw,30px);font-weight:300;margin:26px 0 14px;max-width:680px;color:rgba(240,255,244,.9)}
-  .sub{color:rgba(200,255,200,.65);max-width:560px;margin-bottom:38px;font-size:17px}
-  .hero-cta{display:flex;gap:16px;flex-wrap:wrap}
-  .scroll-hint{margin-top:70px;color:var(--muted);font-size:12px;letter-spacing:3px;font-family:'Michroma';animation:pulse 2.4s infinite}
-  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
-
-  /* generic section */
-  .label{font-family:'Michroma';font-size:12px;letter-spacing:4px;color:var(--violet);text-transform:uppercase;margin-bottom:16px}
-  h2{font-size:clamp(30px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-.5px}
-  .pad{padding:120px 0}
-
-
-
-  /* hardware teaser */
-  .hw-teaser{text-align:center;padding:100px 0 80px}
-  .hw-device{display:flex;justify-content:center;align-items:center;gap:32px;margin:54px 0 48px;flex-wrap:wrap}
-  .hw-stick{width:180px;height:54px;background:linear-gradient(135deg,#1a1f1b,#2e3530);
-    border:1px solid rgba(57,255,122,.25);border-radius:12px;position:relative;
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 0 40px -10px rgba(57,255,122,.3)}
-  .hw-stick::after{content:"HDMI";position:absolute;left:-22px;top:50%;transform:translateY(-50%);
-    width:20px;height:14px;background:#1a1f1b;border:1px solid rgba(57,255,122,.4);border-radius:3px;
-    font-family:'Michroma';font-size:5px;display:flex;align-items:center;justify-content:center;
-    color:var(--green);letter-spacing:.5px}
-  .hw-stick span{font-family:'Michroma';font-size:10px;letter-spacing:3px;color:rgba(57,255,122,.7)}
-  .hw-remote{width:80px;height:80px;background:linear-gradient(135deg,#1a1f1b,#2e3530);
-    border:1px solid rgba(57,255,122,.2);border-radius:50%;
-    box-shadow:0 0 30px -10px rgba(57,255,122,.2)}
-  .hw-plus{font-family:'Michroma';font-size:24px;color:rgba(57,255,122,.3)}
-  .hw-specs{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:40px}
-  .hw-spec{padding:8px 18px;border:1px solid rgba(57,255,122,.2);border-radius:30px;
-    font-family:'Michroma';font-size:11px;letter-spacing:1.5px;color:rgba(57,255,122,.8)}
-  .coming-soon-badge{display:inline-block;background:var(--grad);color:#05060a;
-    font-family:'Michroma';font-size:11px;font-weight:800;letter-spacing:3px;
-    padding:6px 20px;border-radius:30px;margin-bottom:28px}
-  /* pull quote */
-  .pull-quote{font-family:'Michroma';font-size:clamp(16px,2.2vw,24px);font-weight:700;
-    text-align:center;color:var(--white);max-width:700px;margin:36px auto 0;
-    line-height:1.5;letter-spacing:.3px}
-  .pull-quote span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  /* problem section */
-  .problem{text-align:center;padding:100px 0 80px;background:linear-gradient(180deg,transparent,rgba(139,92,246,.06),transparent)}
-  .problem h2{max-width:820px;margin:0 auto 24px}
-  .problem p{color:var(--muted);max-width:580px;margin:0 auto;font-size:18px}
-
-  /* stat row */
-  .stats{display:flex;justify-content:center;gap:60px;flex-wrap:wrap;margin-top:60px}
-  .stat{text-align:center}
-  .stat .num{font-family:'Michroma';font-size:clamp(32px,5vw,52px);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .stat .desc{color:var(--muted);font-size:14px;margin-top:6px}
-
-  /* engines */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-top:54px}
-  .card{background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.01));
-    border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:30px;transition:.3s;backdrop-filter:blur(6px)}
-  .card:hover{transform:translateY(-6px);border-color:rgba(0,229,255,.4);box-shadow:0 20px 60px -20px rgba(0,229,255,.3)}
-  .card .ico{width:46px;height:46px;border-radius:12px;background:var(--grad);margin-bottom:20px;
-    display:grid;place-items:center;font-size:22px}
-  .card h3{font-size:20px;font-weight:700;margin-bottom:12px}
-  .card ul{list-style:none;color:var(--muted);font-size:15px}
-  .card li{padding:3px 0}.card li::before{content:"› ";color:var(--cyan)}
-
-  /* how it works */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-top:54px;counter-reset:step}
-  .step{position:relative;padding-left:20px;counter-increment:step}
-  .step::before{content:counter(step,"0");font-family:'Michroma';font-size:48px;font-weight:900;
-    color:rgba(0,229,255,.12);position:absolute;left:-10px;top:-12px;line-height:1}
-  .step h3{font-size:17px;font-weight:700;margin-bottom:10px;position:relative}
-  .step p{color:var(--muted);font-size:15px;position:relative}
-
-  /* products */
-  .prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:54px}
-  .price{background:var(--black2);border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:38px 32px;position:relative;transition:.3s}
-  .price:hover{transform:translateY(-6px)}
-  .price.feat{border-color:transparent;background:
-    linear-gradient(var(--black2),var(--black2)) padding-box,var(--grad) border-box;border:1.5px solid transparent;
-    box-shadow:0 0 60px -20px rgba(139,92,246,.6)}
-  .price .tier{font-family:'Michroma';font-weight:700;font-size:14px;letter-spacing:2px;color:var(--cyan)}
-  .price .amt{font-family:'Michroma','Arial',system-ui,sans-serif;font-size:42px;font-weight:900;margin:18px 0 4px}
-  .price .amt small{font-size:15px;color:var(--muted);font-weight:400}
-  .price p{color:var(--muted);font-size:15px;margin:14px 0 26px;min-height:48px}
-  .price ul{list-style:none;color:var(--muted);font-size:14px;margin-bottom:28px}
-  .price ul li{padding:4px 0}.price ul li::before{content:"✓ ";color:var(--cyan)}
-  .badge{position:absolute;top:-12px;right:24px;background:var(--grad);color:#05060a;font-family:'Michroma';
-    font-size:11px;font-weight:700;padding:5px 14px;border-radius:30px;letter-spacing:1px}
-
-  /* roadmap */
-  .roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:48px}
-  .rm-item{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start}
-  .rm-item .rm-ico{font-size:22px;flex-shrink:0;margin-top:2px}
-  .rm-item h4{font-size:15px;font-weight:700;margin-bottom:4px}
-  .rm-item p{color:var(--muted);font-size:13px}
-  .rm-item.done{border-color:rgba(0,229,255,.25);background:rgba(0,229,255,.04)}
-  .rm-item.soon{border-color:rgba(139,92,246,.3);background:rgba(139,92,246,.04)}
-
-  /* vision */
-  .vision{text-align:center;padding:160px 0}
-  .vision h2{font-size:clamp(34px,6vw,76px);max-width:900px;margin:0 auto}
-  .vision .claim{font-family:'Michroma';letter-spacing:3px;color:var(--cyan);margin-top:30px;font-size:13px}
-
-  /* contact */
-  .contact-box{background:linear-gradient(135deg,rgba(0,229,255,.07),rgba(139,92,246,.07));
-    border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:60px;text-align:center;margin-top:80px}
-  .contact-box h2{margin-bottom:16px}
-  .contact-box p{color:var(--muted);max-width:500px;margin:0 auto 32px;font-size:17px}
-
-  footer{border-top:1px solid rgba(255,255,255,.08);padding:60px 0 40px;color:var(--muted)}
-  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;align-items:center}
-  .foot-links{display:flex;gap:26px;font-size:14px}.foot-links a:hover{color:var(--cyan)}
-
-  .reveal{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.7,.2,1)}
-  .reveal.in{opacity:1;transform:none}
+  .wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:32px;
+    text-align:center;
+    padding:40px 24px;
+  }
+  .logo-img{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+    mix-blend-mode:screen;
+    filter:drop-shadow(0 0 24px #39FF7A55);
+  }
+  .brand{
+    font-family:'Syncopate',sans-serif;
+    font-size:clamp(22px,5vw,38px);
+    font-weight:700;
+    letter-spacing:0.22em;
+    background:linear-gradient(100deg,#39FF7A,#C6F135);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .tagline{
+    font-family:'Michroma',sans-serif;
+    font-size:clamp(11px,2vw,15px);
+    letter-spacing:0.3em;
+    color:rgba(200,255,200,0.5);
+    text-transform:uppercase;
+    margin-top:-18px;
+  }
+  .divider{
+    width:60px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,#39FF7A,transparent);
+  }
+  .back{
+    font-family:'Rajdhani',sans-serif;
+    font-size:13px;
+    letter-spacing:0.15em;
+    color:rgba(200,255,200,0.35);
+    text-transform:uppercase;
+  }
+  .back a{
+    color:rgba(200,255,200,0.6);
+    text-decoration:none;
+    border-bottom:1px solid rgba(57,255,122,0.2);
+    padding-bottom:1px;
+    transition:color .2s;
+  }
+  .back a:hover{color:#39FF7A}
 </style>
 </head>
 <body>
-<canvas id="warp"></canvas>
-<div class="veil"></div>
-
-<nav>
-  <div class="logo">
-    <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
-      <span class="fw">LL</span>
-      <div>
-        <div style="font-size:13px;letter-spacing:1px;font-family:Orbitron">LuZiD LaYeRs</div>
-        <div style="font-family:Raleway;font-weight:400;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:-2px">FuSioNWaRp — Visualizer No. 1</div>
-      </div>
-    </a>
+<div class="wrap">
+  <img class="logo-img" src="img/logo.jpg" alt="LuzidLayers Logo">
+  <div>
+    <div class="brand">FuSioNWaRp</div>
+    <div class="tagline">Seite im Aufbau</div>
   </div>
-  <div class="nav-links">
-    <a href="#engines" data-t="nav_engines">Engine</a>
-    <a href="#how">How</a>
-    <a href="#products" data-t="nav_products">Produkte</a>
-    <a href="#roadmap">Roadmap</a>
-    <select class="lang-select" id="lang-select" onchange="setLang(this.value)">
-      <option value="de">DE</option>
-      <option value="en">EN</option>
-      <option value="es">ES</option>
-      <option value="fr">FR</option>
-      <option value="it">IT</option>
-    </select>
-  </div>
-</nav>
-
-<!-- HERO -->
-<header class="wrap">
-  <div class="eyebrow reveal">A visual instrument for music.</div>
-  <h1 class="reveal">See what you hear.<br><span class="grad-text">Every screen becomes a stage.</span></h1>
-  <p class="tagline reveal">Albert opened doors. We build windows.</p>
-  <p class="sub reveal">FuSioNWaRp übersetzt Musik in visuelle Welten — in Echtzeit, auf deiner GPU, einzigartig bei jeder Session.</p>
-  <div class="hero-cta reveal">
-    <a href="#engines" class="btn btn-primary">Die Technologie</a>
-    <a href="#products" class="btn btn-ghost">Preise & Verfügbarkeit</a>
-  </div>
-  <div class="screenshot-wrap reveal">
-    <img src="img/fusionwarp/app-ui.jpg" alt="FuSioNWaRp App Screenshot" loading="lazy">
-    <div class="scr-label" data-t="scr_label">Echtzeit-Visual · Portrait Engine · deine Visuals sehen anders aus</div>
-  </div>
-  <div class="scroll-hint" style="margin-top:40px">↓ SCROLL</div>
-</header>
-
-<!-- PROBLEM -->
-<section class="problem">
-  <div class="wrap">
-    <div class="label reveal" data-t="prob_label">Das Problem</div>
-    <h2 class="reveal grad-text" data-t="prob_h2">Ohne Alberts Hilfe Musik sehen.</h2>
-    <p class="reveal" data-t="prob_p">Ob Wohnzimmer-TV, Club-LED-Wall oder Festival-Stage — Visuals und Musik laufen aneinander vorbei. FuSioNWaRp bringt beides zusammen.</p>
-    <p class="pull-quote reveal" data-t="prob_quote"><span>Nicht jeder zockt. Nicht jeder streamt.</span><br>Aber Musik läuft immer.</p>
-    <div class="stats">
-      <div class="stat reveal"><div class="num">50+</div><div class="desc" data-t="stat1">Echtzeit-Effekte</div></div>
-      <div class="stat reveal"><div class="num">∞</div><div class="desc" data-t="stat2">Einzigartige Visuals</div></div>
-      <div class="stat reveal"><div class="num">16</div><div class="desc" data-t="stat3">Audio-Bänder</div></div>
-      <div class="stat reveal"><div class="num">60fps</div><div class="desc" data-t="stat4">Metal GPU-Rendering</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ENGINES -->
-<section id="engines" class="wrap pad">
-  <div class="label reveal" data-t="eng_label">Die Technologie</div>
-  <h2 class="reveal">8 Engines. <span class="grad-text">Ein System.</span></h2>
-  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
-    <div class="card reveal">
-      <div class="ico">▣</div>
-      <h3>Layer Engine</h3>
-      <ul>
-        <li>Bis zu 4 parallele Video-Layer</li>
-        <li>Blend-Modi: Add, Screen, Multiply, Max</li>
-        <li>Pro-Layer Opazität & Mix</li>
-        <li>Eigene Videos & Bilder</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <div class="ico">↻</div>
-      <h3>Motion Engine</h3>
-      <ul>
-        <li>Infinite Zoom & Rotation</li>
-        <li>Tunnel Worlds</li>
-        <li>Pendel & Sway</li>
-        <li>Mirror Worlds / Kaleidoskop</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <div class="ico">≋</div>
-      <h3>Warp Engine</h3>
-      <ul>
-        <li>Liquid Warp</li>
-        <li>Glass & Lens Distortion</li>
-        <li>Noise Fields</li>
-        <li>Heat Waves</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <div class="ico">✦</div>
-      <h3>FX Engine</h3>
-      <ul>
-        <li>Glow / Bloom · Edge Detection</li>
-        <li>RGB Split · Glitch · VHS</li>
-        <li>Strobe · Threshold · Invert</li>
-        <li>Echo · Pixel · Tunnel</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <div class="ico">🎵</div>
-      <h3>Audio Engine</h3>
-      <ul>
-        <li>16-Band-Analyse · BPM · Transient</li>
-        <li>Energy Predictor — 1–2 Sek. Lookahead</li>
-        <li>Tonart-Erkennung · Genre-Klassifikation</li>
-        <li>Instrument-Trennung pro Layer</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <div class="ico">◎</div>
-      <h3>MIDI Engine</h3>
-      <ul>
-        <li>Vollständiges MIDI-Controller-Mapping</li>
-        <li>Launch Control XL · MPC · beliebig</li>
-        <li>MIDI-Learn für alle Parameter</li>
-        <li>Momentary, Burst & Aftertouch</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <div class="ico">◉</div>
-      <h3>Portrait Engine</h3>
-      <ul>
-        <li>KI-Personen-Segmentierung via Vision</li>
-        <li>Gesichts-Landmark-Detection</li>
-        <li>Live Face-Warp synchron zur Musik</li>
-        <li>Frei im Layer-Stack positionierbar</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <div class="ico">📐</div>
-      <h3>Mapping Engine <small style="font-size:11px;opacity:.6">Add-on</small></h3>
-      <ul>
-        <li>Bühnen- & Objekt-Mapping</li>
-        <li>Mehrere Ausgabe-Fenster</li>
-        <li>Direkt aus FusionWarp heraus</li>
-        <li>Keine Extra-Software nötig</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="how" class="wrap pad" style="padding-top:0">
-  <div class="label reveal">Audio-Reaktivität</div>
-  <h2 class="reveal">Die Engine <span class="grad-text">versteht die Energie.</span></h2>
-  <div class="steps">
-    <div class="step reveal">
-      <h3>Bass & Kick</h3>
-      <p>Transient-Detection erkennt jeden Kick. Zoom-Pulse, Tunnel-Sog, PumpTear — das Bild atmet mit dem Beat.</p>
-    </div>
-    <div class="step reveal">
-      <h3>16-Band-Analyse</h3>
-      <p>Das gesamte Spektrum wird in 16 Bänder zerlegt. Jedes Band steuert eigene Parameter — präzise, in Echtzeit.</p>
-    </div>
-    <div class="step reveal">
-      <h3>BPM & Beat-Phase</h3>
-      <p>Automatische Tempo-Erkennung. Effekte wechseln im Takt, Übergänge passieren exakt auf der Eins.</p>
-    </div>
-    <div class="step reveal">
-      <h3>Genre-Intelligenz</h3>
-      <p>Die Engine erkennt den Musikstil und lädt automatisch passende Effekte — ohne einen Knopf zu drücken.</p>
-    </div>
-  </div>
-</section>
-
-<!-- VISUAL GALLERY -->
-<section class="wrap pad" style="padding-top:0">
-  <div class="label reveal">Visuals</div>
-  <h2 class="reveal">Jede Session. <span class="grad-text">Einmalig.</span></h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:54px">
-    <div class="screenshot-wrap reveal" style="margin:0">
-      <img src="img/fusionwarp/vis1.jpg" alt="FuSioNWaRp Visual" loading="lazy">
-    </div>
-    <div class="screenshot-wrap reveal" style="margin:0">
-      <img src="img/fusionwarp/vis2.jpg" alt="FuSioNWaRp Visual" loading="lazy">
-    </div>
-    <div class="screenshot-wrap reveal" style="margin:0">
-      <img src="img/fusionwarp/vis3.jpg" alt="FuSioNWaRp Visual" loading="lazy">
-    </div>
-    <div class="screenshot-wrap reveal" style="margin:0">
-      <img src="img/fusionwarp/vis4.jpg" alt="FuSioNWaRp Visual" loading="lazy">
-    </div>
-  </div>
-  <div class="screenshot-wrap reveal" style="margin-top:12px">
-    <img src="img/fusionwarp/face.jpg" alt="FuSioNWaRp Portrait Engine" loading="lazy">
-    <div class="scr-label">Portrait Engine — Live Face-Warp synchron zur Musik</div>
-  </div>
-</section>
-
-<!-- VIDEO -->
-<section class="wrap pad" style="padding-top:0" id="demo">
-  <div class="label reveal">In Action</div>
-  <h2 class="reveal">Musik wird zu <span class="grad-text">lebendigen Welten.</span></h2>
-  <div class="screenshot-wrap reveal" style="margin-top:54px;border-radius:24px;overflow:hidden;
-    box-shadow:0 0 100px -20px rgba(57,255,122,.4);border:1px solid rgba(57,255,122,.25)">
-    <video
-      src="video/fusionwarp_demo.mp4"
-      autoplay muted loop playsinline
-      style="width:100%;display:block;max-height:600px;object-fit:cover">
-    </video>
-    <div class="scr-label">FuSioNWaRp — Audio-reaktive Visuals in Echtzeit</div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section id="products" class="wrap pad">
-  <div class="label reveal">Verfügbarkeit</div>
-  <h2 class="reveal">Currently building <span class="grad-text">FusionWarp.</span></h2>
-  <p class="reveal" style="color:var(--muted);max-width:580px;font-size:17px;margin-top:16px">FusionWarp ist in aktiver Entwicklung. Alle Kernfunktionen laufen — der Launch steht kurz bevor. Interesse? Meld dich jetzt.</p>
-  <div class="prices">
-    <div class="price feat reveal">
-      <div class="tier">FusionWarp</div>
-      <div class="amt">49€ <small>einmalig</small></div>
-      <p>Der vollständige Visual Synthesizer. Alle Engines, alle Effekte, kein Abo.</p>
-      <ul>
-        <li>FusionWarp Engine — 50+ Effekte</li>
-        <li>Portrait Engine — Live Face-Warp</li>
-        <li>16-Band Audio-Analyse & BPM</li>
-        <li>MIDI-Controller Mapping</li>
-        <li>Auto-Modus & Screensaver</li>
-        <li>iPhone Remote (sobald verfügbar)</li>
-      </ul>
-      <a href="mailto:andreas.deflorin@luzidlayers.de" class="btn btn-primary">Jetzt kaufen</a>
-    </div>
-    <div class="price reveal">
-      <div class="tier">Projection Mapping</div>
-      <div class="amt">29€ <small>Add-on</small></div>
-      <p>Bühnen- und Objekt-Mapping direkt aus FusionWarp. Kein extra Tool nötig.</p>
-      <ul>
-        <li>Mehrere Ausgabe-Fenster</li>
-        <li>Perspektiv-Korrektur</li>
-        <li>Live-Warp auf beliebige Flächen</li>
-        <li>Benötigt FusionWarp-Lizenz</li>
-      </ul>
-      <a href="mailto:andreas.deflorin@luzidlayers.de" class="btn btn-ghost">Add-on kaufen</a>
-    </div>
-  </div>
-  <p class="reveal" style="text-align:center;color:var(--muted);font-size:13px;margin-top:24px">macOS · Apple Silicon · einmalige Zahlung · kein Abo</p>
-</section>
-
-
-<!-- HARDWARE TEASER -->
-<section class="hw-teaser">
-  <div class="wrap">
-    <div class="coming-soon-badge" data-t="hw_badge">COMING SOON</div>
-    <h2 class="reveal" data-t="hw_h2">FuSioNWaRp <span class="grad-text">Hardware</span></h2>
-    <p class="reveal" style="color:var(--muted);max-width:560px;margin:20px auto 0;font-size:18px" data-t="hw_sub">Ein Gerät. Jeder Bildschirm. Kein PC nötig.</p>
-    <div class="hw-device">
-      <div class="hw-stick reveal"><span>FuSioNWaRp</span></div>
-      <div class="hw-plus reveal">+</div>
-      <div class="hw-remote reveal"></div>
-    </div>
-    <div class="hw-specs">
-      <div class="hw-spec reveal" data-t="hw_s1">HDMI · 4K · 60fps</div>
-      <div class="hw-spec reveal" data-t="hw_s2">Plug &amp; Play</div>
-      <div class="hw-spec reveal" data-t="hw_s3">Kein PC</div>
-      <div class="hw-spec reveal" data-t="hw_s4">WiFi · Bluetooth</div>
-      <div class="hw-spec reveal" data-t="hw_s5">App-Steuerung</div>
-    </div>
-    <a href="mailto:andreas.deflorin@luzidlayers.de" class="btn btn-primary reveal" data-t="hw_cta">Auf die Warteliste</a>
-  </div>
-</section>
-
-<!-- ROADMAP -->
-<section id="roadmap" class="wrap pad" style="padding-top:0">
-  <div class="label reveal" data-t="rm_label">Roadmap</div>
-  <h2 class="reveal" data-t="rm_h2">Was bereits läuft — <span class="grad-text" data-t="rm_h2span">was kommt.</span></h2>
-  <div class="roadmap">
-    <div class="rm-item done reveal"><div class="rm-ico">✅</div><div><h4>FusionWarp Engine</h4><p>50+ Effekte, 4 Layer, Blend-Modi — vollständig implementiert</p></div></div>
-    <div class="rm-item done reveal"><div class="rm-ico">✅</div><div><h4>Portrait Engine</h4><p>KI-Gesichtserkennung, Live Face-Warp synchron zur Musik</p></div></div>
-    <div class="rm-item done reveal"><div class="rm-ico">✅</div><div><h4>16-Band Audio-Analyse</h4><p>BPM-Detection, Transient-Detection, Beat-Phase — Echtzeit</p></div></div>
-    <div class="rm-item done reveal"><div class="rm-ico">✅</div><div><h4>MIDI & Hardware</h4><p>Launch Control XL, vollständiges MIDI-Mapping</p></div></div>
-    <div class="rm-item done reveal"><div class="rm-ico">✅</div><div><h4>Screensaver</h4><p>macOS Screensaver — installierbar, Bilder-Ordner wählbar</p></div></div>
-    <div class="rm-item done reveal"><div class="rm-ico">✅</div><div><h4>Projection Mapping</h4><p>Bühnen-Mapping Add-on — fertig und verfügbar</p></div></div>
-    <div class="rm-item soon reveal"><div class="rm-ico">🔜</div><div><h4>iPhone Remote</h4><p>XY-Pads, Gyro, Beat-Steuerung vom iPhone aus</p></div></div>
-    <div class="rm-item soon reveal"><div class="rm-ico">🔜</div><div><h4>iOS App (Vollversion)</h4><p>AirPlay-Output, standalone ohne Mac</p></div></div>
-  </div>
-</section>
-
-<!-- VISION -->
-<section class="wrap vision">
-  <h2 class="reveal" data-t="vis_h2">The universe does not repeat.<br><span class="grad-text">Neither should your screen.</span></h2>
-  <div class="claim reveal">FuSioNWaRp · Real-Time · Reactive · Limitless</div>
-</section>
-
-<!-- CONTACT -->
-<section class="wrap" style="padding-bottom:120px">
-  <div class="contact-box reveal">
-    <div class="label" style="justify-content:center;display:flex" data-t="contact_label">Kontakt &amp; Kooperationen</div>
-    <h2 data-t="contact_h2">Interesse? <span class="grad-text" data-t="contact_h2span">Lass uns reden.</span></h2>
-    <p data-t="contact_p">Ob Investor, Club-Betreiber, DJ oder Festival-Veranstalter — wir freuen uns auf spannende Gespräche.</p>
-    <a href="mailto:andreas.deflorin@luzidlayers.de" class="btn btn-primary">andreas.deflorin@luzidlayers.de</a>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap foot-grid">
-    <div class="logo">
-      <span class="fw">FW</span>
-      <div>
-        <div style="font-size:14px">FuSioNWaRp</div>
-        <div style="font-family:Raleway;font-weight:400;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:-1px">by LuZiD LaYeRs</div>
-      </div>
-    </div>
-    <div class="foot-links">
-      <a href="mailto:andreas.deflorin@luzidlayers.de">andreas.deflorin@luzidlayers.de</a>
-      <a href="impressum.html" data-t="nav_impressum">Impressum</a>
-      <a href="datenschutz.html" data-t="nav_datenschutz">Datenschutz</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-// ---- translations ----
-const T = {
-  de: {
-    scr_label:"Echtzeit-Visual · Beispiel-Input · deine Visuals sehen anders aus",
-    nav_engines:"Engine", nav_products:"Produkte", nav_impressum:"Impressum", nav_datenschutz:"Datenschutz",
-    hero_eyebrow:"Echtzeit Audio-Reaktive Visual Engine",
-    hero_tagline:"FuSioNWaRp verwandelt deine Videos und Bilder in Echtzeit in lebendige, audio-reaktive Welten.",
-    hero_sub:"Pure GPU engine. Every experience is unique — endless, reactive, limitless.",
-    hero_cta1:"Produkte entdecken", hero_cta2:"Die Technologie",
-    prob_label:"Das Problem",
-    prob_h2:"See your music. Without Albert's help.",
-    prob_quote:"Nicht jeder zockt. Nicht jeder streamt. Aber Musik läuft immer.",
-    prob_p:"FuSioNWaRp verwandelt ungenutzte Screens in reaktive visuelle Räume, die auf Musik reagieren, statt nur stumm im Standby zu hängen.",
-    stat1:"Engine-Module", stat2:"Einzigartige Visuals", stat3:"Presets", stat4:"Echtzeit GPU-Rendering",
-    eng_label:"Die Technologie",
-    eng1_h:"Layer Engine", eng1_1:"Bis zu 4 parallele Videoebenen", eng1_2:"Live-Crossfade & Blend-Modi", eng1_3:"Pro-Ebene Opazität & Mix", eng1_4:"Eigene Videos oder Artpacks",
-    eng2_h:"Motion Engine", eng2_1:"Infinite Zoom & Rotation", eng2_2:"Tunnel Worlds", eng2_3:"Pendel & Sway", eng2_4:"Mirror Worlds / Kaleidoskop",
-    eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Glass & Lens Distortion", eng3_3:"Noise Fields", eng3_4:"Heat Waves",
-    eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Edge Detection", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Threshold · Invert", eng4_4:"Echo · Pixel · Tunnel",
-    how_label:"Audio-Reaktivität", how_h2span:"versteht die Energie.",
-    how1_h:"Bass", how1_p:"Nickt das Bild im Takt. Treibt Zoom-Pulse und Tunnel-Sog. Bei jedem Kick kommt das Bild einen Schritt näher.",
-    how2_h:"Mitten", how2_p:"Lassen das Bild schwingen und drehen. Steuern Rotationsgeschwindigkeit und Warp-Stärke in Echtzeit.",
-    how3_h:"Höhen", how3_p:"Funkeln im Detail. RGB-Split, Glow und Edge-Intensität folgen den Höhen — je mehr Energie, desto mehr Glitzer.",
-    how4_h:"Stille", how4_p:"Friert die Welt fast ein. Nur ein feines Grundwabern bleibt — die Engine atmet mit der Musik.",
-    prod_label:"Produkte", prod_h2:"Für jeden Raum ",
-    per_month:"/ Monat", one_time:"einmalig",
-    home_desc:"Für Wohnzimmer-TVs & Smart Displays. Aus jedem Bildschirm wird lebendige Kunst — automatisch, audio-reaktiv.",
-    home_f1:"Eigene Videos & Bilder", home_f2:"Automatischer Visuals-Modus", home_f3:"Art-Packs by LuZiD", home_f4:"macOS · Windows · iOS",
-    core_desc:"Die HDMI-Hardware-Box. Lüfterlos, 4K, lautlos. HDMI-Kabel rein, Musik an — die Welt startet.",
-    core_f1:"Kein PC nötig", core_f2:"4K · 60fps · lüfterlos", core_f3:"Plug & Play Setup", core_f4:"Automatische Updates",
-    pro_desc:"Für Clubs, Bars, Festivals & DJs. MIDI-Controller-Support, volle manuelle Kontrolle, bühnentauglich.",
-    pro_f1:"MIDI-Controller Mapping", pro_f2:"8 Ebenen · volle Kontrolle", pro_f3:"Live-Performance Modus", pro_f4:"Preset-Slots & Szenen",
-    btn_waitlist:"Vormerken", badge_plug:"PLUG & PLAY", price_note:"Preise vorläufig — finale Tarife folgen beim Launch.",
-    hw_badge:"COMING SOON",
-    hw_h2:"FuSioNWaRp Hardware",
-    hw_sub:"Ein Gerät. Jeder Bildschirm. Kein PC nötig.",
-    hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Kein PC", hw_s4:"WiFi · Bluetooth", hw_s5:"App-Steuerung",
-    hw_cta:"Auf die Warteliste",
-    hw_badge:"COMING SOON",
-    hw_h2:"FuSioNWaRp Hardware",
-    hw_sub:"One device. Any screen. No PC needed.",
-    hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"No PC", hw_s4:"WiFi · Bluetooth", hw_s5:"App Control",
-    hw_cta:"Join the Waitlist",
-    hw_badge:"MUY PRONTO",
-  hw_h2:"FuSioNWaRp Hardware",
-  hw_sub:"Un dispositivo. Cualquier pantalla. Sin PC.",
-  hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Sin PC", hw_s4:"WiFi · Bluetooth", hw_s5:"Control App",
-  hw_cta:"Unirse a la lista de espera",
-  hw_badge:"BIENTÔT",
-  hw_h2:"FuSioNWaRp Hardware",
-  hw_sub:"Un appareil. N'importe quel écran. Sans PC.",
-  hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Sans PC", hw_s4:"WiFi · Bluetooth", hw_s5:"Contrôle App",
-  hw_cta:"Rejoindre la liste d'attente",
-  hw_badge:"PROSSIMAMENTE",
-  hw_h2:"FuSioNWaRp Hardware",
-  hw_sub:"Un dispositivo. Qualsiasi schermo. Nessun PC.",
-  hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Nessun PC", hw_s4:"WiFi · Bluetooth", hw_s5:"Controllo App",
-  hw_cta:"Unisciti alla lista d'attesa",
-  rm_label:"Roadmap", rm_h2:"Was bereits läuft — ", rm_h2span:"was kommt.",
-    rm1_h:"4 Engine-Module", rm1_p:"Layer, Motion, Warp & FX vollständig implementiert",
-    rm2_h:"Audio-Reaktivität", rm2_p:"Bass, Mid, High, Kick — Echtzeit-Analyse & Mapping",
-    rm3_h:"MIDI Launch Control XL", rm3_p:"Vollständiges Hardware-Mapping & MIDI-Learn",
-    rm4_h:"macOS Native App", rm4_p:"Metal GPU-Rendering, SwiftUI, läuft auf Apple Silicon",
-    rm5_h:"Video-Navigation", rm5_p:"Pro-Ebene Video-Auswahl, Loop, Vor/Zurück",
-    rm6_h:"Trend-Reaktivität", rm6_p:"Langsame Audio-Envelopes triggern Effekte automatisch",
-    rm7_h:"Bildschirmschoner", rm7_p:"macOS Screensaver auf Basis der Visual Engine",
-    rm8_h:"iOS & Windows", rm8_p:"Cross-Platform Release geplant",
-    vis_h2:"The universe does not repeat. ",
-    contact_label:"Kontakt & Kooperationen",
-    contact_h2:"Interesse? ", contact_h2span:"Lass uns reden.",
-    contact_p:"Ob Investor, Club-Betreiber, DJ oder Festival-Veranstalter — wir freuen uns auf spannende Gespräche.",
-  },
-  en: {
-    scr_label:"Real-time visual · example input · your visuals will look different",
-    nav_engines:"Engine", nav_products:"Products", nav_impressum:"Imprint", nav_datenschutz:"Privacy",
-    hero_eyebrow:"Real-Time Audio-Reactive Visual Engine",
-    hero_tagline:"FuSioNWaRp turns your videos and images into living, audio-reactive worlds — in real time.",
-    hero_sub:"Pure GPU engine. Every experience is unique — endless, reactive, limitless.",
-    hero_cta1:"Explore Products", hero_cta2:"The Technology",
-    prob_label:"The Problem",
-    prob_h2:"Too many screens stay black while the music is already playing.",
-    prob_quote:"Not everyone games. Not everyone streams. But music is always playing.",
-    prob_p:"FuSioNWaRp turns unused screens into reactive visual spaces that respond to music instead of sitting silently in standby.",
-    stat1:"Engine Modules", stat2:"Unique Visuals", stat3:"Presets", stat4:"Real-Time GPU Rendering",
-    eng_label:"The Technology",
-    eng1_h:"Layer Engine", eng1_1:"Up to 4 parallel video layers", eng1_2:"Live crossfade & blend modes", eng1_3:"Per-layer opacity & mix", eng1_4:"Your own videos or art packs",
-    eng2_h:"Motion Engine", eng2_1:"Infinite Zoom & Rotation", eng2_2:"Tunnel Worlds", eng2_3:"Pendulum & Sway", eng2_4:"Mirror Worlds / Kaleidoscope",
-    eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Glass & Lens Distortion", eng3_3:"Noise Fields", eng3_4:"Heat Waves",
-    eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Edge Detection", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Threshold · Invert", eng4_4:"Echo · Pixel · Tunnel",
-    how_label:"Audio Reactivity", how_h2span:"understands the energy.",
-    how1_h:"Bass", how1_p:"Nods the image to the beat. Drives zoom pulses and tunnel pull. Every kick brings the image one step closer.",
-    how2_h:"Mids", how2_p:"Make the image swing and spin. Control rotation speed and warp intensity in real time.",
-    how3_h:"Highs", how3_p:"Sparkle in the details. RGB split, glow and edge intensity follow the highs — more energy means more glitter.",
-    how4_h:"Silence", how4_p:"Nearly freezes the world. Only a faint base shimmer remains — the engine breathes with the music.",
-    prod_label:"Products", prod_h2:"A world for every space. ",
-    per_month:"/ month", one_time:"one-time",
-    home_desc:"For living-room TVs & smart displays. Every screen becomes living art — automatic, audio-reactive.",
-    home_f1:"Your own videos & images", home_f2:"Automatic visuals mode", home_f3:"Art packs by LuZiD", home_f4:"macOS · Windows · iOS",
-    core_desc:"The HDMI hardware box. Fanless, 4K, silent. Plug in the HDMI cable, turn on music — the world starts.",
-    core_f1:"No PC required", core_f2:"4K · 60fps · fanless", core_f3:"Plug & Play setup", core_f4:"Automatic updates",
-    pro_desc:"For clubs, bars, festivals & DJs. MIDI controller support, full manual control, stage-ready.",
-    pro_f1:"MIDI controller mapping", pro_f2:"8 layers · full control", pro_f3:"Live performance mode", pro_f4:"Preset slots & scenes",
-    btn_waitlist:"Join Waitlist", badge_plug:"PLUG & PLAY", price_note:"Prices preliminary — final pricing announced at launch.",
-    rm_label:"Roadmap", rm_h2:"What's live — ", rm_h2span:"what's coming.",
-    rm1_h:"4 Engine Modules", rm1_p:"Layer, Motion, Warp & FX fully implemented",
-    rm2_h:"Audio Reactivity", rm2_p:"Bass, Mid, High, Kick — real-time analysis & mapping",
-    rm3_h:"MIDI Launch Control XL", rm3_p:"Full hardware mapping & MIDI learn",
-    rm4_h:"macOS Native App", rm4_p:"Metal GPU rendering, SwiftUI, runs on Apple Silicon",
-    rm5_h:"Video Navigation", rm5_p:"Per-layer video selection, loop, next/prev",
-    rm6_h:"Trend Reactivity", rm6_p:"Slow audio envelopes trigger effects automatically",
-    rm7_h:"Screen Saver", rm7_p:"macOS screensaver powered by the visual engine",
-    rm8_h:"iOS & Windows", rm8_p:"Cross-platform release planned",
-    vis_h2:"The universe does not repeat. ",
-    contact_label:"Contact & Partnerships",
-    contact_h2:"Interested? ", contact_h2span:"Let's talk.",
-    contact_p:"Whether you're an investor, club owner, DJ or festival organiser — we'd love to hear from you.",
-  }
-};
-
-// Spanish
-T.es = {
-  scr_label:"Visual en tiempo real · entrada de ejemplo · tus visuales se verán diferentes",
-  nav_engines:"Motor", nav_products:"Productos", nav_impressum:"Aviso legal", nav_datenschutz:"Privacidad",
-  hero_eyebrow:"Motor Visual Reactivo al Audio en Tiempo Real",
-  hero_tagline:"FuSioNWaRp convierte tus vídeos e imágenes en mundos vivos y reactivos al audio — en tiempo real.",
-  hero_sub:"Motor GPU puro. Cada experiencia es única — infinita, reactiva, ilimitada.",
-  hero_cta1:"Descubrir productos", hero_cta2:"La tecnología",
-  prob_label:"El problema",
-  prob_h2:"Demasiadas pantallas permanecen negras mientras la música ya suena.",
-  prob_quote:"No todos juegan. No todos hacen streaming. Pero la música siempre suena.",
-  prob_p:"Ya sea un TV de salón, una pantalla LED de club o un escenario de festival — los visuales y la música no se comunican. FuSioNWaRp los une.",
-  stat1:"Módulos de motor", stat2:"Visuales únicos", stat3:"Vídeos pregrabados", stat4:"Renderizado GPU en tiempo real",
-  eng_label:"La tecnología",
-  eng1_h:"Layer Engine", eng1_1:"Hasta 4 capas de vídeo en paralelo", eng1_2:"Crossfade en vivo & modos de mezcla", eng1_3:"Opacidad & mezcla por capa", eng1_4:"Tus vídeos o art packs",
-  eng2_h:"Motion Engine", eng2_1:"Zoom infinito & rotación", eng2_2:"Tunnel Worlds", eng2_3:"Péndulo & Sway", eng2_4:"Mirror Worlds / Caleidoscopio",
-  eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Distorsión de cristal & lente", eng3_3:"Campos de ruido", eng3_4:"Ondas de calor",
-  eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Detección de bordes", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Threshold · Inversión", eng4_4:"Echo · Pixel · Tunnel",
-  how_label:"Reactividad al audio", how_h2span:"entiende la energía.",
-  how1_h:"Graves", how1_p:"Sincroniza la imagen con el ritmo. Impulsa pulsos de zoom y atracción del túnel.",
-  how2_h:"Medios", how2_p:"Hacen oscilar y girar la imagen. Controlan la velocidad de rotación en tiempo real.",
-  how3_h:"Agudos", how3_p:"Brillan en los detalles. RGB split, brillo e intensidad de borde siguen los agudos.",
-  how4_h:"Silencio", how4_p:"Casi congela el mundo. Solo queda un leve brillo base — el motor respira con la música.",
-  prod_label:"Productos", prod_h2:"Un mundo para cada espacio. ",
-  per_month:"/ mes", one_time:"pago único",
-  home_desc:"Para TVs de salón y pantallas inteligentes. Cada pantalla se convierte en arte vivo — automático, reactivo al audio.",
-  home_f1:"Tus vídeos e imágenes", home_f2:"Modo visual automático", home_f3:"Art packs by LuZiD", home_f4:"macOS · Windows · iOS",
-  core_desc:"La caja hardware HDMI. Sin ventilador, 4K, silenciosa. Conecta el cable HDMI, pon música — el mundo comienza.",
-  core_f1:"Sin PC necesario", core_f2:"4K · 60fps · sin ventilador", core_f3:"Configuración Plug & Play", core_f4:"Actualizaciones automáticas",
-  pro_desc:"Para clubs, bares, festivales y DJs. Soporte para controladores MIDI, control manual completo, listo para el escenario.",
-  pro_f1:"Mapeo de controlador MIDI", pro_f2:"8 capas · control total", pro_f3:"Modo actuación en directo", pro_f4:"Slots de presets y escenas",
-  btn_waitlist:"Registrarse", badge_plug:"PLUG & PLAY", price_note:"Precios provisionales — precios finales anunciados en el lanzamiento.",
-  rm_label:"Hoja de ruta", rm_h2:"Lo que ya funciona — ", rm_h2span:"lo que viene.",
-  rm1_h:"4 Módulos de motor", rm1_p:"Layer, Motion, Warp & FX completamente implementados",
-  rm2_h:"Reactividad al audio", rm2_p:"Bass, Mid, High, Kick — análisis y mapeo en tiempo real",
-  rm3_h:"MIDI Launch Control XL", rm3_p:"Mapeo completo de hardware y MIDI learn",
-  rm4_h:"App nativa macOS", rm4_p:"Metal GPU rendering, SwiftUI, funciona en Apple Silicon",
-  rm5_h:"Navegación de vídeo", rm5_p:"Selección de vídeo por capa, bucle, siguiente/anterior",
-  rm6_h:"Reactividad de tendencias", rm6_p:"Los envolventes de audio lentos activan efectos automáticamente",
-  rm7_h:"Salvapantallas", rm7_p:"Salvapantallas macOS impulsado por el motor visual",
-  rm8_h:"iOS & Windows", rm8_p:"Lanzamiento multiplataforma planificado",
-  vis_h2:"The universe does not repeat. ",
-  contact_label:"Contacto & Colaboraciones",
-  contact_h2:"¿Interesado? ", contact_h2span:"Hablemos.",
-  contact_p:"Tanto si eres inversor, propietario de club, DJ u organizador de festivales — nos encantaría conocerte.",
-};
-
-// French
-T.fr = {
-  scr_label:"Visuel temps réel · exemple d'entrée · vos visuels seront différents",
-  nav_engines:"Moteur", nav_products:"Produits", nav_impressum:"Mentions légales", nav_datenschutz:"Confidentialité",
-  hero_eyebrow:"Moteur Visuel Réactif Audio en Temps Réel",
-  hero_tagline:"FuSioNWaRp transforme vos vidéos et images en mondes vivants et réactifs à l'audio — en temps réel.",
-  hero_sub:"Pur moteur GPU. Chaque expérience est unique — infinie, réactive, sans limites.",
-  hero_cta1:"Découvrir les produits", hero_cta2:"La technologie",
-  prob_label:"Le problème",
-  prob_h2:"Trop d'écrans restent noirs alors que la musique joue déjà.",
-  prob_quote:"Tout le monde ne joue pas. Tout le monde ne streame pas. Mais la musique tourne toujours.",
-  prob_p:"FuSioNWaRp transforme les écrans inutilisés en espaces visuels réactifs qui répondent à la musique au lieu de rester muets en veille.",
-  stat1:"Modules moteur", stat2:"Visuels uniques", stat3:"Vidéos préenregistrées", stat4:"Rendu GPU temps réel",
-  eng_label:"La technologie",
-  eng1_h:"Layer Engine", eng1_1:"Jusqu'à 4 couches vidéo parallèles", eng1_2:"Crossfade live & modes de fusion", eng1_3:"Opacité & mix par couche", eng1_4:"Vos vidéos ou art packs",
-  eng2_h:"Motion Engine", eng2_1:"Zoom infini & rotation", eng2_2:"Tunnel Worlds", eng2_3:"Pendule & Sway", eng2_4:"Mirror Worlds / Kaléidoscope",
-  eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Distorsion verre & lentille", eng3_3:"Champs de bruit", eng3_4:"Vagues de chaleur",
-  eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Détection de contours", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Seuil · Inversion", eng4_4:"Echo · Pixel · Tunnel",
-  how_label:"Réactivité audio", how_h2span:"comprend l'énergie.",
-  how1_h:"Basses", how1_p:"Synchronise l'image avec le rythme. Pilote les impulsions de zoom et l'attraction du tunnel.",
-  how2_h:"Médiums", how2_p:"Font osciller et tourner l'image. Contrôlent la vitesse de rotation en temps réel.",
-  how3_h:"Aigus", how3_p:"Scintillent dans les détails. RGB split, lueur et intensité de contour suivent les aigus.",
-  how4_h:"Silence", how4_p:"Gèle presque le monde. Il ne reste qu'un léger frémissement de base — le moteur respire avec la musique.",
-  prod_label:"Produits", prod_h2:"Un monde pour chaque espace. ",
-  per_month:"/ mois", one_time:"paiement unique",
-  home_desc:"Pour les TV de salon & écrans intelligents. Chaque écran devient de l'art vivant — automatique, réactif à l'audio.",
-  home_f1:"Vos vidéos & images", home_f2:"Mode visuals automatique", home_f3:"Art packs by LuZiD", home_f4:"macOS · Windows · iOS",
-  core_desc:"Le boîtier hardware HDMI. Sans ventilateur, 4K, silencieux. Branchez le câble HDMI, lancez la musique — le monde démarre.",
-  core_f1:"Sans PC requis", core_f2:"4K · 60fps · sans ventilateur", core_f3:"Configuration Plug & Play", core_f4:"Mises à jour automatiques",
-  pro_desc:"Pour les clubs, bars, festivals & DJs. Support contrôleurs MIDI, contrôle manuel complet, prêt pour la scène.",
-  pro_f1:"Mapping contrôleur MIDI", pro_f2:"8 couches · contrôle total", pro_f3:"Mode performance live", pro_f4:"Slots de presets & scènes",
-  btn_waitlist:"S'inscrire", badge_plug:"PLUG & PLAY", price_note:"Prix provisoires — tarifs définitifs annoncés au lancement.",
-  rm_label:"Feuille de route", rm_h2:"Ce qui fonctionne déjà — ", rm_h2span:"ce qui arrive.",
-  rm1_h:"4 Modules moteur", rm1_p:"Layer, Motion, Warp & FX entièrement implémentés",
-  rm2_h:"Réactivité audio", rm2_p:"Bass, Mid, High, Kick — analyse & mapping temps réel",
-  rm3_h:"MIDI Launch Control XL", rm3_p:"Mapping hardware complet & MIDI learn",
-  rm4_h:"App native macOS", rm4_p:"Metal GPU rendering, SwiftUI, fonctionne sur Apple Silicon",
-  rm5_h:"Navigation vidéo", rm5_p:"Sélection vidéo par couche, boucle, suivant/précédent",
-  rm6_h:"Réactivité de tendance", rm6_p:"Les enveloppes audio lentes déclenchent les effets automatiquement",
-  rm7_h:"Économiseur d'écran", rm7_p:"Économiseur d'écran macOS propulsé par le moteur visuel",
-  rm8_h:"iOS & Windows", rm8_p:"Lancement multiplateforme prévu",
-  vis_h2:"The universe does not repeat. ",
-  contact_label:"Contact & Partenariats",
-  contact_h2:"Intéressé ? ", contact_h2span:"Parlons-en.",
-  contact_p:"Que vous soyez investisseur, propriétaire de club, DJ ou organisateur de festival — nous serions ravis de vous rencontrer.",
-};
-
-// Italian
-T.it = {
-  scr_label:"Visual in tempo reale · input di esempio · i tuoi visual saranno diversi",
-  nav_engines:"Motore", nav_products:"Prodotti", nav_impressum:"Note legali", nav_datenschutz:"Privacy",
-  hero_eyebrow:"Motore Visivo Reattivo all'Audio in Tempo Reale",
-  hero_tagline:"FuSioNWaRp trasforma i tuoi video e immagini in mondi vivi e reattivi all'audio — in tempo reale.",
-  hero_sub:"Puro motore GPU. Ogni esperienza è unica — infinita, reattiva, senza limiti.",
-  hero_cta1:"Scopri i prodotti", hero_cta2:"La tecnologia",
-  prob_label:"Il problema",
-  prob_h2:"Troppi schermi restano neri mentre la musica sta già suonando.",
-  prob_quote:"Non tutti giocano. Non tutti guardano serie. Ma la musica suona sempre.",
-  prob_p:"FuSioNWaRp trasforma schermi inutilizzati in spazi visivi reattivi che rispondono alla musica invece di restare muti in standby.",
-  stat1:"Moduli motore", stat2:"Visual unici", stat3:"Preset", stat4:"Rendering GPU tempo reale",
-  eng_label:"La tecnologia",
-  eng1_h:"Layer Engine", eng1_1:"Fino a 4 livelli video paralleli", eng1_2:"Crossfade live & modalità di fusione", eng1_3:"Opacità & mix per livello", eng1_4:"I tuoi video o art pack",
-  eng2_h:"Motion Engine", eng2_1:"Zoom infinito & rotazione", eng2_2:"Tunnel Worlds", eng2_3:"Pendolo & Sway", eng2_4:"Mirror Worlds / Caleidoscopio",
-  eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Distorsione vetro & lente", eng3_3:"Campi di rumore", eng3_4:"Onde di calore",
-  eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Rilevamento bordi", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Soglia · Inversione", eng4_4:"Echo · Pixel · Tunnel",
-  how_label:"Reattività audio", how_h2span:"capisce l'energia.",
-  how1_h:"Bassi", how1_p:"Sincronizza l'immagine con il ritmo. Guida i pulse di zoom e l'attrazione del tunnel.",
-  how2_h:"Medi", how2_p:"Fanno oscillare e ruotare l'immagine. Controllano la velocità di rotazione in tempo reale.",
-  how3_h:"Alti", how3_p:"Scintillano nei dettagli. RGB split, glow e intensità dei bordi seguono gli alti.",
-  how4_h:"Silenzio", how4_p:"Congela quasi il mondo. Rimane solo un lieve fremito di base — il motore respira con la musica.",
-  prod_label:"Prodotti", prod_h2:"Un mondo per ogni spazio. ",
-  per_month:"/ mese", one_time:"pagamento unico",
-  home_desc:"Per TV da salotto & smart display. Ogni schermo diventa arte viva — automatico, reattivo all'audio.",
-  home_f1:"I tuoi video & immagini", home_f2:"Modalità visual automatica", home_f3:"Art pack by LuZiD", home_f4:"macOS · Windows · iOS",
-  core_desc:"Il box hardware HDMI. Senza ventola, 4K, silenzioso. Collega il cavo HDMI, metti la musica — il mondo inizia.",
-  core_f1:"Nessun PC necessario", core_f2:"4K · 60fps · senza ventola", core_f3:"Configurazione Plug & Play", core_f4:"Aggiornamenti automatici",
-  pro_desc:"Per club, bar, festival & DJ. Supporto controller MIDI, controllo manuale completo, pronto per il palco.",
-  pro_f1:"Mappatura controller MIDI", pro_f2:"8 livelli · controllo totale", pro_f3:"Modalità performance live", pro_f4:"Slot preset & scene",
-  btn_waitlist:"Registrati", badge_plug:"PLUG & PLAY", price_note:"Prezzi provvisori — tariffe finali annunciate al lancio.",
-  rm_label:"Roadmap", rm_h2:"Cosa funziona già — ", rm_h2span:"cosa arriva.",
-  rm1_h:"4 Moduli motore", rm1_p:"Layer, Motion, Warp & FX completamente implementati",
-  rm2_h:"Reattività audio", rm2_p:"Bass, Mid, High, Kick — analisi & mapping in tempo reale",
-  rm3_h:"MIDI Launch Control XL", rm3_p:"Mappatura hardware completa & MIDI learn",
-  rm4_h:"App nativa macOS", rm4_p:"Metal GPU rendering, SwiftUI, gira su Apple Silicon",
-  rm5_h:"Navigazione video", rm5_p:"Selezione video per livello, loop, successivo/precedente",
-  rm6_h:"Reattività di tendenza", rm6_p:"Le envelope audio lente attivano effetti automaticamente",
-  rm7_h:"Screen saver", rm7_p:"Screen saver macOS alimentato dal motore visivo",
-  rm8_h:"iOS & Windows", rm8_p:"Lancio multipiattaforma pianificato",
-  vis_h2:"The universe does not repeat. ",
-  contact_label:"Contatti & Partnership",
-  contact_h2:"Interessato? ", contact_h2span:"Parliamone.",
-  contact_p:"Che tu sia un investitore, proprietario di club, DJ o organizzatore di festival — siamo lieti di conoscerti.",
-};
-
-let lang = 'de';
-function setLang(l) {
-  lang = l;
-  document.documentElement.lang = l;
-  document.getElementById('lang-select').value = l;
-  document.querySelectorAll('[data-t]').forEach(el => {
-    const key = el.getAttribute('data-t');
-    if (T[l] && T[l][key] !== undefined) el.textContent = T[l][key];
-  });
-}
-
-// ---- warp starfield ----
-const c=document.getElementById('warp'),x=c.getContext('2d');let W,H,cx,cy,stars=[];
-function rs(){W=c.width=innerWidth;H=c.height=innerHeight;cx=W/2;cy=H/2;
-  stars=Array.from({length:Math.min(420,(W*H)/4500)},()=>({a:Math.random()*6.283,z:Math.random(),s:0.0015+Math.random()*0.004}));}
-addEventListener('resize',rs);rs();
-function tick(){
-  x.fillStyle='rgba(10,10,13,.35)';x.fillRect(0,0,W,H);
-  const maxR=Math.hypot(W,H)/2;
-  for(const st of stars){st.z+=st.s;if(st.z>1)st.z-=1;
-    const r=st.z*st.z*maxR*1.15,dx=Math.cos(st.a),dy=Math.sin(st.a);
-    const px=cx+dx*r,py=cy+dy*r,r0=Math.max(0,r-(8+st.z*46)),qx=cx+dx*r0,qy=cy+dy*r0;
-    const t=st.z;
-    // green → lime gradient by depth
-    x.strokeStyle=`rgba(${Math.round(57+t*141)},${Math.round(255-t*64)},${Math.round(122-t*87)},${0.1+t*0.55})`;
-    x.lineWidth=0.5+t*2.0;x.beginPath();x.moveTo(qx,qy);x.lineTo(px,py);x.stroke();}
-  requestAnimationFrame(tick);
-}tick();
-
-// ---- scroll reveal ----
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.15});
-document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*0.08)+'s';io.observe(el)});
-</script>
+  <div class="divider"></div>
+  <div class="back"><a href="index.html">luzidlayers.de</a></div>
+</div>
 </body>
 </html>
