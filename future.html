@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon — LuZiD LaYeRs</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;cursor:none}
+html{scroll-behavior:smooth}
+body{background:#000;color:#fff;font-family:'C1st Font',serif;font-weight:300;overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 36px}
+
+#universe{position:fixed;inset:0;z-index:0}
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 130% 70% at 50% 0%,transparent,rgba(0,0,0,.88) 65%)}
+main{position:relative;z-index:2}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 36px;backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-family:'C1st Font',serif;font-size:17px;letter-spacing:.17em;
+  color:rgba(255,255,255,.85);text-shadow:0 0 20px rgba(255,149,0,.2)}
+.nav-back{font-family:'C1st Font',serif;font-size:9px;letter-spacing:.35em;
+  text-transform:uppercase;color:rgba(255,149,0,.6);transition:color .2s}
+.nav-back:hover{color:rgba(255,149,0,1)}
+
+/* HERO */
+.hero{min-height:60vh;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:140px 0 70px}
+.hero-eyebrow{font-size:10px;letter-spacing:.6em;text-transform:uppercase;
+  color:rgba(255,149,0,.7);margin-bottom:20px}
+.hero-h{font-family:'C1st Font',serif;font-size:clamp(44px,7vw,96px);
+  line-height:.95;letter-spacing:.04em;color:#fff;margin-bottom:18px;
+  text-shadow:0 0 60px rgba(255,149,0,.1)}
+.hero-sub{font-size:clamp(13px,1.6vw,17px);color:rgba(255,255,255,.35);
+  letter-spacing:.15em;max-width:500px}
+
+/* TABS */
+.tabs{display:flex;gap:0;margin:60px 0 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.tab{padding:14px 28px;font-family:'C1st Font',serif;font-size:11px;
+  letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.3);
+  cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:all .25s;background:none;border-top:none;border-left:none;border-right:none}
+.tab:hover{color:rgba(255,255,255,.7)}
+.tab.active{color:#fff;border-bottom-color:rgba(255,149,0,.8)}
+
+/* TAB PANELS */
+.panel{display:none;padding:64px 0 120px}
+.panel.active{display:block}
+
+/* CARD GRID */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:0}
+
+.card{border:1px solid rgba(255,255,255,.07);border-radius:20px;
+  padding:36px;background:rgba(255,255,255,.02);
+  backdrop-filter:blur(4px);transition:all .3s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--cc,.3) 0%,transparent 60%);
+  opacity:.06;pointer-events:none}
+.card:hover{border-color:rgba(255,255,255,.14);transform:translateY(-4px);
+  box-shadow:0 20px 60px -20px rgba(0,0,0,.6)}
+
+.card-badge{display:inline-block;font-size:8px;letter-spacing:.45em;
+  text-transform:uppercase;padding:5px 14px;border-radius:20px;
+  border:1px solid var(--bc,rgba(255,149,0,.4));color:var(--bc,rgba(255,149,0,.8));
+  margin-bottom:24px}
+.card-ico{font-size:32px;margin-bottom:20px;display:block}
+.card h3{font-family:'C1st Font',serif;font-size:clamp(22px,2.5vw,30px);
+  color:#fff;margin-bottom:12px;line-height:1.1}
+.card p{font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:20px}
+
+.spec-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.spec{font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  padding:5px 12px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.35)}
+
+.waitlist-btn{display:inline-block;margin-top:24px;padding:11px 28px;
+  border:1px solid rgba(255,149,0,.4);border-radius:30px;
+  font-family:'C1st Font',serif;font-size:9px;letter-spacing:.35em;
+  text-transform:uppercase;color:rgba(255,149,0,.8);
+  background:rgba(255,149,0,.04);transition:all .25s}
+.waitlist-btn:hover{background:rgba(255,149,0,.1);border-color:rgba(255,149,0,.8);color:#fff}
+
+/* krom-A accent = violet */
+.violet .card-badge{border-color:rgba(139,92,246,.5);color:rgba(139,92,246,.9)}
+.violet .tab.active{border-bottom-color:rgba(139,92,246,.8)}
+.violet .waitlist-btn{border-color:rgba(139,92,246,.4);color:rgba(139,92,246,.8)}
+.violet .waitlist-btn:hover{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.8)}
+
+/* ROADMAP STRIP */
+.roadmap{margin-top:80px;border-top:1px solid rgba(255,255,255,.06);padding-top:60px}
+.roadmap-label{font-size:9px;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(255,149,0,.6);margin-bottom:36px}
+.rm-items{display:flex;flex-direction:column;gap:0}
+.rm-row{display:flex;align-items:flex-start;gap:24px;padding:20px 0;
+  border-bottom:1px solid rgba(255,255,255,.05)}
+.rm-row:last-child{border-bottom:none}
+.rm-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rm-dot.done{background:rgba(57,255,122,.8);box-shadow:0 0 10px rgba(57,255,122,.4)}
+.rm-dot.soon{background:rgba(255,149,0,.8);box-shadow:0 0 10px rgba(255,149,0,.3);
+  animation:soon-pulse 2s ease-in-out infinite}
+@keyframes soon-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+.rm-dot.later{background:rgba(255,255,255,.15)}
+.rm-text h4{font-family:'C1st Font',serif;font-size:15px;color:#fff;margin-bottom:4px}
+.rm-text p{font-size:13px;color:rgba(255,255,255,.35);line-height:1.5}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 0;position:relative;z-index:2}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-logo{font-family:'C1st Font',serif;font-size:14px;letter-spacing:.17em;color:rgba(255,255,255,.25)}
+.foot-links{display:flex;gap:24px;font-size:9px;letter-spacing:.35em;
+  text-transform:uppercase;color:rgba(255,255,255,.2)}
+.foot-links a:hover{color:rgba(255,255,255,.7)}
+a,button{cursor:none}
+#cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:rgba(255,149,0,.9);box-shadow:0 0 8px rgba(255,149,0,.9),0 0 20px rgba(255,149,0,.4);transform:translate(-50%,-50%);transition:width .15s,height .15s}
+#cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,149,0,.35);transform:translate(-50%,-50%)}
+body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(255,149,0,1),0 0 40px rgba(255,149,0,.6)}
+body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(255,149,0,.6)}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="universe"></canvas>
+<div class="veil"></div>
+
+<nav>
+  <a class="nav-back" href="home.html">← Universum</a>
+  <a class="nav-logo" href="fusionwarp_live.html">FusionWarp</a>
+</nav>
+
+<main>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">In der Pipeline</div>
+    <div class="hero-h">Was noch kommt.</div>
+    <div class="hero-sub">Produkte in Entwicklung — noch nicht fertig, aber auf dem Weg.</div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('fw')">FuSioNWaRp</button>
+    <button class="tab" onclick="showTab('kroma')">krom-A</button>
+  </div>
+
+  <!-- ── FUSIONWARP PANEL ── -->
+  <div class="panel active" id="panel-fw">
+    <div class="cards">
+
+      <!-- iPhone Remote -->
+      <div class="card" style="--cc:rgba(0,229,255,.8)">
+        <span class="card-badge" style="border-color:rgba(0,229,255,.4);color:rgba(0,229,255,.8)">Coming Soon · iPhone</span>
+        <span class="card-ico">📱</span>
+        <h3>FuSioNWaRp Remote</h3>
+        <p>Steuere FusionWarp live vom iPhone — XY-Pads, Gyro-Steuerung, Beat-Haptik. Performance-Modus optimiert für Portrait und Landscape.</p>
+        <div class="spec-list">
+          <span class="spec">XY-Pads</span>
+          <span class="spec">Gyro</span>
+          <span class="spec">Beat-Haptik</span>
+          <span class="spec">Multi-iPhone</span>
+          <span class="spec">WiFi</span>
+        </div>
+        <a class="waitlist-btn" href="mailto:andreas.deflorin@luzidlayers.de?subject=Warteliste FusionWarp Remote">Auf die Warteliste</a>
+      </div>
+
+      <!-- Hardware Box -->
+      <div class="card" style="--cc:rgba(255,149,0,.8)">
+        <span class="card-badge">Coming Soon · Hardware</span>
+        <span class="card-ico">📦</span>
+        <h3>FuSioNWaRp Hardware</h3>
+        <p>Ein Gerät. Jeder Bildschirm. Kein PC nötig. HDMI-Stick mit eingebautem FusionWarp — lüfterlos, 4K, Plug & Play.</p>
+        <div class="spec-list">
+          <span class="spec">HDMI · 4K · 60fps</span>
+          <span class="spec">Kein PC</span>
+          <span class="spec">Plug & Play</span>
+          <span class="spec">WiFi · Bluetooth</span>
+          <span class="spec">App-Steuerung</span>
+        </div>
+        <a class="waitlist-btn" href="mailto:andreas.deflorin@luzidlayers.de?subject=Warteliste FusionWarp Hardware">Auf die Warteliste</a>
+      </div>
+
+      <!-- iOS Vollversion -->
+      <div class="card" style="--cc:rgba(139,92,246,.8)">
+        <span class="card-badge" style="border-color:rgba(139,92,246,.4);color:rgba(139,92,246,.8)">In Planung · iOS</span>
+        <span class="card-ico">🎵</span>
+        <h3>FuSioNWaRp iOS</h3>
+        <p>Standalone-App für iPhone und iPad. AirPlay-Output, alle Engines, kein Mac nötig. FusionWarp überall.</p>
+        <div class="spec-list">
+          <span class="spec">AirPlay</span>
+          <span class="spec">Standalone</span>
+          <span class="spec">Alle Engines</span>
+          <span class="spec">iPhone & iPad</span>
+        </div>
+        <a class="waitlist-btn" href="mailto:andreas.deflorin@luzidlayers.de?subject=Warteliste FusionWarp iOS" style="border-color:rgba(139,92,246,.4);color:rgba(139,92,246,.8)">Auf die Warteliste</a>
+      </div>
+
+    </div>
+
+    <!-- Roadmap -->
+    <div class="roadmap">
+      <div class="roadmap-label">FuSioNWaRp · Status</div>
+      <div class="rm-items">
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>FusionWarp Engine</h4><p>50+ Effekte, 4 Layer, Blend-Modi — vollständig</p></div></div>
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>Portrait Engine</h4><p>KI-Gesichtserkennung, Live Face-Warp synchron zur Musik</p></div></div>
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>16-Band Audio-Analyse</h4><p>BPM, Transient, Beat-Phase — Echtzeit</p></div></div>
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>MIDI Mapping</h4><p>Launch Control XL, MPC, beliebige Controller</p></div></div>
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>Screensaver</h4><p>macOS Screensaver, Bilder-Ordner wählbar</p></div></div>
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>Projection Mapping Add-on</h4><p>Corner-Pin Warping, Bühnen-Mapping</p></div></div>
+        <div class="rm-row"><div class="rm-dot soon"></div><div class="rm-text"><h4>iPhone Remote</h4><p>XY-Pads, Gyro, Beat-Haptik</p></div></div>
+        <div class="rm-row"><div class="rm-dot later"></div><div class="rm-text"><h4>Hardware-Box</h4><p>HDMI-Stick, kein PC nötig</p></div></div>
+        <div class="rm-row"><div class="rm-dot later"></div><div class="rm-text"><h4>iOS Vollversion</h4><p>Standalone, AirPlay</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── KROM-A PANEL ── -->
+  <div class="panel" id="panel-kroma">
+    <div class="cards">
+
+      <div class="card violet" style="--cc:rgba(139,92,246,.8)">
+        <span class="card-badge violet">In Entwicklung · macOS / Windows</span>
+        <span class="card-ico">⬡</span>
+        <h3>krom-A</h3>
+        <p>Pro Visual Synthesizer. 15 Module, 6 Engines — du verbindest sie wie im Synthesizer. Kein Preset, keine Templates. Deine Architektur, dein Instrument.</p>
+        <div class="spec-list">
+          <span class="spec">15 Module</span>
+          <span class="spec">6 Engines</span>
+          <span class="spec">Node-basiert</span>
+          <span class="spec">MIDI · MPC</span>
+          <span class="spec">Audio-reaktiv</span>
+        </div>
+        <a class="waitlist-btn violet" href="mailto:andreas.deflorin@luzidlayers.de?subject=Warteliste krom-A">Auf die Warteliste</a>
+      </div>
+
+      <div class="card violet" style="--cc:rgba(139,92,246,.8)">
+        <span class="card-badge violet">Konzept · Hardware</span>
+        <span class="card-ico">🎛</span>
+        <h3>krom-A Controller</h3>
+        <p>Dedizierter Hardware-Controller für krom-A. MPC Live III + Moog Messenger als Inspiration — ein Instrument das sich wie ein Instrument anfühlt.</p>
+        <div class="spec-list">
+          <span class="spec">MPC Mapping</span>
+          <span class="spec">Moog Messenger</span>
+          <span class="spec">Haptisches Feedback</span>
+        </div>
+        <a class="waitlist-btn violet" href="mailto:andreas.deflorin@luzidlayers.de?subject=Warteliste krom-A Controller">Interesse melden</a>
+      </div>
+
+    </div>
+
+    <div class="roadmap">
+      <div class="roadmap-label">krom-A · Status</div>
+      <div class="rm-items">
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>Konzept & Architektur</h4><p>6 Engines, 15 Module definiert</p></div></div>
+        <div class="rm-row"><div class="rm-dot done"></div><div class="rm-text"><h4>MPC + Moog Mapping</h4><p>Controller-Layout ausgearbeitet</p></div></div>
+        <div class="rm-row"><div class="rm-dot soon"></div><div class="rm-text"><h4>Erste Engine</h4><p>Generative Engine — in Entwicklung</p></div></div>
+        <div class="rm-row"><div class="rm-dot later"></div><div class="rm-text"><h4>Node Editor UI</h4><p>Visueller Drag & Drop Editor</p></div></div>
+        <div class="rm-row"><div class="rm-dot later"></div><div class="rm-text"><h4>Beta</h4><p>Geschlossene Beta für Interessenten</p></div></div>
+        <div class="rm-row"><div class="rm-dot later"></div><div class="rm-text"><h4>Release</h4><p>macOS zuerst, Windows folgt</p></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="foot-logo">LuZiD LaYeRs</span>
+    <div class="foot-links">
+      <a href="home.html">Universum</a>
+      <a href="fusionwarp_live.html">FusionWarp</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(id){
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active', ['fw','kroma'][i]===id);
+  });
+  document.querySelectorAll('.panel').forEach(p=>{
+    p.classList.toggle('active', p.id==='panel-'+id);
+  });
+}
+
+// Universe background
+const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function rs(){
+  W=canvas.width=innerWidth; H=canvas.height=innerHeight;
+  pts=Array.from({length:Math.min(340,Math.floor(W*H/5500))},()=>({
+    a:Math.random()*6.283, z:Math.random(), s:.001+Math.random()*.004
+  }));
+}
+addEventListener('resize',rs);rs();
+function tick(){
+  ctx.fillStyle='rgba(0,0,0,.28)';ctx.fillRect(0,0,W,H);
+  const maxR=Math.hypot(W,H)/2;
+  for(const p of pts){
+    p.z+=p.s; if(p.z>1)p.z-=1;
+    const r=p.z*p.z*maxR*1.1,dx=Math.cos(p.a),dy=Math.sin(p.a);
+    const r0=Math.max(0,r-(6+p.z*40));
+    const t=p.z;
+    // Warm orange/white for future page
+    const rr=Math.round(200+t*55), gg=Math.round(120+t*109), bb=Math.round(50+t*205);
+    ctx.strokeStyle=`rgba(${rr},${gg},${bb},${.08+t*.5})`;
+    ctx.lineWidth=.4+t*1.6;ctx.beginPath();
+    ctx.moveTo(W/2+dx*r0,H/2+dy*r0);ctx.lineTo(W/2+dx*r,H/2+dy*r);ctx.stroke();
+  }
+  requestAnimationFrame(tick);
+}tick();
+</script>
+<script>
+const _cd=document.getElementById('cursor-dot'),_cr=document.getElementById('cursor-ring');
+let _mx=0,_my=0,_rx=0,_ry=0;
+document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
+(function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+</body>
+</html>

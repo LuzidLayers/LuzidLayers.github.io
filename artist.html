@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andreas Deflorin — LuZiD LaYeRs</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;cursor:none}
+html{scroll-behavior:smooth}
+body{background:#000;color:#fff;font-family:'C1st Font',serif;font-weight:300;overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 36px}
+
+/* universe bg */
+#universe{position:fixed;inset:0;z-index:0}
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 120% 80% at 50% -10%,transparent,rgba(0,0,0,.85) 70%)}
+main{position:relative;z-index:2}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 36px;backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-family:'C1st Font',serif;font-size:17px;letter-spacing:.17em;
+  color:rgba(255,255,255,.85);text-shadow:0 0 20px rgba(0,229,255,.3)}
+.nav-right{display:flex;gap:32px;align-items:center}
+.nav-links{display:flex;gap:28px;font-size:10px;letter-spacing:.35em;text-transform:uppercase}
+.nav-links a{color:rgba(255,255,255,.3);font-family:'C1st Font',serif;transition:color .2s}
+.nav-links a:hover{color:rgba(255,255,255,.9)}
+.back-btn{font-family:'C1st Font',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(0,229,255,.6);transition:color .2s}
+.back-btn:hover{color:rgba(0,229,255,1)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:140px 0 80px;position:relative}
+.hero-eyebrow{font-size:10px;letter-spacing:.55em;text-transform:uppercase;
+  color:rgba(0,229,255,.6);margin-bottom:20px;font-family:'C1st Font',serif}
+.hero-name{font-family:'C1st Font',serif;font-size:clamp(48px,8vw,110px);
+  line-height:.95;letter-spacing:.04em;color:#fff;
+  text-shadow:0 0 60px rgba(0,229,255,.15);margin-bottom:20px}
+.hero-role{font-size:clamp(13px,1.8vw,18px);letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);margin-bottom:0}
+
+/* PORTRAIT + BIO GRID */
+.about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;
+  align-items:start;padding:100px 0 120px}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:50px}}
+
+.portrait-wrap{position:sticky;top:100px}
+.portrait{width:100%;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(0,229,255,.15);
+  box-shadow:0 0 80px -20px rgba(0,229,255,.2),0 0 0 1px rgba(255,255,255,.04)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.portrait-caption{margin-top:20px;font-size:9px;letter-spacing:.4em;
+  text-transform:uppercase;color:rgba(255,255,255,.2);text-align:center}
+
+/* BIO TEXT */
+.bio p{font-size:clamp(15px,1.6vw,18px);color:rgba(255,255,255,.6);margin-bottom:28px;line-height:1.75}
+.bio p:first-child{font-size:clamp(17px,1.8vw,21px);color:rgba(255,255,255,.8)}
+
+.bio-divider{width:40px;height:1px;background:linear-gradient(to right,rgba(0,229,255,.5),transparent);
+  margin:44px 0}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
+.tag{padding:8px 18px;border-radius:30px;font-family:'C1st Font',serif;
+  font-size:10px;letter-spacing:.25em;text-transform:uppercase;
+  border:1px solid rgba(0,229,255,.2);color:rgba(0,229,255,.7);
+  transition:all .25s;backdrop-filter:blur(4px)}
+.tag:hover{border-color:rgba(0,229,255,.6);color:#fff;background:rgba(0,229,255,.08)}
+
+/* SHOP TEASER */
+.shop-teaser{border-top:1px solid rgba(255,255,255,.07);padding:80px 0 120px;text-align:center}
+.shop-eyebrow{font-size:10px;letter-spacing:.55em;text-transform:uppercase;
+  color:rgba(139,92,246,.7);margin-bottom:24px;font-family:'C1st Font',serif}
+.shop-h{font-family:'C1st Font',serif;font-size:clamp(28px,5vw,60px);
+  color:#fff;margin-bottom:20px;letter-spacing:.04em}
+.shop-p{max-width:480px;margin:0 auto 44px;font-size:16px;
+  color:rgba(255,255,255,.4);line-height:1.7}
+.shop-btn{display:inline-block;padding:16px 44px;border:1px solid rgba(139,92,246,.5);
+  border-radius:40px;color:rgba(139,92,246,.9);font-family:'C1st Font',serif;
+  font-size:11px;letter-spacing:.35em;text-transform:uppercase;
+  background:rgba(139,92,246,.04);transition:all .3s;backdrop-filter:blur(4px)}
+.shop-btn:hover{background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.9);
+  box-shadow:0 0 30px rgba(139,92,246,.2);color:#fff}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 0;
+  position:relative;z-index:2}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:16px}
+.foot-logo{font-family:'C1st Font',serif;font-size:14px;letter-spacing:.17em;
+  color:rgba(255,255,255,.3)}
+.foot-links{display:flex;gap:24px;font-size:9px;letter-spacing:.35em;
+  text-transform:uppercase;color:rgba(255,255,255,.25)}
+.foot-links a:hover{color:rgba(255,255,255,.7)}
+a,button{cursor:none}
+#cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:rgba(139,92,246,.9);box-shadow:0 0 8px rgba(139,92,246,.9),0 0 20px rgba(139,92,246,.4);transform:translate(-50%,-50%);transition:width .15s,height .15s}
+#cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(139,92,246,.35);transform:translate(-50%,-50%)}
+body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(139,92,246,1),0 0 40px rgba(139,92,246,.6)}
+body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(139,92,246,.6)}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="universe"></canvas>
+<div class="veil"></div>
+
+<nav>
+  <a class="back-btn" href="home.html">← Universum</a>
+  <div class="nav-links">
+    <a href="fusionwarp_live.html">FusionWarp</a>
+    <a href="shop.html">Shop</a>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <header class="wrap hero">
+    <div class="hero-eyebrow">Der Mensch dahinter</div>
+    <div class="hero-name">Andreas<br>Deflorin</div>
+    <div class="hero-role">Visual Artist · Creative Technologist · VJ · Warngau, Bayern</div>
+  </header>
+
+  <!-- PORTRAIT + BIO -->
+  <section class="wrap">
+    <div class="about-grid">
+
+      <!-- Bild -->
+      <div class="portrait-wrap">
+        <div class="portrait">
+          <img src="portrait.jpg" alt="Andreas Deflorin">
+        </div>
+        <div class="portrait-caption">Andreas Deflorin · Warngau · 2025</div>
+      </div>
+
+      <!-- Text -->
+      <div class="bio">
+        <p>
+          Ich bin Andreas Deflorin aus Warngau in Oberbayern.
+          Meine Arbeiten entstehen nicht zuerst am Computer. Der Ursprung liegt im Handwerk: im Bauen, Zeichnen, Experimentieren und im Umgang mit echten Materialien.
+          Viele meiner Bilder beginnen mit Bleistift, Edding, Acrylfarbe oder Markern. Linien, Strukturen und Zufälle entstehen von Hand, bevor sie digital weiterentwickelt werden.
+        </p>
+
+        <p>
+          Aus analogen Kunstwerken werden digitale Welten. Erst entstehen statische Bilder mit Tiefe und räumlicher Wirkung, später verwandeln sie sich durch FusionWarp in bewegte Visuals.
+          FusionWarp ist meine eigene Software und verbindet das, was mich seit Jahren fasziniert: Kunst, Technik, Licht, Bewegung und Musik.
+          Es ist mein Werkzeug, um Bilder nicht nur sichtbar, sondern erlebbar zu machen.
+        </p>
+
+        <p>
+          Musik begleitet mich fast ständig. Besonders treibende Rhythmen, Bass und Melodien sind für mich mehr als Hintergrund — sie sind Energie und Auslöser für neue Ideen.
+          Ich interessiere mich dafür, wie Dinge funktionieren, wie man sie verbessern kann und was passiert, wenn man Bereiche verbindet, die normalerweise getrennt bleiben.
+        </p>
+
+        <p>
+          Ob Handwerk, Kunst, Software oder neue Geschäftsmodelle: Mich reizt der Punkt, an dem aus einer Idee etwas Echtes entsteht.
+          Für mich ist das wichtigste Werkzeug nicht mehr der Stift, der Computer oder die Software —
+          es ist die Fähigkeit, Dinge anders zu betrachten.
+        </p>
+
+        <div class="bio-divider"></div>
+
+        <div class="tags">
+          <span class="tag">Visual Art</span>
+          <span class="tag">VJ</span>
+          <span class="tag">Projection Mapping</span>
+          <span class="tag">Echtzeit-Visualisierung</span>
+          <span class="tag">MIDI Mapping</span>
+          <span class="tag">FusionWarp</span>
+          <span class="tag">Oberbayern</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SHOP TEASER -->
+  <section class="wrap shop-teaser">
+    <div class="shop-eyebrow">Kunst zum Anfassen</div>
+    <div class="shop-h">Limitierte Art Prints</div>
+    <p class="shop-p">
+      Handgezeichnet. Digital veredelt. Auf Hahnemühle 308g gedruckt.<br>
+      Jeder Print limitiert auf 30 Exemplare.
+    </p>
+    <a class="shop-btn" href="shop.html">Zum Shop</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="foot-logo">LuZiD LaYeRs</span>
+    <div class="foot-links">
+      <a href="home.html">Universum</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
+let W,H,cx,cy,pts=[];
+function rs(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;cx=W/2;cy=H/2;
+  pts=Array.from({length:Math.min(380,Math.floor(W*H/5000))},()=>({
+    a:Math.random()*6.283,z:Math.random(),s:.0012+Math.random()*.004
+  }));}
+addEventListener('resize',rs);rs();
+function tick(){
+  ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(0,0,W,H);
+  const maxR=Math.hypot(W,H)/2;
+  for(const p of pts){
+    p.z+=p.s;if(p.z>1)p.z-=1;
+    const r=p.z*p.z*maxR*1.1,dx=Math.cos(p.a),dy=Math.sin(p.a);
+    const px=cx+dx*r,py=cy+dy*r,r0=Math.max(0,r-(6+p.z*40)),qx=cx+dx*r0,qy=cy+dy*r0;
+    const t=p.z;
+    ctx.strokeStyle=`rgba(${Math.round(t*139)},${Math.round(229-t*137)},255,${.1+t*.55})`;
+    ctx.lineWidth=.4+t*1.8;ctx.beginPath();ctx.moveTo(qx,qy);ctx.lineTo(px,py);ctx.stroke();
+  }
+  requestAnimationFrame(tick);
+}tick();
+</script>
+<script>
+const _cd=document.getElementById('cursor-dot'),_cr=document.getElementById('cursor-ring');
+let _mx=0,_my=0,_rx=0,_ry=0;
+document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
+(function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+</body>
+</html>

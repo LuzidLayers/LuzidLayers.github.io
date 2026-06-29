@@ -1,489 +1,508 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LuZiD LaYeRs — Art · Technology · Vision</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuZiD LaYeRs</title>
 <link rel="stylesheet" href="fonts.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --black: #080C06;
-    --black2: #0C100A;
-    --cyan: #6DB83F;
-    --violet: #3A7A2A;
-    --white: #F0FFF0;
-    --muted: rgba(220,255,200,.45);
-    --grad: linear-gradient(100deg, #7DC840, #2E7D32);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--black); color: var(--white);
-    font-family: 'Raleway', system-ui, sans-serif; font-weight: 300;
-    overflow-x: hidden; line-height: 1.6;
-  }
-  h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; }
-  .mono, .label, .eyebrow, .btn, .proj-tag, .tag, .price-hint, .svc .price-hint,
-  nav, .logo-text, .logo-sub, .foot-links, .port-more, .scroll-hint { font-family: 'Syne', sans-serif; }
-  .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  a { color: inherit; text-decoration: none; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
-  section { position: relative; z-index: 2; }
-  .pad { padding: 120px 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+body { font-family: 'C1st Font', serif; color: #fff; }
 
-  /* animated background */
-  #bg { position: fixed; inset: 0; z-index: 0; opacity: .4; }
-  .veil { position: fixed; inset: 0; z-index: 1; pointer-events: none;
-    background: radial-gradient(120% 80% at 50% -10%, transparent, var(--black) 70%); }
+/* ── CUSTOM CURSOR ── */
+#cursor-dot {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(0,229,255,0.9);
+  box-shadow: 0 0 8px rgba(0,229,255,0.9), 0 0 20px rgba(0,229,255,0.4);
+  transform: translate(-50%,-50%);
+  transition: width .15s, height .15s, background .2s, box-shadow .2s;
+}
+#cursor-ring {
+  position: fixed; z-index: 9998; pointer-events: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.35);
+  transform: translate(-50%,-50%);
+  transition: width .25s, height .25s, border-color .2s, opacity .2s;
+}
+body.cursor-hover #cursor-dot {
+  width: 12px; height: 12px;
+  background: rgba(0,229,255,1);
+  box-shadow: 0 0 16px rgba(0,229,255,1), 0 0 40px rgba(0,229,255,0.6), 0 0 80px rgba(139,92,246,0.3);
+}
+body.cursor-hover #cursor-ring {
+  width: 50px; height: 50px;
+  border-color: rgba(0,229,255,0.6);
+}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 30;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 28px; backdrop-filter: blur(12px);
-    background: rgba(10,10,13,.4); border-bottom: 1px solid rgba(255,255,255,.06);
-  }
-  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron'; font-weight: 900; }
-  .logo .ll {
-    width: 38px; height: 38px; border-radius: 10px;
-    background: var(--grad); display: grid; place-items: center;
-    font-size: 13px; color: #0A0A0D; font-weight: 900;
-    box-shadow: 0 0 24px rgba(0,229,255,.4);
-  }
-  .logo-text { font-size: 15px; letter-spacing: 1px; }
-  .logo-sub { font-family: 'Raleway'; font-weight: 400; font-size: 9px; letter-spacing: 3px; color: var(--muted); margin-top: -2px; }
-  .nav-links { display: flex; gap: 24px; align-items: center; font-weight: 600; font-size: 14px; }
-  .nav-links a { color: var(--muted); transition: .2s; }
-  .nav-links a:hover { color: var(--white); }
-  @media(max-width: 700px) { .nav-links a:not(:last-child) { display: none; } }
+canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
 
-  /* BUTTONS */
-  .btn {
-    display: inline-block; padding: 13px 28px; border-radius: 40px;
-    font-weight: 800; font-family: 'Orbitron'; font-size: 13px;
-    letter-spacing: .5px; cursor: pointer; transition: .25s; border: none;
-  }
-  .btn-primary { background: var(--grad); color: #0A0A0D; box-shadow: 0 0 30px rgba(0,229,255,.3); }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(139,92,246,.6); }
-  .btn-ghost { border: 1px solid rgba(255,255,255,.18); color: var(--white); background: rgba(255,255,255,.03); }
-  .btn-ghost:hover { border-color: var(--cyan); }
+/* ── INTRO ── */
+#intro {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 1.8s ease; pointer-events: all;
+}
+#intro.out { opacity: 0; pointer-events: none; }
 
-  /* HERO */
-  header {
-    min-height: 100vh; display: flex; flex-direction: column;
-    justify-content: center; padding-top: 90px; position: relative; z-index: 2;
-  }
-  .eyebrow {
-    font-family: 'Orbitron'; font-size: 12px; letter-spacing: 5px;
-    color: var(--cyan); margin-bottom: 22px; text-transform: uppercase;
-  }
-  h1 { font-size: clamp(56px, 10vw, 140px); font-weight: 700; font-style: italic; line-height: .9; letter-spacing: -2px; }
-  .tagline { font-size: clamp(18px, 2.5vw, 26px); font-weight: 300; margin: 28px 0 14px; max-width: 680px; color: #dfe3ff; }
-  .sub { color: var(--muted); max-width: 540px; margin-bottom: 38px; font-size: 17px; }
-  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
-  .scroll-hint {
-    margin-top: 60px; color: var(--muted); font-size: 12px;
-    letter-spacing: 3px; font-family: 'Orbitron'; animation: pulse 2.4s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+.intro-brand {
+  font-family: 'C1st Font', serif;
+  font-size: clamp(38px, 7vw, 88px);
+  letter-spacing: 0.18em; color: #fff;
+  text-shadow: 0 0 30px rgba(0,229,255,0.5), 0 0 80px rgba(0,229,255,0.2);
+  margin-bottom: 12px;
+  animation: brand-breathe 4s ease-in-out infinite;
+}
+@keyframes brand-breathe {
+  0%,100% { text-shadow: 0 0 30px rgba(0,229,255,0.4), 0 0 80px rgba(0,229,255,0.15); }
+  50%      { text-shadow: 0 0 50px rgba(0,229,255,0.9), 0 0 120px rgba(139,92,246,0.35); }
+}
+.intro-role {
+  font-size: clamp(9px,1.3vw,13px); letter-spacing: 0.55em;
+  color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 72px;
+}
+.intro-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, transparent, rgba(0,229,255,0.4));
+  margin-bottom: 32px;
+}
+.intro-prompt {
+  font-family: 'C1st Font', serif; font-size: clamp(13px,2vw,18px);
+  letter-spacing: 0.35em; color: rgba(255,255,255,0.6); text-transform: uppercase;
+  margin-bottom: 48px; animation: prompt-pulse 2.5s ease-in-out infinite;
+}
+@keyframes prompt-pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
 
-  /* SECTION LABELS */
-  .label {
-    font-family: 'Orbitron'; font-size: 12px; letter-spacing: 4px;
-    color: var(--violet); text-transform: uppercase; margin-bottom: 16px;
-  }
-  h2 { font-size: clamp(32px, 5vw, 64px); font-weight: 700; font-style: italic; line-height: 1; letter-spacing: -.5px; }
+.enter-ring { position: relative; width: 90px; height: 90px; cursor: pointer; }
+.enter-ring::before, .enter-ring::after {
+  content: ''; position: absolute; border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.25);
+  animation: ring-expand 2.8s ease-out infinite;
+}
+.enter-ring::before { inset: -14px; animation-delay: 0s; }
+.enter-ring::after  { inset: -28px; animation-delay: 0.7s; }
+@keyframes ring-expand {
+  0%  { transform: scale(0.9); opacity: 0.8; }
+  100%{ transform: scale(1.15); opacity: 0; }
+}
+.enter-circle {
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.5); background: rgba(0,229,255,0.04);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.35s; backdrop-filter: blur(4px);
+}
+.enter-ring:hover .enter-circle {
+  background: rgba(0,229,255,0.12); border-color: rgba(0,229,255,0.9);
+  box-shadow: 0 0 40px rgba(0,229,255,0.35), inset 0 0 20px rgba(0,229,255,0.08);
+}
+.play-tri {
+  width: 0; height: 0; border-style: solid;
+  border-width: 13px 0 13px 24px;
+  border-color: transparent transparent transparent rgba(0,229,255,0.85);
+  margin-left: 5px;
+}
 
-  /* ÜBER MICH */
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-    align-items: center; margin-top: 60px;
-  }
-  @media(max-width: 760px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
-  .about-img {
-    aspect-ratio: 4/5; border-radius: 20px; overflow: hidden;
-    background: linear-gradient(135deg, rgba(0,229,255,.1), rgba(139,92,246,.1));
-    border: 1px solid rgba(255,255,255,.1);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Orbitron'; font-size: 13px; letter-spacing: 3px; color: var(--muted);
-    /* BILD HIER: ersetze diesen Block durch <img src="img/dein-foto.jpg" style="width:100%;height:100%;object-fit:cover"> */
-  }
-  .about-img img { width: 100%; height: 100%; object-fit: cover; }
-  .about-text p { color: var(--muted); margin-bottom: 20px; font-size: 17px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-  .tag {
-    padding: 7px 16px; border-radius: 30px; font-family: 'Orbitron';
-    font-size: 11px; letter-spacing: 1.5px;
-    border: 1px solid rgba(0,229,255,.3); color: var(--cyan);
-  }
+/* ── NAV ── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 36px;
+  opacity: 0; transition: opacity 1.2s ease 0.6s; pointer-events: none;
+}
+#nav.show { opacity: 1; pointer-events: all; }
+.nav-logo {
+  font-family: 'C1st Font', serif; font-size: 17px; letter-spacing: 0.17em;
+  color: rgba(255,255,255,0.85); text-decoration: none;
+  text-shadow: 0 0 20px rgba(0,229,255,0.3);
+  transition: text-shadow .3s;
+}
+.nav-logo:hover {
+  text-shadow: 0 0 8px #fff, 0 0 28px rgba(0,229,255,.9), 0 0 60px rgba(0,229,255,.4);
+}
+.nav-hint {
+  font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+}
 
-  /* PROJEKTE */
-  .projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px; margin-top: 54px;
-  }
-  .proj-card {
-    background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
-    border: 1px solid rgba(255,255,255,.08); border-radius: 20px;
-    overflow: hidden; transition: .3s; cursor: pointer;
-  }
-  .proj-card:hover { transform: translateY(-6px); border-color: rgba(0,229,255,.35); box-shadow: 0 20px 60px -20px rgba(0,229,255,.25); }
-  .proj-img {
-    width: 100%; aspect-ratio: 16/9;
-    background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(139,92,246,.15));
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; color: var(--muted);
-    /* BILD HIER: ersetze durch <img src="img/projekt-vorschau.jpg" style="width:100%;height:100%;object-fit:cover"> */
-  }
-  .proj-img img { width: 100%; height: 100%; object-fit: cover; }
-  .proj-body { padding: 26px; }
-  .proj-tag {
-    font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px;
-    color: var(--violet); margin-bottom: 10px;
-  }
-  .proj-card h3 { font-size: 26px; font-weight: 700; font-style: italic; margin-bottom: 10px; }
-  .proj-card p { color: var(--muted); font-size: 15px; margin-bottom: 18px; }
-  .proj-link { font-family: 'Orbitron'; font-size: 12px; letter-spacing: 2px; color: var(--cyan); }
-  .proj-link:hover { text-decoration: underline; }
+/* ── DESTINATION STARS ── */
+#star-nav {
+  position: fixed; inset: 0; z-index: 20;
+  pointer-events: none; opacity: 0;
+  transition: opacity 1.4s ease 1s;
+}
+#star-nav.show { opacity: 1; pointer-events: all; }
 
-  /* PORTFOLIO GRID */
-  .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 8px; margin-top: 54px;
-  }
-  .port-item {
-    aspect-ratio: 1; border-radius: 8px; overflow: hidden;
-    background: linear-gradient(135deg, rgba(0,229,255,.06), rgba(139,92,246,.1));
-    border: 1px solid rgba(255,255,255,.06); transition: .3s;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,.2);
-    /* BILD HIER: füge <img src="img/portfolio/..." style="width:100%;height:100%;object-fit:cover"> ein */
-  }
-  .port-item img { width: 100%; height: 100%; object-fit: cover; }
-  .port-item:hover { transform: scale(1.03); border-color: rgba(0,229,255,.3); }
-  .port-more {
-    text-align: center; margin-top: 40px; color: var(--muted);
-    font-family: 'Orbitron'; font-size: 12px; letter-spacing: 3px;
-  }
+.dest {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  text-decoration: none; color: inherit;
+}
 
-  /* SERVICES */
-  .services-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 22px; margin-top: 54px;
-  }
-  .svc {
-    border: 1px solid rgba(255,255,255,.08); border-radius: 18px;
-    padding: 30px; transition: .3s;
-  }
-  .svc:hover { border-color: rgba(139,92,246,.4); background: rgba(139,92,246,.04); }
-  .svc-ico { font-size: 32px; margin-bottom: 18px; }
-  .svc h3 { font-size: 24px; font-style: italic; margin-bottom: 12px; }
-  .svc p { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
-  .svc .price-hint { font-family: 'Orbitron'; font-size: 12px; letter-spacing: 1px; color: var(--cyan); }
+/* The glowing dot */
+.dest-dot {
+  position: relative;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--dc);
+  box-shadow: 0 0 12px var(--dc), 0 0 30px color-mix(in srgb, var(--dc) 40%, transparent);
+  animation: dest-pulse 3s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+@keyframes dest-pulse {
+  0%,100% { transform: scale(1);   opacity: 0.7; }
+  50%      { transform: scale(1.5); opacity: 1;   }
+}
+.dest:hover .dest-dot {
+  transform: scale(2.2);
+  box-shadow: 0 0 20px var(--dc), 0 0 60px color-mix(in srgb, var(--dc) 60%, transparent);
+}
 
-  /* CONTACT */
-  .contact-box {
-    background: linear-gradient(135deg, rgba(0,229,255,.06), rgba(139,92,246,.08));
-    border: 1px solid rgba(255,255,255,.1); border-radius: 24px;
-    padding: 80px 60px; text-align: center; margin-top: 80px;
-  }
-  @media(max-width: 600px) { .contact-box { padding: 50px 24px; } }
-  .contact-box h2 { margin-bottom: 18px; }
-  .contact-box p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; font-size: 17px; }
-  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+/* Outer ring */
+.dest-dot::before {
+  content: '';
+  position: absolute; inset: -12px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--dc) 30%, transparent);
+  animation: dest-ring 3s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes dest-ring {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.8); opacity: 0; }
+}
 
-  /* FOOTER */
-  footer { border-top: 1px solid rgba(255,255,255,.08); padding: 60px 0 40px; color: var(--muted); }
-  .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; align-items: center; }
-  .foot-links { display: flex; gap: 24px; font-size: 14px; }
-  .foot-links a:hover { color: var(--cyan); }
+/* Label */
+.dest-label {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  opacity: 0.5; transition: opacity 0.3s;
+}
+.dest:hover .dest-label { opacity: 1; }
+.dest-name {
+  font-family: 'C1st Font', serif;
+  font-size: clamp(11px, 1.4vw, 15px);
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 20px var(--dc);
+  transition: text-shadow .3s, letter-spacing .3s;
+}
+.dest:hover .dest-name {
+  text-shadow: 0 0 10px #fff, 0 0 30px var(--dc), 0 0 60px var(--dc);
+  letter-spacing: 0.32em;
+}
+.dest-sub {
+  font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  transition: color .3s;
+}
+.dest:hover .dest-sub { color: rgba(255,255,255,0.7); }
 
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(28px); transition: .8s cubic-bezier(.2,.7,.2,1); }
-  .reveal.in { opacity: 1; transform: none; }
+/* ── BOTTOM HUD ── */
+#hud {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+  display: flex; flex-direction: column; align-items: center;
+  padding-bottom: 28px; gap: 12px;
+  opacity: 0; transition: opacity 1.2s ease 0.8s; pointer-events: none;
+}
+#hud.show { opacity: 1; }
+#freq-bars { display: flex; gap: 2px; align-items: flex-end; height: 38px; }
+.f-bar {
+  width: 3px; min-height: 2px; border-radius: 2px 2px 0 0;
+  background: rgba(0,229,255,0.5); transition: height 0.04s ease, background 0.04s;
+}
+.hud-status {
+  font-family: 'C1st Font', serif; font-size: 9px;
+  letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.18);
+}
 </style>
 </head>
 <body>
 
-<canvas id="bg"></canvas>
-<div class="veil"></div>
+<canvas id="universe"></canvas>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-brand">LuZiD LaYeRs</div>
+  <div class="intro-role">Visual Artist · Creative Technologist · VJ</div>
+  <div class="intro-line"></div>
+  <div class="intro-prompt">Betritt das Universum</div>
+  <div class="enter-ring" onclick="startExperience()" role="button" aria-label="Enter">
+    <div class="enter-circle"><div class="play-tri"></div></div>
+  </div>
+</div>
 
 <!-- NAV -->
-<nav>
-  <div class="logo">
-    <div class="ll">LL</div>
-    <div>
-      <div class="logo-text">LuZiD LaYeRs</div>
-      <div class="logo-sub">Art · Technology · Vision</div>
-    </div>
-  </div>
-  <div class="nav-links">
-    <a href="#projekte">Projekte</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#services">Services</a>
-    <a href="#kontakt">Kontakt</a>
-  </div>
+<nav id="nav">
+  <a class="nav-logo" href="home.html">LuZiD LaYeRs</a>
+  <span class="nav-hint">Wähle einen Stern</span>
 </nav>
 
-<!-- HERO -->
-<header class="wrap">
-  <div class="eyebrow reveal">Visual Artist · Software Developer · VJ</div>
-  <h1 class="reveal">
-    Turn Sound<br>Into <span class="grad-text">Living Worlds.</span>
-  </h1>
-  <p class="tagline reveal">
-    Andreas Deflorin — Ich baue Visuals, Echtzeit-Software und Erlebnisse die sich niemand vergisst.
-  </p>
-  <p class="sub reveal">
-    Eigene Software. Eigene Ästhetik. Kein Template. Basierend auf über 1.200 eigenen Arbeiten.
-  </p>
-  <div class="hero-cta reveal">
-    <a href="#projekte" class="btn btn-primary">Projekte entdecken</a>
-    <a href="#kontakt" class="btn btn-ghost">Kontakt</a>
-  </div>
-  <div class="scroll-hint reveal" style="margin-top:60px">↓ SCROLL</div>
-</header>
+<!-- DESTINATION STARS -->
+<div id="star-nav">
 
-<!-- ÜBER MICH -->
-<section class="wrap pad" id="about">
-  <div class="label reveal">Über mich</div>
-  <h2 class="reveal">Ich mache Bilder, die <span class="grad-text">sich bewegen.</span></h2>
-  <div class="about-grid">
-    <div class="about-img reveal">
-      <img src="img/portrait.jpg" alt="Andreas Deflorin" style="width:100%;height:100%;object-fit:cover">
+  <!-- FusionWarp — upper right -->
+  <a class="dest" href="fusionwarp_live.html"
+     style="top:32%; left:72%; --dc:#39FF7A; --delay:0s;">
+    <div class="dest-dot"></div>
+    <div class="dest-label">
+      <span class="dest-name">FuSioNWaRp</span>
+      <span class="dest-sub">Visual Engine</span>
     </div>
-    <div class="about-text reveal">
-      <p>
-        Ich bin Andreas Deflorin — Visual Artist, VJ und Software-Entwickler aus dem Raum München.
-        Seit Jahren erschaffe ich audiovisuelle Welten: von Live-Visuals auf Bühnen bis zu selbst entwickelter Software
-        die in Echtzeit auf Musik reagiert.
-      </p>
-      <p>
-        Mein Werkzeug ist meine eigene Software. FusionWarp, meine macOS-App, verwandelt Audio in endlos
-        sich verändernde Visuals — GPU-beschleunigt, einzigartig bei jedem Durchlauf.
-      </p>
-      <p>
-        Unter dem Label <strong>LuZiD LaYeRs</strong> entstehen Software-Produkte, Visual-Performances
-        und künstlerische Installationen — alles aus einer Hand.
-      </p>
-      <div class="tags">
-        <span class="tag">Live Visuals</span>
-        <span class="tag">VJ</span>
-        <span class="tag">Projection Mapping</span>
-        <span class="tag">macOS Development</span>
-        <span class="tag">Metal GPU</span>
-        <span class="tag">MIDI</span>
-        <span class="tag">Oberbayern</span>
-      </div>
+  </a>
+
+  <!-- Web Player — left -->
+  <a class="dest" href="player.html"
+     style="top:50%; left:20%; --dc:#00E5FF; --delay:0.6s;">
+    <div class="dest-dot"></div>
+    <div class="dest-label">
+      <span class="dest-name">Web Player</span>
+      <span class="dest-sub">Musik visualisieren</span>
     </div>
-  </div>
-</section>
+  </a>
 
-<!-- PROJEKTE -->
-<section id="projekte" class="wrap pad" style="padding-top:0">
-  <div class="label reveal">Projekte</div>
-  <h2 class="reveal">Was ich <span class="grad-text">gebaut habe.</span></h2>
-  <div class="projects-grid">
-
-    <!-- PROJEKT 1: FusionWarp -->
-    <div class="proj-card reveal">
-      <div class="proj-img">
-        <img src="img/fw-preview.jpg" alt="FusionWarp" style="width:100%;height:100%;object-fit:cover">
-      </div>
-      <div class="proj-body">
-        <div class="proj-tag">SOFTWARE · macOS</div>
-        <h3>FusionWarp</h3>
-        <p>Echtzeit Audio-Visual Engine. Musik wird zu lebendigen, endlos variierenden Welten. 4 Effect-Engines, MIDI, Projection Mapping.</p>
-        <a href="fusionwarp_live.html" class="proj-link">Zur Produktseite →</a>
-      </div>
+  <!-- Shop — right -->
+  <a class="dest" href="shop.html"
+     style="top:65%; left:74%; --dc:#8B5CF6; --delay:1.2s;">
+    <div class="dest-dot"></div>
+    <div class="dest-label">
+      <span class="dest-name">Shop</span>
+      <span class="dest-sub">Art Prints · Screensaver</span>
     </div>
+  </a>
 
-    <!-- PROJEKT 2: krom-A -->
-    <div class="proj-card reveal">
-      <div class="proj-img">
-        <!-- BILD: <img src="img/kroma-preview.jpg" alt="krom-A"> -->
-        krom-A PREVIEW
-      </div>
-      <div class="proj-body">
-        <div class="proj-tag">SOFTWARE · Visual Synthesizer</div>
-        <h3>krom-A</h3>
-        <p>Modularer Visual Synthesizer mit 6 Engines und 15 Modulen. MPC Live III und Moog Messenger Integration. In Entwicklung.</p>
-        <a href="kroma.html" class="proj-link">Mehr erfahren →</a>
-      </div>
+  <!-- Future — upper left -->
+  <a class="dest" href="future.html"
+     style="top:28%; left:26%; --dc:#FF9500; --delay:0.3s;">
+    <div class="dest-dot"></div>
+    <div class="dest-label">
+      <span class="dest-name">Coming Soon</span>
+      <span class="dest-sub">krom-A · Hardware · Remote</span>
     </div>
+  </a>
 
-    <!-- PROJEKT 3: Living Artwork -->
-    <div class="proj-card reveal">
-      <div class="proj-img">
-        <!-- BILD: <img src="img/living-artwork-preview.jpg" alt="Living Artwork"> -->
-        LIVING ARTWORK PREVIEW
-      </div>
-      <div class="proj-body">
-        <div class="proj-tag">KONZEPT · Kunst & Druck</div>
-        <h3>Living Artwork</h3>
-        <p>Physische Prints mit QR-Code — scan, und das Kunstwerk erwacht als Fusionwarp-Animation. Signatur-Editionen für Sammler.</p>
-        <span class="proj-link" style="color:var(--violet)">In Planung</span>
-      </div>
+  <!-- Artist — lower center -->
+  <a class="dest" href="artist.html"
+     style="top:72%; left:42%; --dc:#FFD700; --delay:0.9s;">
+    <div class="dest-dot"></div>
+    <div class="dest-label">
+      <span class="dest-name">Artist</span>
+      <span class="dest-sub">Andreas Deflorin</span>
     </div>
+  </a>
 
-    <!-- WEITERE PROJEKTE: kopiere eine .proj-card und fülle sie aus -->
+</div>
 
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section id="portfolio" class="wrap pad" style="padding-top:0">
-  <div class="label reveal">Portfolio</div>
-  <h2 class="reveal">Über 1.200 <span class="grad-text">eigene Arbeiten.</span></h2>
-  <div class="portfolio-grid">
-    <div class="port-item reveal"><img src="img/portfolio/Bild00002.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00006.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00009.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00013.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00016.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00019.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00021.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00025.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00028.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00029.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00035.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00037.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00047.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00054.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00061.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00063.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00065.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00067.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00070.jpeg" alt=""></div>
-    <div class="port-item reveal"><img src="img/portfolio/Bild00076.jpeg" alt=""></div>
-    <div class="port-item reveal">BILD</div>
-  </div>
-  <div class="port-more reveal" style="margin-top:40px">
-    + mehr auf Anfrage
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services" class="wrap pad" style="padding-top:0">
-  <div class="label reveal">Dienstleistungen</div>
-  <h2 class="reveal">Ich komme zu <span class="grad-text">deinem Event.</span></h2>
-  <div class="services-grid">
-    <div class="svc reveal">
-      <div class="svc-ico">🎛</div>
-      <h3>Live Visuals / VJ</h3>
-      <p>Audio-reaktive Echtzeit-Visuals für Clubs, Konzerte, Festivals. Mit eigener Software — einzigartiger Look, den sonst niemand hat.</p>
-      <div class="price-hint">ab 300 € / Auftritt</div>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-ico">📐</div>
-      <h3>Projection Mapping</h3>
-      <p>Visuals auf Gebäude, Bühnen oder Objekte — perfekt ausgerichtet, dramatisch in der Wirkung. Für Events, Messen und Installationen.</p>
-      <div class="price-hint">ab 500 € / Projekt</div>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-ico">🎬</div>
-      <h3>Visual-Loops & Bühnenvideos</h3>
-      <p>Individuelle Video-Loops und Bühnen-Visuals für DJs, Bands und Labels. Produktion nach Briefing, Lieferung als Datei-Package.</p>
-      <div class="price-hint">ab 200 € / Paket</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="kontakt" class="wrap pad" style="padding-top:0">
-  <div class="contact-box reveal">
-    <div class="label" style="justify-content:center;display:flex">Kontakt</div>
-    <h2>Lass uns etwas <span class="grad-text">erschaffen.</span></h2>
-    <p>Booking, Kollaborationen, Fragen zu Software oder einfach Hallo — ich freue mich.</p>
-    <div class="contact-links">
-      <a href="mailto:andreas.deflorin@luzidlayers.de" class="btn btn-primary">andreas.deflorin@luzidlayers.de</a>
-      <a href="https://instagram.com/fusionwarp.visuals" class="btn btn-ghost" target="_blank">Instagram</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div style="font-family:'Orbitron';font-size:13px;font-weight:700">LuZiD LaYeRs</div>
-      <div class="foot-links">
-        <a href="fusionwarp_live.html">FusionWarp</a>
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-      </div>
-      <div style="font-size:13px">© 2026 Andreas Deflorin · Warngau</div>
-    </div>
-  </div>
-</footer>
+<!-- BOTTOM HUD -->
+<div id="hud">
+  <div id="freq-bars"></div>
+  <div class="hud-status" id="hud-status">Bereit</div>
+</div>
 
 <script>
-// Animated particle background
-const canvas = document.getElementById('bg');
+const canvas = document.getElementById('universe');
 const ctx = canvas.getContext('2d');
-let W, H, particles = [];
+let W, H, stars = [], frame = 0;
+let analyser = null, freqData = null, waveData = null;
+let bass = 0, mid = 0, treble = 0, vol = 0;
 
 function resize() {
   W = canvas.width = window.innerWidth;
   H = canvas.height = window.innerHeight;
+  initStars();
 }
+window.addEventListener('resize', resize);
 
-function initParticles() {
-  particles = [];
-  for (let i = 0; i < 60; i++) {
-    particles.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.5 + .3,
-      vx: (Math.random() - .5) * .3,
-      vy: (Math.random() - .5) * .3,
-      hue: Math.random() > .5 ? 105 : 130, // grass green or forest green
-      alpha: Math.random() * .6 + .2,
-    });
+class Star {
+  constructor() { this.init(); }
+  init() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.z = Math.random();
+    this.baseR = 0.3 + this.z * 1.5;
+    this.vx = (Math.random()-0.5)*0.09*(0.3+this.z*0.7);
+    this.vy = (Math.random()-0.5)*0.09*(0.3+this.z*0.7);
+    this.phase = Math.random()*Math.PI*2;
+    this.band = Math.floor(Math.random()*16);
+    this.brt = 0; this.isHot = Math.random()<0.04;
+  }
+  update() {
+    const bFreq = freqData ? getBand(this.band, freqData, 16) : 0;
+    this.brt = 0.2 + bFreq * 0.8;
+    const push = bass*0.4, dx=this.x-W*.5, dy=this.y-H*.5;
+    const dist = Math.sqrt(dx*dx+dy*dy)||1;
+    this.vx += (dx/dist)*push*0.002; this.vy += (dy/dist)*push*0.002;
+    this.vx *= 0.995; this.vy *= 0.995;
+    this.x += this.vx; this.y += this.vy;
+    if(this.x<-10) this.x=W+10; if(this.x>W+10) this.x=-10;
+    if(this.y<-10) this.y=H+10; if(this.y>H+10) this.y=-10;
+  }
+  draw() {
+    const tw=0.6+0.4*Math.sin(frame*0.03+this.phase);
+    const r=this.baseR*(1+bass*1.2)*tw, a=(0.3+this.brt*0.7)*tw;
+    let col = this.z>0.7 ? lerpColor([0,229,255],[139,92,246],(vol+bass)*.5) : [255,255,255];
+    ctx.beginPath(); ctx.arc(this.x,this.y,r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${col[0]},${col[1]},${col[2]},${a})`; ctx.fill();
+    if(this.isHot||(this.brt>0.7&&this.z>0.6)) {
+      const gr=ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,r*6);
+      gr.addColorStop(0,`rgba(${col[0]},${col[1]},${col[2]},${a*0.3})`);
+      gr.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath(); ctx.arc(this.x,this.y,r*6,0,Math.PI*2);
+      ctx.fillStyle=gr; ctx.fill();
+    }
   }
 }
 
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.alpha})`;
-    ctx.fill();
-  });
-
-  // soft glow blobs
-  const t = Date.now() / 5000;
-  const blobs = [
-    { x: W * (.3 + .1 * Math.sin(t)), y: H * (.4 + .1 * Math.cos(t * 1.3)), c: '109,184,63' },
-    { x: W * (.7 + .1 * Math.cos(t * .8)), y: H * (.5 + .08 * Math.sin(t * 1.1)), c: '46,125,50' },
-  ];
-  blobs.forEach(b => {
-    const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, W * .35);
-    g.addColorStop(0, `rgba(${b.c},.12)`);
-    g.addColorStop(1, 'transparent');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, W, H);
-  });
-
-  requestAnimationFrame(draw);
+function initStars() {
+  stars = Array.from({length:Math.min(380,Math.floor(W*H/5200))}, ()=>new Star());
 }
 
-window.addEventListener('resize', () => { resize(); initParticles(); });
-resize(); initParticles(); draw();
+function drawNebulae() {
+  const t=frame*0.0004;
+  const blobs=[
+    {cx:W*.5+Math.sin(t)*W*.18,  cy:H*.4+Math.cos(t*.7)*H*.12, r:Math.min(W,H)*(.38+bass*.12), ca:[0,229,255],  a:.04+mid*.06},
+    {cx:W*.65+Math.cos(t*.6)*W*.12,cy:H*.6+Math.sin(t*.9)*H*.1,  r:Math.min(W,H)*(.28+mid*.08),  ca:[139,92,246], a:.03+bass*.05},
+    {cx:W*.3+Math.sin(t*.8)*W*.1,  cy:H*.35+Math.cos(t*1.1)*H*.08,r:Math.min(W,H)*(.22+treble*.06),ca:[80,200,255],a:.025+vol*.04},
+  ];
+  for(const b of blobs){
+    const gr=ctx.createRadialGradient(b.cx,b.cy,0,b.cx,b.cy,b.r);
+    gr.addColorStop(0,`rgba(${b.ca[0]},${b.ca[1]},${b.ca[2]},${b.a})`);
+    gr.addColorStop(.5,`rgba(${b.ca[0]},${b.ca[1]},${b.ca[2]},${b.a*.3})`);
+    gr.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=gr; ctx.fillRect(0,0,W,H);
+  }
+}
 
-// Scroll reveal
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: .15 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+function drawCore() {
+  const r=60+bass*200+vol*80;
+  const gr=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,r);
+  gr.addColorStop(0,`rgba(0,229,255,${.06+bass*.24})`);
+  gr.addColorStop(.3,`rgba(0,229,255,${.02+bass*.08})`);
+  gr.addColorStop(.7,`rgba(139,92,246,${.015+mid*.04})`);
+  gr.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=gr; ctx.fillRect(0,0,W,H);
+}
+
+function drawConnections() {
+  const maxDist=80+vol*60, nearby=stars.filter(s=>s.z>0.5);
+  for(let i=0;i<nearby.length;i++) for(let j=i+1;j<nearby.length;j++){
+    const dx=nearby[i].x-nearby[j].x, dy=nearby[i].y-nearby[j].y;
+    const d2=dx*dx+dy*dy;
+    if(d2<maxDist*maxDist){
+      const f=1-Math.sqrt(d2)/maxDist;
+      ctx.beginPath(); ctx.moveTo(nearby[i].x,nearby[i].y); ctx.lineTo(nearby[j].x,nearby[j].y);
+      ctx.strokeStyle=`rgba(0,229,255,${f*.12*(1+vol*1.5)})`; ctx.lineWidth=0.4+f*.6; ctx.stroke();
+    }
+  }
+}
+
+function drawWaveRing() {
+  if(!waveData||!analyser) return;
+  analyser.getByteTimeDomainData(waveData);
+  const cx=W/2, cy=H/2, baseR=Math.min(W,H)*.18;
+  ctx.beginPath();
+  for(let i=0;i<waveData.length;i++){
+    const angle=(i/waveData.length)*Math.PI*2-Math.PI/2;
+    const v=waveData[i]/128-1, r=baseR+v*baseR*.6*(1+vol);
+    const x=cx+Math.cos(angle)*r, y=cy+Math.sin(angle)*r;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath(); ctx.strokeStyle=`rgba(0,229,255,${.08+vol*.2})`; ctx.lineWidth=1; ctx.stroke();
+}
+
+function updateHUD() {
+  if(!freqData) return;
+  document.querySelectorAll('.f-bar').forEach((bar,i)=>{
+    const idx=Math.floor((i/28)*freqData.length*.6), v=freqData[idx]/255;
+    bar.style.height=(2+v*36)+'px';
+    const c=lerpColor([0,229,255],[139,92,246],v);
+    bar.style.background=`rgba(${c[0]},${c[1]},${c[2]},${.4+v*.6})`;
+  });
+}
+
+function render() {
+  requestAnimationFrame(render); frame++;
+  if(analyser&&freqData){
+    analyser.getByteFrequencyData(freqData);
+    const len=freqData.length, bEnd=Math.floor(len*.08), mEnd=Math.floor(len*.45);
+    let bS=0,mS=0,tS=0;
+    for(let i=0;i<bEnd;i++) bS+=freqData[i];
+    for(let i=bEnd;i<mEnd;i++) mS+=freqData[i];
+    for(let i=mEnd;i<len;i++) tS+=freqData[i];
+    bass  =smooth(bass,  bS/bEnd/255,.15);
+    mid   =smooth(mid,   mS/(mEnd-bEnd)/255,.15);
+    treble=smooth(treble,tS/(len-mEnd)/255,.15);
+    vol   =bass*.5+mid*.3+treble*.2;
+    updateHUD();
+  } else {
+    bass=0.04+Math.sin(frame*.018)*.03; mid=0.03+Math.cos(frame*.025)*.02;
+    treble=0.02; vol=0.035;
+  }
+  ctx.fillStyle=`rgba(0,0,0,${.18+bass*.08})`; ctx.fillRect(0,0,W,H);
+  drawNebulae(); drawCore(); drawConnections(); drawWaveRing();
+  for(const s of stars){s.update();s.draw();}
+}
+
+function getBand(band,arr,total){
+  const sz=Math.floor(arr.length/total); let s=0;
+  for(let i=band*sz;i<(band+1)*sz&&i<arr.length;i++) s+=arr[i];
+  return s/(sz*255);
+}
+function smooth(o,v,f){return o+(v-o)*f;}
+function lerpColor(a,b,t){
+  t=Math.max(0,Math.min(1,t));
+  return[Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];
+}
+
+function startExperience() {
+  sessionStorage.setItem('ll_entered','1');
+  document.getElementById('intro').classList.add('out');
+  setTimeout(()=>{
+    document.getElementById('nav').classList.add('show');
+    document.getElementById('star-nav').classList.add('show');
+    document.getElementById('hud').classList.add('show');
+  },900);
+}
+
+(function(){
+  const c=document.getElementById('freq-bars');
+  for(let i=0;i<28;i++){const b=document.createElement('div');b.className='f-bar';b.style.height='2px';c.appendChild(b);}
+})();
+
+resize(); render();
+
+// ── SKIP INTRO wenn zurück von Unterseite ────────────────────────────────
+if(sessionStorage.getItem('ll_entered')){
+  document.getElementById('intro').style.display='none';
+  document.getElementById('nav').classList.add('show');
+  document.getElementById('star-nav').classList.add('show');
+  document.getElementById('hud').classList.add('show');
+}
+
+// ── CUSTOM CURSOR ─────────────────────────────────────────────────────────
+const dot  = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let mx=0, my=0, rx=0, ry=0;
+
+document.addEventListener('mousemove', e=>{
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+
+// Ring follows with slight lag
+(function ringLoop(){
+  rx += (mx-rx)*.12;
+  ry += (my-ry)*.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(ringLoop);
+})();
+
+// Hover state on clickable elements
+document.querySelectorAll('a, button, .dest, .enter-ring, [onclick]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+});
 </script>
 </body>
 </html>
