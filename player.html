@@ -48,6 +48,10 @@ canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
 .mode-btn.sys:hover{border-color:rgba(139,92,246,.3);box-shadow:0 20px 60px -20px rgba(139,92,246,.2)}
 .mode-btn.sys:hover::before{opacity:1}
 
+.mode-btn.demo::before{background:radial-gradient(ellipse at 50% 120%,rgba(255,200,50,.1),transparent)}
+.mode-btn.demo:hover{border-color:rgba(255,200,50,.3);box-shadow:0 20px 60px -20px rgba(255,200,50,.15)}
+.mode-btn.demo:hover::before{opacity:1}
+
 .mode-icon{font-size:32px;line-height:1}
 .mode-name{font-family:'C1st Font',serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 .mode-desc{font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.25);text-align:center;line-height:1.5}
@@ -123,6 +127,11 @@ body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(0,229,255,.6)}
       <div class="mode-icon">🖥</div>
       <div class="mode-name">System Audio</div>
       <div class="mode-desc">Spotify, YouTube & co. direkt im Browser</div>
+    </button>
+    <button class="mode-btn demo" onclick="startDemo()">
+      <div class="mode-icon">✦</div>
+      <div class="mode-name">Demo</div>
+      <div class="mode-desc">Kein Mikrofon nötig — Visual läuft autonom</div>
     </button>
   </div>
   <div id="err-hint"></div>
@@ -369,6 +378,13 @@ async function startSysAudio(){
   }catch(e){
     if(e.name!=='AbortError'&&e.name!=='NotAllowedError')setErr('System Audio nicht verfügbar.');
   }
+}
+
+// ── DEMO ─────────────────────────────────────────────────────────────────────
+function startDemo(){
+  setErr('');
+  showPlayer('Demo Modus');
+  // visual runs on its own with the idle animation values already in render()
 }
 
 // ── STOP ─────────────────────────────────────────────────────────────────────
