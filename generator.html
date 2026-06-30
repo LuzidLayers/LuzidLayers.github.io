@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Generator — LuZiD LaYeRs</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;cursor:none}
+html,body{width:100%;height:100%;overflow:hidden;background:#000}
+body{font-family:'C1st Font',serif;color:#fff}
+
+canvas#stage{position:fixed;inset:0;width:100%;height:100%;display:block}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 36px;pointer-events:none}
+.nav-back{font-family:'C1st Font',serif;font-size:9px;letter-spacing:.35em;
+  text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;
+  pointer-events:all;transition:color .2s}
+.nav-back:hover{color:rgba(255,255,255,.7)}
+.engine-tag{font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:rgba(255,255,255,.18)}
+
+/* CENTER BUZZER */
+#buzzer-wrap{position:fixed;inset:0;z-index:20;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:28px;transition:opacity .6s ease}
+#buzzer-wrap.hidden{opacity:0;pointer-events:none}
+
+.buzzer-hint{font-size:9px;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);animation:blink 2.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:.7}}
+
+#buzzer{width:120px;height:120px;border-radius:50%;
+  border:none;background:none;position:relative;transition:transform .1s}
+#buzzer:active{transform:scale(.93)}
+.bz-ring{position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(255,255,255,.12);
+  animation:bz-pulse 2.4s ease-out infinite}
+.bz-ring:nth-child(2){animation-delay:.6s;inset:-14px}
+.bz-ring:nth-child(3){animation-delay:1.2s;inset:-28px}
+@keyframes bz-pulse{0%{opacity:.6;transform:scale(.9)}100%{opacity:0;transform:scale(1.3)}}
+.bz-core{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;transition:all .2s;backdrop-filter:blur(8px)}
+#buzzer:hover .bz-core{background:radial-gradient(circle,rgba(255,255,255,.14),rgba(255,255,255,.04));
+  border-color:rgba(255,255,255,.5);box-shadow:0 0 40px rgba(255,255,255,.15)}
+
+/* RESULT PANEL */
+#result{position:fixed;inset:0;z-index:20;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding-bottom:52px;gap:16px;
+  opacity:0;pointer-events:none;transition:opacity .8s ease}
+#result.show{opacity:1;pointer-events:all}
+
+.result-name{font-family:'C1st Font',serif;font-size:clamp(20px,3vw,32px);
+  letter-spacing:.12em;color:rgba(255,255,255,.8);text-align:center}
+.result-sub{font-size:9px;letter-spacing:.45em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);margin-top:-8px}
+
+.result-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.rbtn{display:inline-flex;align-items:center;gap:8px;
+  padding:13px 28px;border-radius:40px;font-family:'C1st Font',serif;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  transition:all .25s;backdrop-filter:blur(12px);text-decoration:none}
+.rbtn-dl{border:1px solid rgba(0,229,255,.3);background:rgba(0,229,255,.06);color:rgba(0,229,255,.9)}
+.rbtn-dl:hover{border-color:rgba(0,229,255,.8);background:rgba(0,229,255,.14);
+  box-shadow:0 0 30px rgba(0,229,255,.2);color:#fff}
+.rbtn-saver{border:1px solid rgba(139,92,246,.3);background:rgba(139,92,246,.06);color:rgba(139,92,246,.9)}
+.rbtn-saver:hover{border-color:rgba(139,92,246,.8);background:rgba(139,92,246,.14);
+  box-shadow:0 0 30px rgba(139,92,246,.2);color:#fff}
+.rbtn-again{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:rgba(255,255,255,.4)}
+.rbtn-again:hover{border-color:rgba(255,255,255,.35);color:rgba(255,255,255,.8)}
+
+/* flash overlay during spin */
+#flash{position:fixed;inset:0;z-index:10;pointer-events:none;opacity:0;background:#fff;transition:opacity .05s}
+
+/* CURSOR */
+a,button{cursor:none}
+#cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;
+  border-radius:50%;background:rgba(255,255,255,.9);
+  box-shadow:0 0 8px rgba(255,255,255,.6);
+  transform:translate(-50%,-50%);transition:width .15s,height .15s,background .4s}
+#cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;
+  border-radius:50%;border:1px solid rgba(255,255,255,.2);transform:translate(-50%,-50%)}
+body.ch #cursor-dot{width:13px;height:13px}
+body.ch #cursor-ring{width:52px;height:52px}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="stage"></canvas>
+<div id="flash"></div>
+
+<nav>
+  <a class="nav-back" href="home.html">← Universum</a>
+  <div class="engine-tag" id="engine-tag"></div>
+</nav>
+
+<!-- BUZZER -->
+<div id="buzzer-wrap">
+  <div class="buzzer-hint">Drück den Buzzer</div>
+  <button id="buzzer" onclick="pressBuzzer()" aria-label="Buzzer">
+    <div class="bz-ring"></div>
+    <div class="bz-ring"></div>
+    <div class="bz-ring"></div>
+    <div class="bz-core">⚡</div>
+  </button>
+</div>
+
+<!-- RESULT -->
+<div id="result">
+  <div class="result-name" id="result-name"></div>
+  <div class="result-sub" id="result-sub"></div>
+  <div class="result-btns">
+    <button class="rbtn rbtn-dl" onclick="downloadWallpaper()">↓ Wallpaper</button>
+    <a class="rbtn rbtn-saver" href="Fusionwarp_Screensaver.zip" download>↓ Screensaver</a>
+    <button class="rbtn rbtn-again" onclick="resetRoulette()">⟳ Nochmal</button>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById('stage'),ctx=canvas.getContext('2d');
+let W,H,frame=0,animId=null;
+let pts=[],vel=[],phase=[];
+
+// ── PALETTES & ENGINES ──────────────────────────────────────────────────────
+const PALETTES=[
+  {name:'Cyan Void',   c:[[0,229,255],[139,92,246],[80,200,255]],bg:[0,0,10]},
+  {name:'Acid Bloom',  c:[[57,255,122],[198,241,53],[0,229,255]], bg:[0,10,0]},
+  {name:'Violet Haze', c:[[168,85,247],[236,72,153],[139,92,246]],bg:[8,0,15]},
+  {name:'Solar Flare', c:[[255,149,0],[255,80,50],[255,220,0]],   bg:[12,4,0]},
+  {name:'Deep Ocean',  c:[[0,180,255],[0,100,200],[100,230,255]], bg:[0,5,15]},
+  {name:'Rose Dust',   c:[[255,100,150],[200,50,120],[255,180,200]],bg:[12,0,8]},
+  {name:'Mono White',  c:[[255,255,255],[200,220,255],[150,180,255]],bg:[5,5,8]},
+  {name:'Toxic Green', c:[[0,255,100],[100,255,0],[0,200,180]],   bg:[0,10,5]},
+];
+const ENGINES=[
+  {name:'Starfield Warp',fn:engineStarfield},
+  {name:'Plasma Nebula', fn:enginePlasma},
+  {name:'Particle Burst',fn:engineBurst},
+  {name:'Wave Rings',    fn:engineWaveRings},
+  {name:'Flow Field',    fn:engineFlow},
+  {name:'Crystal Grid',  fn:engineCrystal},
+  {name:'Tunnel Void',   fn:engineTunnel},
+];
+
+let pal=PALETTES[0],eng=ENGINES[0],seed=0;
+
+// ── STATE MACHINE ────────────────────────────────────────────────────────────
+// IDLE → SPINNING (instant) → SLOWING → STOPPED
+let state='IDLE'; // IDLE | SPINNING | SLOWING | STOPPED
+let spinInterval=4;     // frames between engine switches
+let switchCounter=0;
+let finalPal,finalEng;
+
+function pressBuzzer(){
+  if(state!=='IDLE')return;
+  state='SPINNING';
+  spinInterval=4;
+  switchCounter=0;
+  document.getElementById('buzzer-wrap').classList.add('hidden');
+  startDeceleration();
+}
+
+function startDeceleration(){
+  // After 600ms of spinning at full speed, start slowing
+  setTimeout(()=>{
+    state='SLOWING';
+    // pick the final destination now (random)
+    finalPal=PALETTES[Math.floor(Math.random()*PALETTES.length)];
+    finalEng=ENGINES[Math.floor(Math.random()*ENGINES.length)];
+    decelerate();
+  },600);
+}
+
+// Decelerate: increase switch interval over time, then stop
+const DECEL_STEPS=[4,5,7,10,15,22,34,52,80,120,180,999];
+let decelStep=0;
+function decelerate(){
+  if(decelStep>=DECEL_STEPS.length-1){
+    // STOP — snap to final
+    state='STOPPED';
+    pal=finalPal;eng=finalEng;seed=Math.random()*9999|0;
+    initPts();
+    frame=0;
+    showResult();
+    return;
+  }
+  spinInterval=DECEL_STEPS[decelStep++];
+  const delay=spinInterval*(1000/60)*2;
+  setTimeout(decelerate,delay);
+}
+
+function showResult(){
+  document.getElementById('result-name').textContent=finalEng.name;
+  document.getElementById('result-sub').textContent=finalPal.name;
+  document.getElementById('engine-tag').textContent=finalEng.name+' · '+finalPal.name;
+  updateCursorColor();
+  document.getElementById('result').classList.add('show');
+}
+
+function resetRoulette(){
+  decelStep=0;state='IDLE';spinInterval=4;switchCounter=0;
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('buzzer-wrap').classList.remove('hidden');
+  document.getElementById('engine-tag').textContent='';
+  pal=PALETTES[Math.floor(Math.random()*PALETTES.length)];
+  eng=ENGINES[Math.floor(Math.random()*ENGINES.length)];
+  seed=Math.random()*9999|0;initPts();frame=0;
+  resetCursorColor();
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function lerpC(a,b,t){t=Math.max(0,Math.min(1,t));return[a[0]+(b[0]-a[0])*t|0,a[1]+(b[1]-a[1])*t|0,a[2]+(b[2]-a[2])*t|0];}
+function palC(t,a=.8){
+  const p=pal.c,n=p.length-1,i=Math.min(Math.floor(t*n),n-1);
+  const c=lerpC(p[i],p[i+1],(t*n)%1);
+  return`rgba(${c[0]},${c[1]},${c[2]},${a})`;
+}
+
+function initPts(){
+  pts=[];vel=[];phase=[];
+  for(let i=0;i<360;i++){
+    pts.push([Math.random()*W,Math.random()*H,Math.random()]);
+    vel.push([(Math.random()-.5)*.8,(Math.random()-.5)*.8]);
+    phase.push(Math.random()*Math.PI*2);
+  }
+  ctx.fillStyle=`rgb(${pal.bg.join(',')})`;ctx.fillRect(0,0,W,H);
+}
+
+function switchEngine(){
+  pal=PALETTES[Math.floor(Math.random()*PALETTES.length)];
+  eng=ENGINES[Math.floor(Math.random()*ENGINES.length)];
+  seed=Math.random()*9999|0;initPts();frame=0;
+  document.getElementById('engine-tag').textContent=eng.name+' · '+pal.name;
+  // quick flash
+  const fl=document.getElementById('flash');
+  fl.style.opacity='.08';setTimeout(()=>fl.style.opacity='0',40);
+}
+
+function updateCursorColor(){
+  const c=finalPal.c[0];
+  document.getElementById('cursor-dot').style.background=`rgba(${c[0]},${c[1]},${c[2]},0.9)`;
+  document.getElementById('cursor-dot').style.boxShadow=`0 0 10px rgba(${c[0]},${c[1]},${c[2]},0.8)`;
+}
+function resetCursorColor(){
+  document.getElementById('cursor-dot').style.background='rgba(255,255,255,.9)';
+  document.getElementById('cursor-dot').style.boxShadow='0 0 8px rgba(255,255,255,.6)';
+}
+
+function downloadWallpaper(){
+  const a=document.createElement('a');
+  a.download=`LuZiD-LaYeRs-${finalEng.name.replace(/ /g,'-')}.png`;
+  a.href=canvas.toDataURL('image/png');a.click();
+}
+
+// ── ENGINES ──────────────────────────────────────────────────────────────────
+function engineStarfield(){
+  ctx.fillStyle=`rgba(${pal.bg.join(',')},0.25)`;ctx.fillRect(0,0,W,H);
+  const maxR=Math.hypot(W,H)/2,cx=W/2,cy=H/2;
+  for(let i=0;i<pts.length;i++){
+    const a=pts[i][0],z=pts[i][2];
+    const r=z*z*maxR*1.1,dx=Math.cos(a),dy=Math.sin(a);
+    const r0=Math.max(0,r-(5+z*35));
+    ctx.strokeStyle=palC(z,.15+z*.65);ctx.lineWidth=.4+z*1.8;
+    ctx.beginPath();ctx.moveTo(cx+dx*r0,cy+dy*r0);ctx.lineTo(cx+dx*r,cy+dy*r);ctx.stroke();
+    pts[i][2]+=.0025;if(pts[i][2]>1)pts[i][2]-=1;
+  }
+}
+function enginePlasma(){
+  ctx.fillStyle=`rgba(${pal.bg.join(',')},0.1)`;ctx.fillRect(0,0,W,H);
+  const t=frame*.0025;
+  for(let i=0;i<pts.length;i++){
+    const [x,y,z]=pts[i];
+    const r=Math.min(W,H)*(.035+z*.055);
+    const v=(Math.sin(x*.006+t)*Math.cos(y*.006+t*.7)+Math.sin((x+y)*.004+t*.5)+2)/4;
+    const gr=ctx.createRadialGradient(x,y,0,x,y,r);
+    gr.addColorStop(0,palC(v,.09+z*.1));gr.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=gr;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+    pts[i][0]+=Math.sin(t*.3+phase[i])*.6;pts[i][1]+=Math.cos(t*.4+phase[i])*.6;
+    if(pts[i][0]<-50)pts[i][0]=W+50;if(pts[i][0]>W+50)pts[i][0]=-50;
+    if(pts[i][1]<-50)pts[i][1]=H+50;if(pts[i][1]>H+50)pts[i][1]=-50;
+  }
+}
+function engineBurst(){
+  ctx.fillStyle=`rgba(${pal.bg.join(',')},0.18)`;ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H/2,maxD=Math.hypot(W,H)/2;
+  for(let i=0;i<pts.length;i++){
+    const [x,y,z]=pts[i];
+    const t=(Math.hypot(x-cx,y-cy)/maxD);
+    const r=.5+z*2.5;
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle=palC(t,.4+z*.6);ctx.fill();
+    if(z>.5){
+      const gr=ctx.createRadialGradient(x,y,0,x,y,r*7);
+      gr.addColorStop(0,palC(t,.1));gr.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(x,y,r*7,0,Math.PI*2);ctx.fill();
+    }
+    pts[i][0]+=vel[i][0]*(1+z);pts[i][1]+=vel[i][1]*(1+z);
+    const dx=pts[i][0]-cx,dy=pts[i][1]-cy;
+    if(Math.hypot(dx,dy)>maxD||pts[i][0]<0||pts[i][0]>W||pts[i][1]<0||pts[i][1]>H){
+      const a=Math.random()*Math.PI*2;
+      pts[i]=[cx+Math.cos(a)*8,cy+Math.sin(a)*8,Math.random()];
+      vel[i]=[Math.cos(a)*(0.5+Math.random()*2),Math.sin(a)*(0.5+Math.random()*2)];
+    }
+  }
+}
+function engineWaveRings(){
+  ctx.fillStyle=`rgba(${pal.bg.join(',')},0.07)`;ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H/2,n=120,t=frame*.015,maxR=Math.min(W,H)*.48;
+  for(let ring=0;ring<9;ring++){
+    const rBase=maxR*(ring+1)/9+Math.sin(t+ring*.7)*18;
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){
+      const a=(i/n)*Math.PI*2;
+      const wave=Math.sin(a*4+t+ring)*.04+Math.sin(a*7-t*.7+ring*.5)*.018;
+      const r=rBase*(1+wave);
+      const x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle=palC(ring/9,.2+Math.sin(t+ring)*.08);ctx.lineWidth=.8+ring*.18;ctx.stroke();
+  }
+  const c=pal.c[0];
+  const gr=ctx.createRadialGradient(cx,cy,0,cx,cy,maxR*.3);
+  gr.addColorStop(0,`rgba(${c[0]},${c[1]},${c[2]},0.05)`);gr.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);
+}
+function engineFlow(){
+  ctx.fillStyle=`rgba(${pal.bg.join(',')},0.04)`;ctx.fillRect(0,0,W,H);
+  const t=frame*.008;
+  for(let i=0;i<pts.length;i++){
+    const [x,y,z]=pts[i];
+    const angle=Math.sin(x*.004+t)*Math.PI+Math.cos(y*.003+t*.8)*Math.PI;
+    vel[i][0]=vel[i][0]*.92+Math.cos(angle)*.5;
+    vel[i][1]=vel[i][1]*.92+Math.sin(angle)*.5;
+    pts[i][0]+=vel[i][0];pts[i][1]+=vel[i][1];
+    if(pts[i][0]<0||pts[i][0]>W||pts[i][1]<0||pts[i][1]>H){
+      pts[i]=[Math.random()*W,Math.random()*H,Math.random()];vel[i]=[(Math.random()-.5),.0];
+    }
+    ctx.beginPath();ctx.arc(x,y,.8+z*1.2,0,Math.PI*2);
+    ctx.fillStyle=palC((Math.sin(x*.003+t)+1)*.5,.35+z*.35);ctx.fill();
+  }
+}
+function engineCrystal(){
+  ctx.fillStyle=`rgba(${pal.bg.join(',')},0.2)`;ctx.fillRect(0,0,W,H);
+  const t=frame*.01,gx=Math.floor(W/70)+2,gy=Math.floor(H/70)+2;
+  const sw=W/(gx-1),sh=H/(gy-1);
+  for(let yi=0;yi<gy;yi++) for(let xi=0;xi<gx;xi++){
+    const wave=Math.sin(xi*.8+t)*Math.cos(yi*.6+t*.7)*14;
+    const x=xi*sw+wave,y=yi*sh+wave*.5;
+    if(xi<gx-1&&yi<gy-1){
+      const nw=Math.sin((xi+1)*.8+t)*Math.cos(yi*.6+t*.7)*14;
+      const col=(xi+yi)/(gx+gy);
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo((xi+1)*sw+nw,yi*sh+nw*.5);
+      ctx.strokeStyle=palC(col,.12+Math.sin(t+xi+yi)*.06);ctx.lineWidth=.5+col*.7;ctx.stroke();
+      const ew=Math.sin(xi*.8+t)*Math.cos((yi+1)*.6+t*.7)*14;
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(xi*sw+ew,(yi+1)*sh+ew*.5);
+      ctx.strokeStyle=palC(1-col,.12);ctx.lineWidth=.4;ctx.stroke();
+    }
+    const r=2+Math.abs(wave)*.1;
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle=palC((xi+yi)/(gx+gy),.5+Math.sin(t+xi*.3+yi*.4)*.28);ctx.fill();
+  }
+}
+function engineTunnel(){
+  ctx.fillStyle=`rgba(${pal.bg.join(',')},0.22)`;ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H/2,t=frame*.018,rings=22;
+  for(let r=rings;r>=0;r--){
+    const z=(r/rings+t*.06)%1;
+    const sz=Math.pow(z,1.5)*Math.min(W,H)*.55;
+    const twist=z*Math.PI*2*(seed%2===0?1:-1);
+    const n=6+Math.floor(r*.5);
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){
+      const a=(i/n)*Math.PI*2+twist;
+      const warp=1+Math.sin(a*3+t)*.07;
+      ctx.lineTo(cx+Math.cos(a)*sz*warp,cy+Math.sin(a)*sz*warp);
+    }
+    ctx.closePath();
+    ctx.strokeStyle=palC(z,.08+z*.5);ctx.lineWidth=.5+z*2;ctx.stroke();
+    if(z>.55){ctx.fillStyle=palC(z,.01);ctx.fill();}
+  }
+  const c=pal.c[0];
+  const gr=ctx.createRadialGradient(cx,cy,0,cx,cy,60+Math.sin(t)*20);
+  gr.addColorStop(0,`rgba(${c[0]},${c[1]},${c[2]},${.1+Math.sin(t)*.05})`);
+  gr.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);
+}
+
+// ── RENDER LOOP ───────────────────────────────────────────────────────────────
+function loop(){
+  animId=requestAnimationFrame(loop);
+  if(state==='STOPPED'){ENGINES.find(e=>e===eng||e.name===eng.name)?.fn();return;}
+  frame++;
+  // spin: switch engine at current interval
+  if(state==='SPINNING'||state==='SLOWING'){
+    switchCounter++;
+    if(switchCounter>=spinInterval){
+      switchCounter=0;
+      if(state!=='STOPPED')switchEngine();
+    }
+  }
+  eng.fn();
+}
+
+function resize(){
+  W=canvas.width=innerWidth;H=canvas.height=innerHeight;
+  pal=PALETTES[Math.floor(Math.random()*PALETTES.length)];
+  eng=ENGINES[Math.floor(Math.random()*ENGINES.length)];
+  seed=Math.random()*9999|0;initPts();frame=0;
+}
+addEventListener('resize',resize);
+resize();loop();
+</script>
+<script>
+const _cd=document.getElementById('cursor-dot'),_cr=document.getElementById('cursor-ring');
+let _mx=0,_my=0,_rx=0,_ry=0;
+document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
+(function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+</body>
+</html>
