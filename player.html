@@ -14,42 +14,47 @@ canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
 
 /* ── INTRO ── */
 #intro{position:fixed;inset:0;z-index:50;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:opacity 1.6s ease}
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+  transition:opacity 1.8s ease}
 #intro.out{opacity:0;pointer-events:none}
 
-.intro-brand{font-family:'C1st Font',serif;font-size:clamp(26px,5vw,52px);
+.intro-brand{font-family:'C1st Font',serif;font-size:clamp(28px,5vw,54px);
   letter-spacing:.18em;color:#fff;margin-bottom:6px;
-  text-shadow:0 0 30px rgba(0,229,255,.5);animation:breathe 4s ease-in-out infinite}
+  text-shadow:0 0 30px rgba(0,229,255,.5),0 0 80px rgba(0,229,255,.15);
+  animation:breathe 4s ease-in-out infinite}
 @keyframes breathe{
   0%,100%{text-shadow:0 0 30px rgba(0,229,255,.4),0 0 80px rgba(0,229,255,.1)}
-  50%{text-shadow:0 0 60px rgba(0,229,255,.9),0 0 120px rgba(139,92,246,.3)}}
+  50%    {text-shadow:0 0 60px rgba(0,229,255,.9),0 0 120px rgba(139,92,246,.3)}}
 .intro-sub{font-size:10px;letter-spacing:.5em;text-transform:uppercase;
-  color:rgba(255,255,255,.25);margin-bottom:64px}
+  color:rgba(255,255,255,.2);margin-bottom:72px}
 
-.load-zone{display:flex;flex-direction:column;align-items:center;gap:16px}
-.load-prompt{font-size:10px;letter-spacing:.45em;text-transform:uppercase;
-  color:rgba(255,255,255,.3);margin-bottom:4px}
+.mode-label{font-size:9px;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);margin-bottom:28px}
 
-/* drop target */
-#drop-zone{width:260px;height:130px;border:1px solid rgba(0,229,255,.2);border-radius:20px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-  background:rgba(0,229,255,.02);transition:all .25s;position:relative}
-#drop-zone.drag{border-color:rgba(0,229,255,.7);background:rgba(0,229,255,.07);
-  box-shadow:0 0 40px rgba(0,229,255,.15)}
-.drop-icon{font-size:28px;opacity:.5}
-.drop-text{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3)}
-.drop-sub{font-size:9px;letter-spacing:.25em;color:rgba(255,255,255,.15)}
-#file-input{display:none}
+.mode-btns{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
 
-.or-line{display:flex;align-items:center;gap:14px;color:rgba(255,255,255,.15);
-  font-size:9px;letter-spacing:.3em;text-transform:uppercase;width:260px}
-.or-line::before,.or-line::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07)}
+.mode-btn{display:flex;flex-direction:column;align-items:center;gap:14px;
+  width:160px;padding:32px 24px;border-radius:24px;
+  border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);
+  transition:all .3s;position:relative;overflow:hidden}
+.mode-btn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s}
+.mode-btn:hover{transform:translateY(-4px)}
 
-.mic-intro-btn{padding:14px 36px;border:1px solid rgba(0,229,255,.2);border-radius:40px;
-  background:rgba(0,229,255,.03);color:rgba(255,255,255,.4);font-family:'C1st Font',serif;
-  font-size:10px;letter-spacing:.35em;text-transform:uppercase;transition:all .25s}
-.mic-intro-btn:hover{border-color:rgba(0,229,255,.5);color:rgba(0,229,255,.9)}
+.mode-btn.mic::before{background:radial-gradient(ellipse at 50% 120%,rgba(0,229,255,.12),transparent)}
+.mode-btn.mic:hover{border-color:rgba(0,229,255,.3);box-shadow:0 20px 60px -20px rgba(0,229,255,.2)}
+.mode-btn.mic:hover::before{opacity:1}
+
+.mode-btn.sys::before{background:radial-gradient(ellipse at 50% 120%,rgba(139,92,246,.12),transparent)}
+.mode-btn.sys:hover{border-color:rgba(139,92,246,.3);box-shadow:0 20px 60px -20px rgba(139,92,246,.2)}
+.mode-btn.sys:hover::before{opacity:1}
+
+.mode-icon{font-size:32px;line-height:1}
+.mode-name{font-family:'C1st Font',serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.mode-desc{font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.25);text-align:center;line-height:1.5}
+
+/* error hint */
+#err-hint{font-size:10px;letter-spacing:.2em;color:rgba(255,80,80,.6);
+  margin-top:28px;text-align:center;min-height:16px}
 
 /* ── NAV ── */
 #nav{position:fixed;top:0;left:0;right:0;z-index:30;
@@ -59,51 +64,31 @@ canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
 .nav-back{font-family:'C1st Font',serif;font-size:9px;letter-spacing:.35em;
   text-transform:uppercase;color:rgba(0,229,255,.5);text-decoration:none;transition:color .2s}
 .nav-back:hover{color:rgba(0,229,255,1)}
-.nav-title{font-family:'C1st Font',serif;font-size:11px;letter-spacing:.15em;
-  color:rgba(255,255,255,.3);max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ── PLAYER BAR ── */
-#player-bar{position:fixed;bottom:0;left:0;right:0;z-index:30;
-  padding:0 36px 36px;opacity:0;transition:opacity 1s ease;pointer-events:none;
-  display:flex;flex-direction:column;gap:12px;align-items:center}
-#player-bar.show{opacity:1;pointer-events:all}
+/* ── STATUS BAR ── */
+#status-bar{position:fixed;bottom:36px;left:0;right:0;z-index:30;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;transition:opacity 1s ease;pointer-events:none}
+#status-bar.show{opacity:1;pointer-events:all}
 
-/* track info */
-.track-info{text-align:center}
-.track-name{font-family:'C1st Font',serif;font-size:12px;letter-spacing:.15em;
-  color:rgba(255,255,255,.7);margin-bottom:3px}
-.track-time{font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.25)}
+.status-pill{display:flex;align-items:center;gap:10px;
+  padding:8px 20px;border-radius:40px;
+  border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.4);
+  backdrop-filter:blur(12px)}
+.status-dot{width:6px;height:6px;border-radius:50%;background:rgba(0,229,255,.8);
+  animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.4)}50%{box-shadow:0 0 0 5px rgba(0,229,255,0)}}
+.status-text{font-family:'C1st Font',serif;font-size:9px;letter-spacing:.35em;
+  text-transform:uppercase;color:rgba(255,255,255,.4)}
 
-/* progress */
-.progress-wrap{width:min(520px,90vw);display:flex;align-items:center;gap:12px}
-.prog-bar{flex:1;height:3px;background:rgba(255,255,255,.08);border-radius:2px;
-  position:relative;cursor:pointer}
-.prog-fill{height:100%;background:linear-gradient(90deg,rgba(0,229,255,.8),rgba(139,92,246,.8));
-  border-radius:2px;width:0%;transition:width .3s linear;pointer-events:none}
-.time-label{font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.25);min-width:32px}
+.stop-btn{font-family:'C1st Font',serif;font-size:8px;letter-spacing:.3em;
+  text-transform:uppercase;color:rgba(255,255,255,.2);border:none;background:transparent;
+  padding:4px 10px;transition:color .2s}
+.stop-btn:hover{color:rgba(255,100,100,.7)}
 
-/* controls */
-.controls{display:flex;align-items:center;gap:20px}
-.ctrl-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;
-  font-size:14px;transition:all .2s;backdrop-filter:blur(4px)}
-.ctrl-btn:hover{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.07)}
-.ctrl-btn.play-pause{width:54px;height:54px;font-size:18px;
-  border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.05)}
-.ctrl-btn.play-pause:hover{border-color:rgba(0,229,255,.8);background:rgba(0,229,255,.12);
-  box-shadow:0 0 30px rgba(0,229,255,.2)}
-.ctrl-btn.active{border-color:rgba(0,229,255,.6);background:rgba(0,229,255,.1)}
-
-/* load new */
-.load-new-btn{font-family:'C1st Font',serif;font-size:8px;letter-spacing:.35em;
-  text-transform:uppercase;color:rgba(255,255,255,.2);border:none;
-  background:transparent;padding:4px 10px;transition:color .2s}
-.load-new-btn:hover{color:rgba(0,229,255,.8)}
-
-/* visualizer bars */
-.vis-bars{display:flex;gap:2px;align-items:flex-end;height:32px}
-.f-bar{width:3px;min-height:2px;border-radius:1px 1px 0 0;
-  background:rgba(0,229,255,.4)}
+/* vis bars */
+.vis-bars{display:flex;gap:2px;align-items:flex-end;height:24px}
+.f-bar{width:3px;min-height:2px;border-radius:1px 1px 0 0;background:rgba(0,229,255,.4)}
 
 /* ── CURSOR ── */
 a,button{cursor:none}
@@ -122,65 +107,54 @@ body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(0,229,255,.6)}
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
 <canvas id="universe"></canvas>
-<audio id="audio" preload="auto"></audio>
 
 <!-- INTRO -->
 <div id="intro">
   <div class="intro-brand">LuZiD LaYeRs</div>
   <div class="intro-sub">Web Player</div>
-  <div class="load-zone">
-    <div class="load-prompt">Lade deine Musik</div>
-    <div id="drop-zone" onclick="document.getElementById('file-input').click()">
-      <div class="drop-icon">♫</div>
-      <div class="drop-text">Datei ablegen</div>
-      <div class="drop-sub">oder klicken zum Laden</div>
-    </div>
-    <input type="file" id="file-input" accept="audio/*">
-    <div class="or-line">oder</div>
-    <button class="mic-intro-btn" onclick="startWithMic()">Mikrofon verwenden</button>
+  <div class="mode-label">Wie hörst du Musik?</div>
+  <div class="mode-btns">
+    <button class="mode-btn mic" onclick="startMic()">
+      <div class="mode-icon">🎙</div>
+      <div class="mode-name">Mikrofon</div>
+      <div class="mode-desc">Musik läuft aus Lautsprechern — Mic hört zu</div>
+    </button>
+    <button class="mode-btn sys" onclick="startSysAudio()">
+      <div class="mode-icon">🖥</div>
+      <div class="mode-name">System Audio</div>
+      <div class="mode-desc">Spotify, YouTube & co. direkt im Browser</div>
+    </button>
   </div>
+  <div id="err-hint"></div>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
   <a class="nav-back" href="home.html">← Universum</a>
-  <div class="nav-title" id="nav-title">LuZiD LaYeRs Web Player</div>
 </nav>
 
-<!-- PLAYER BAR -->
-<div id="player-bar">
+<!-- STATUS -->
+<div id="status-bar">
   <div class="vis-bars" id="vis-bars"></div>
-  <div class="track-info">
-    <div class="track-name" id="track-name">—</div>
-    <div class="track-time" id="track-time">0:00 / 0:00</div>
+  <div class="status-pill">
+    <div class="status-dot"></div>
+    <div class="status-text" id="status-text">Hört zu</div>
   </div>
-  <div class="progress-wrap">
-    <span class="time-label" id="t-cur">0:00</span>
-    <div class="prog-bar" id="prog-bar">
-      <div class="prog-fill" id="prog-fill"></div>
-    </div>
-    <span class="time-label" id="t-dur">0:00</span>
-  </div>
-  <div class="controls">
-    <button class="ctrl-btn" id="mic-btn" onclick="toggleMic()" title="Mikrofon">🎙</button>
-    <button class="ctrl-btn play-pause" id="pp-btn" onclick="togglePlay()" title="Play/Pause">▶</button>
-    <button class="load-new-btn" onclick="document.getElementById('file-input').click()">+ Datei</button>
-  </div>
+  <button class="stop-btn" onclick="stopAll()">■ Stoppen</button>
 </div>
 
 <script>
 const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
-const audio=document.getElementById('audio');
 let W,H,stars=[],frame=0;
 let analyser=null,freqData=null,waveData=null;
 let bass=0,mid=0,treble=0,vol=0;
-let micStream=null,micActive=false;
+let activeStream=null;
 let actx=null;
 
 function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;initStars();}
 addEventListener('resize',resize);
 
-// ── STARS ──────────────────────────────────────────────────────────────────
+// ── STARS ───────────────────────────────────────────────────────────────────
 class Star{
   constructor(){this.init()}
   init(){
@@ -288,7 +262,7 @@ function updateVisBars(){
   if(!freqData)return;
   document.querySelectorAll('.f-bar').forEach((bar,i)=>{
     const idx=Math.floor((i/20)*freqData.length*.6),v=freqData[idx]/255;
-    bar.style.height=(2+v*28)+'px';
+    bar.style.height=(2+v*22)+'px';
     const c=lerpColor([0,229,255],[139,92,246],v);
     bar.style.background=`rgba(${c[0]},${c[1]},${c[2]},${.4+v*.6})`;
   });
@@ -330,133 +304,85 @@ function lerpColor(a,b,t){
   t=Math.max(0,Math.min(1,t));
   return[Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];
 }
-function fmtTime(s){const m=Math.floor(s/60);return m+':'+(Math.floor(s%60)+'').padStart(2,'0')}
 
-// ── AUDIO CONTEXT ─────────────────────────────────────────────────────────────
-function ensureACtx(){
-  if(!actx){
-    actx=new(window.AudioContext||window.webkitAudioContext)();
-  } else if(actx.state==='suspended'){
-    actx.resume();
-  }
-}
-function connectAnalyser(src){
-  if(!actx)ensureACtx();
+// ── AUDIO SETUP ───────────────────────────────────────────────────────────────
+function setupAnalyser(stream){
+  stopAll(false);
+  activeStream=stream;
+  actx=new(window.AudioContext||window.webkitAudioContext)();
+  const src=actx.createMediaStreamSource(stream);
   analyser=actx.createAnalyser();
   analyser.fftSize=2048;
   analyser.smoothingTimeConstant=.82;
   src.connect(analyser);
-  analyser.connect(actx.destination);
   freqData=new Uint8Array(analyser.frequencyBinCount);
   waveData=new Uint8Array(analyser.fftSize);
 }
 
-// ── FILE LOADING ──────────────────────────────────────────────────────────────
-let audioSrc=null;
-function loadAudioFile(file){
-  if(!file||!file.type.startsWith('audio/'))return;
-  stopMic();
-  if(audioSrc){audioSrc.disconnect();audioSrc=null;}
-  if(analyser){analyser.disconnect();analyser=null;}
-  const url=URL.createObjectURL(file);
-  audio.src=url;
-  audio.load();
-  const name=file.name.replace(/\.[^/.]+$/,'');
-  document.getElementById('track-name').textContent=name;
-  document.getElementById('nav-title').textContent=name;
-  showPlayer();
-  ensureACtx();
-  if(!audioSrc){
-    audioSrc=actx.createMediaElementSource(audio);
-    connectAnalyser(audioSrc);
-  }
-  audio.play();
-  document.getElementById('pp-btn').textContent='⏸';
-}
-
-// ── PLAY/PAUSE ────────────────────────────────────────────────────────────────
-function togglePlay(){
-  if(!audio.src&&!micActive)return;
-  ensureACtx();
-  if(audio.src){
-    if(audio.paused){audio.play();document.getElementById('pp-btn').textContent='⏸';}
-    else{audio.pause();document.getElementById('pp-btn').textContent='▶';}
-  }
-}
-
-// ── PROGRESS ─────────────────────────────────────────────────────────────────
-audio.addEventListener('timeupdate',()=>{
-  if(!audio.duration)return;
-  const pct=(audio.currentTime/audio.duration)*100;
-  document.getElementById('prog-fill').style.width=pct+'%';
-  document.getElementById('t-cur').textContent=fmtTime(audio.currentTime);
-  document.getElementById('t-dur').textContent=fmtTime(audio.duration);
-  document.getElementById('track-time').textContent=fmtTime(audio.currentTime)+' / '+fmtTime(audio.duration);
-});
-document.getElementById('prog-bar').addEventListener('click',e=>{
-  if(!audio.duration)return;
-  const rect=e.currentTarget.getBoundingClientRect();
-  audio.currentTime=((e.clientX-rect.left)/rect.width)*audio.duration;
-});
-
-// ── MIC ───────────────────────────────────────────────────────────────────────
-async function startWithMic(){
-  showPlayer();
-  await startMic();
-}
-async function startMic(){
-  if(!navigator.mediaDevices?.getUserMedia)return;
-  try{
-    if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
-    if(audioSrc){audioSrc.disconnect();audioSrc=null;}
-    if(analyser){analyser.disconnect();analyser=null;}
-    ensureACtx();
-    micStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
-    const micSrc=actx.createMediaStreamSource(micStream);
-    connectAnalyser(micSrc);
-    micSrc.disconnect(analyser);micSrc.connect(analyser);
-    micActive=true;
-    document.getElementById('mic-btn').classList.add('active');
-    document.getElementById('mic-btn').textContent='🔴';
-  }catch(e){console.warn('mic:',e);}
-}
-function stopMic(){
-  if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
-  micActive=false;
-  document.getElementById('mic-btn').classList.remove('active');
-  document.getElementById('mic-btn').textContent='🎙';
-}
-async function toggleMic(){
-  if(micActive){stopMic();if(audio.src&&audio.paused)audio.play();}
-  else{await startMic();}
-}
-
-// ── SHOW PLAYER ───────────────────────────────────────────────────────────────
-function showPlayer(){
+function showPlayer(label){
   document.getElementById('intro').classList.add('out');
+  document.getElementById('status-text').textContent=label;
   setTimeout(()=>{
     document.getElementById('nav').classList.add('show');
-    document.getElementById('player-bar').classList.add('show');
+    document.getElementById('status-bar').classList.add('show');
   },600);
 }
 
-// ── FILE INPUT + DRAG ─────────────────────────────────────────────────────────
-document.getElementById('file-input').addEventListener('change',e=>{
-  if(e.target.files[0])loadAudioFile(e.target.files[0]);
-});
-const dz=document.getElementById('drop-zone');
-dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
-dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
-dz.addEventListener('drop',e=>{
-  e.preventDefault();dz.classList.remove('drag');
-  const f=e.dataTransfer.files[0];if(f)loadAudioFile(f);
-});
-// also allow dropping anywhere on the page
-document.addEventListener('dragover',e=>e.preventDefault());
-document.addEventListener('drop',e=>{
-  e.preventDefault();
-  const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('audio/'))loadAudioFile(f);
-});
+function setErr(msg){document.getElementById('err-hint').textContent=msg;}
+
+// ── MIC ───────────────────────────────────────────────────────────────────────
+async function startMic(){
+  setErr('');
+  if(!navigator.mediaDevices?.getUserMedia){setErr('Mikrofon nicht unterstützt.');return;}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+    setupAnalyser(stream);
+    showPlayer('Mikrofon aktiv');
+  }catch(e){
+    if(e.name==='NotAllowedError')setErr('Mikrofon-Zugriff verweigert. Bitte in den Browser-Einstellungen erlauben.');
+    else setErr('Mikrofon nicht verfügbar.');
+  }
+}
+
+// ── SYSTEM AUDIO ─────────────────────────────────────────────────────────────
+async function startSysAudio(){
+  setErr('');
+  if(!navigator.mediaDevices?.getDisplayMedia){setErr('System Audio nicht unterstützt (Chrome empfohlen).');return;}
+  try{
+    // request screen share with audio — user picks a tab or "Share system audio"
+    const stream=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});
+    // drop video track immediately to save resources
+    stream.getVideoTracks().forEach(t=>t.stop());
+    const audioTracks=stream.getAudioTracks();
+    if(audioTracks.length===0){
+      stream.getTracks().forEach(t=>t.stop());
+      setErr('Kein Audio gefunden. Beim Teilen "Audio teilen" aktivieren.');
+      return;
+    }
+    setupAnalyser(stream);
+    showPlayer('System Audio aktiv');
+    // stop when user ends the share
+    audioTracks[0].addEventListener('ended',()=>{
+      analyser=null;freqData=null;waveData=null;
+      document.getElementById('status-text').textContent='Gestoppt';
+    });
+  }catch(e){
+    if(e.name!=='AbortError'&&e.name!=='NotAllowedError')setErr('System Audio nicht verfügbar.');
+  }
+}
+
+// ── STOP ─────────────────────────────────────────────────────────────────────
+function stopAll(showIntro=true){
+  if(activeStream){activeStream.getTracks().forEach(t=>t.stop());activeStream=null;}
+  if(actx){actx.close();actx=null;}
+  analyser=null;freqData=null;waveData=null;
+  if(showIntro){
+    document.getElementById('nav').classList.remove('show');
+    document.getElementById('status-bar').classList.remove('show');
+    document.getElementById('intro').classList.remove('out');
+    setErr('');
+  }
+}
 
 // ── VIS BARS INIT ─────────────────────────────────────────────────────────────
 (function(){
