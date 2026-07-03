@@ -315,7 +315,7 @@ footer a:hover{color:#39FF7A}
 
 <!-- NAV -->
 <nav>
-  <a class="nav-back" href="home.html">← Universum</a>
+  <a class="nav-back" href="home.html?entered=1">← Universum</a>
   <span class="nav-brand">LuZiD LaYeRs</span>
   <a class="nav-cta" href="shop.html">Download</a>
 </nav>
@@ -633,101 +633,96 @@ document.querySelectorAll('a,button').forEach(el=>{
     const a=hash(ix,iy),b=hash(ix+1,iy),c=hash(ix,iy+1),d=hash(ix+1,iy+1);
     return a+(b-a)*u+(c-a)*v+(d-a+a-b-c+b)*u*v;
   }
-  function fbm(x,y){return noise(x,y)*.5+noise(x*2,y*2)*.25+noise(x*4,y*4)*.125;}
 
-  const palettes=[
-    [[0,229,255],[139,92,246],[20,20,60]],    // plasma: cyan/violet
-    [[255,255,255],[0,180,255],[5,5,20]],      // starfield: white/blue
-    [[57,255,122],[0,180,100],[5,20,10]],      // flow: green
-    [[0,229,255],[0,120,200],[5,10,30]],       // rings: cyan
-    [[220,60,0],[255,140,0],[20,5,0]],         // lava: orange
-  ];
-
+  // ── PLASMA: 4×4 Blöcke statt per-Pixel (16× schneller) ──
   function drawPlasma(){
-    const id=cx.createImageData(W,H);const d=id.data;
-    const p=palettes[0];const speed=t*.4;
-    const ox=mx*4-2,oy=my*4-2;
-    for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const R=4,speed=t*.4,ox=mx*4-2,oy=my*4-2;
+    for(let y=0;y<H;y+=R)for(let x=0;x<W;x+=R){
       const u=x/W,v=y/H;
       let val=Math.sin((u+ox)*8+speed)+Math.sin((v+oy)*6+speed*.7)
              +Math.sin((u+v)*5+speed*.5)+Math.sin(Math.sqrt(u*u+v*v)*8+speed);
       val=(val+4)/8;
-      const ca=p[0],cb=p[1],cc=p[2];
-      const r=cc[0]+(val<.5?ca[0]-cc[0]:cb[0]-cc[0])*Math.min(1,val*2);
-      const g=cc[1]+(val<.5?ca[1]-cc[1]:cb[1]-cc[1])*Math.min(1,val*2);
-      const b=cc[2]+(val<.5?ca[2]-cc[2]:cb[2]-cc[2])*Math.min(1,val*2);
-      const i=(y*W+x)*4;d[i]=r;d[i+1]=g;d[i+2]=b;d[i+3]=255;
+      const r=(20+(val<.5?(0-20)*val*2:(139-20)*(val-.5)*2))|0;
+      const g=(20+(val<.5?(229-20)*val*2:(92-20)*(val-.5)*2))|0;
+      const b=(60+(val<.5?(255-60)*val*2:(246-60)*(val-.5)*2))|0;
+      cx.fillStyle=`rgb(${r},${g},${b})`;
+      cx.fillRect(x,y,R,R);
     }
-    cx.putImageData(id,0,0);
   }
 
+  // ── STARFIELD: Canvas-Primitives, immer schnell ──
   function drawStarfield(){
     cx.fillStyle='rgba(5,5,20,.18)';cx.fillRect(0,0,W,H);
     const cx2=W/2,cy2=H/2;
     for(let i=0;i<120;i++){
       const a=i/120*Math.PI*2+mx*.5;
-      const speed=.08+((i*37)%100)/100*.25;
-      const z=((t*speed+i*.07)%1);
+      const spd=.08+((i*37)%100)/100*.25;
+      const z=((t*spd+i*.07)%1);
       const px=cx2+Math.cos(a)*z*W*.55*(1+my*.4);
       const py=cy2+Math.sin(a)*z*H*.55;
-      const r=z*2.5;const alpha=z*.9;
-      cx.beginPath();cx.arc(px,py,r,0,Math.PI*2);
-      cx.fillStyle=`rgba(${z>.6?139:200},${z>.6?92:220},${z>.6?246:255},${alpha})`;
+      cx.beginPath();cx.arc(px,py,z*2.5,0,Math.PI*2);
+      cx.fillStyle=`rgba(${z>.6?139:200},${z>.6?92:220},${z>.6?246:255},${z*.9})`;
       cx.fill();
     }
   }
 
+  // ── FLOW FIELD: Partikel-Pfade statt per-Pixel (~1000× schneller) ──
+  let _fp=null;
   function drawFlow(){
-    const id=cx.createImageData(W,H);const d=id.data;
-    const p=palettes[2];const sc=3+mx*2;
-    for(let y=0;y<H;y++)for(let x=0;x<W;x++){
-      const u=x/W,v=y/H;
-      const nx=fbm(u*sc+t*.2,v*sc);
-      const ny=fbm(u*sc+5.2,v*sc+t*.2);
-      const val=fbm(u*sc+nx*.5+my*.5,v*sc+ny*.5);
-      const r=p[2][0]+val*(p[0][0]-p[2][0]);
-      const g=p[2][1]+val*(p[0][1]-p[2][1]);
-      const b=p[2][2]+val*(p[0][2]-p[2][2]);
-      const i=(y*W+x)*4;d[i]=r;d[i+1]=g;d[i+2]=b;d[i+3]=255;
+    if(!_fp||_fp.length===0){
+      _fp=Array.from({length:500},()=>({x:Math.random(),y:Math.random(),life:Math.random()}));
     }
-    cx.putImageData(id,0,0);
+    cx.fillStyle='rgba(5,20,10,.13)';cx.fillRect(0,0,W,H);
+    const sc=2.5+mx*2;
+    cx.lineWidth=1.1;
+    for(const p of _fp){
+      const u=p.x,v=p.y;
+      const nx=(noise(u*sc+t*.12,v*sc)-.5)*2;
+      const ny=(noise(u*sc+5.2,v*sc+t*.12)-.5)*2;
+      const px1=p.x*W,py1=p.y*H;
+      p.x+=nx*.004; p.y+=ny*.004;
+      p.x+=(mx-p.x)*.0003; p.y+=(my-p.y)*.0003;
+      if(p.x<0||p.x>1||p.y<0||p.y>1){p.x=Math.random();p.y=Math.random();p.life=0;}
+      p.life=(p.life+.004)%1;
+      const alpha=Math.min(p.life*5,1-p.life)*.7;
+      const g=120+p.life*135|0;
+      cx.beginPath();cx.moveTo(px1,py1);cx.lineTo(p.x*W,p.y*H);
+      cx.strokeStyle=`rgba(30,${g},50,${alpha})`;
+      cx.stroke();
+    }
   }
 
+  // ── WAVE RINGS: Canvas-Primitives, schnell ──
   function drawRings(){
     cx.fillStyle='rgba(5,10,30,.25)';cx.fillRect(0,0,W,H);
     const cx2=W*(0.3+mx*.4),cy2=H*(0.3+my*.4);
     for(let r=10;r<Math.max(W,H)*1.2;r+=18){
       const wave=Math.sin(r*.04-t*1.5)*.5+.5;
       cx.beginPath();cx.arc(cx2,cy2,r+wave*12,0,Math.PI*2);
-      cx.strokeStyle=`rgba(0,${150+wave*79},${200+wave*55},${wave*.55})`;
+      cx.strokeStyle=`rgba(0,${150+wave*79|0},${200+wave*55|0},${wave*.55})`;
       cx.lineWidth=1.5*wave;cx.stroke();
     }
   }
 
+  // ── LAVA CELLS: 5×5 Blöcke statt per-Pixel (25× schneller) ──
   function drawLava(){
-    const id=cx.createImageData(W,H);const d=id.data;
-    const seeds=[];const N=20;
-    for(let i=0;i<N;i++){
-      seeds.push([
-        (.1+i/N*.8+Math.sin(t*(0.1+i*.03)+i)*(.05+mx*.1))%1,
-        (.1+(i*7%N)/N*.8+Math.cos(t*(0.08+i*.02)+i)*(.05+my*.1))%1
-      ]);
-    }
-    for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const R=5,N=18,seeds=[];
+    for(let i=0;i<N;i++)seeds.push([
+      (.1+i/N*.8+Math.sin(t*(.1+i*.03)+i)*(.05+mx*.1))%1,
+      (.1+(i*7%N)/N*.8+Math.cos(t*(.08+i*.02)+i)*(.05+my*.1))%1
+    ]);
+    for(let y=0;y<H;y+=R)for(let x=0;x<W;x+=R){
       const u=x/W,v=y/H;
       let d1=9,d2=9;
       for(const s of seeds){
         const dd=Math.sqrt((u-s[0])**2+(v-s[1])**2);
         if(dd<d1){d2=d1;d1=dd;}else if(dd<d2)d2=dd;
       }
-      const edge=Math.min(1,(d2-d1)*12);
-      const val=d1*6;
-      const r=Math.min(255,edge*(180+val*80));
-      const g=Math.min(255,edge*(40+val*20));
-      const b=0;
-      const i=(y*W+x)*4;d[i]=r;d[i+1]=g;d[i+2]=b;d[i+3]=255;
+      const edge=Math.min(1,(d2-d1)*14);
+      const val=Math.min(1,d1*6);
+      cx.fillStyle=`rgb(${Math.min(255,edge*(180+val*75)|0)},${Math.min(255,edge*(35+val*25)|0)},0)`;
+      cx.fillRect(x,y,R,R);
     }
-    cx.putImageData(id,0,0);
   }
 
   const drawFns=[drawPlasma,drawStarfield,drawFlow,drawRings,drawLava];

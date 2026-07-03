@@ -483,6 +483,9 @@ function startExperience() {
 resize(); render();
 
 // ── SKIP INTRO wenn zurück von Unterseite ────────────────────────────────
+if(new URLSearchParams(location.search).get('entered')==='1'){
+  sessionStorage.setItem('ll_entered','1');
+}
 if(sessionStorage.getItem('ll_entered')){
   document.getElementById('intro').style.display='none';
   document.getElementById('nav').classList.add('show');

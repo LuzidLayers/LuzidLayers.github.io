@@ -72,6 +72,51 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
   transition:all .25s;backdrop-filter:blur(4px)}
 .tag:hover{border-color:rgba(0,229,255,.6);color:#fff;background:rgba(0,229,255,.08)}
 
+/* PORTFOLIO GRID */
+.portfolio-section{padding:40px 0 100px}
+.portfolio-eyebrow{font-size:10px;letter-spacing:.55em;text-transform:uppercase;
+  color:rgba(0,217,160,.7);margin-bottom:20px;font-family:'C1st Font',serif}
+.portfolio-h{font-family:'C1st Font',serif;font-size:clamp(28px,5vw,52px);
+  color:#fff;margin-bottom:28px;letter-spacing:.04em}
+.portfolio-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+.pf-btn{padding:8px 18px;border-radius:30px;font-family:'C1st Font',serif;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid rgba(0,217,160,.2);color:rgba(0,217,160,.6);
+  background:transparent;transition:all .25s;cursor:pointer}
+.pf-btn:hover{border-color:rgba(0,217,160,.5);color:#fff}
+.pf-btn.active{background:rgba(0,217,160,.12);border-color:rgba(0,217,160,.7);color:#fff}
+.portfolio-empty{display:none;padding:40px 0;text-align:center;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.portfolio-empty.show{display:block}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.port-item{aspect-ratio:1;border-radius:10px;overflow:hidden;position:relative;
+  cursor:pointer;background:linear-gradient(135deg,rgba(0,217,160,.06),rgba(0,120,90,.1));
+  border:1px solid rgba(0,217,160,.12);transition:border-color .3s,box-shadow .3s;
+  opacity:0;transform:translateY(24px)}
+.port-item.in{opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s ease}
+.port-item:hover{border-color:rgba(0,217,160,.5);box-shadow:0 10px 34px -10px rgba(0,217,160,.35)}
+.port-item img{width:100%;height:100%;object-fit:cover;transform-origin:center;
+  animation:kenburns 24s ease-in-out infinite;will-change:transform}
+@keyframes kenburns{
+  0%{transform:scale(1) translate(0,0)}
+  50%{transform:scale(1.12) translate(-2%,2%)}
+  100%{transform:scale(1) translate(0,0)}
+}
+.port-overlay{position:absolute;inset:0;background:rgba(0,60,45,.25);
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#fff;z-index:4}
+.port-item:hover .port-overlay{opacity:1}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;z-index:100;background:rgba(0,8,6,.96);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;
+  transition:.3s;backdrop-filter:blur(20px)}
+#lightbox.open{opacity:1;pointer-events:all}
+#lb-close{position:absolute;top:24px;right:32px;font-size:26px;color:rgba(200,255,235,.5);
+  cursor:pointer;transition:color .2s}
+#lb-close:hover{color:#fff}
+#lb-img{max-width:90vw;max-height:88vh;border-radius:10px;object-fit:contain;display:block}
+
 /* SHOP TEASER */
 .shop-teaser{border-top:1px solid rgba(255,255,255,.07);padding:80px 0 120px;text-align:center}
 .shop-eyebrow{font-size:10px;letter-spacing:.55em;text-transform:uppercase;
@@ -111,7 +156,7 @@ body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(139,92,246,.6)}
 <div class="veil"></div>
 
 <nav>
-  <a class="back-btn" href="home.html">← Universum</a>
+  <a class="back-btn" href="home.html?entered=1">← Universum</a>
   <div class="nav-links">
     <a href="fusionwarp_live.html">FusionWarp</a>
     <a href="shop.html">Shop</a>
@@ -179,6 +224,45 @@ body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(139,92,246,.6)}
     </div>
   </section>
 
+  <!-- PORTFOLIO -->
+  <section class="wrap portfolio-section">
+    <div class="portfolio-eyebrow">Ausgewählte Werke</div>
+    <div class="portfolio-h">Portfolio</div>
+
+    <div class="portfolio-filters" id="portFilters">
+      <button class="pf-btn active" data-cat="all">Alle</button>
+      <button class="pf-btn" data-cat="zeichnungen">Zeichnungen</button>
+      <button class="pf-btn" data-cat="digital">Digitale Arbeiten</button>
+      <button class="pf-btn" data-cat="schriften">Schriften &amp; Namen</button>
+      <button class="pf-btn" data-cat="abstrakt">Abstrakte Zeichnungen (digital bearbeitet)</button>
+      <button class="pf-btn" data-cat="analog-digital">Analog ↔ Digital</button>
+    </div>
+
+    <div class="portfolio-grid" id="portGrid">
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00002.jpeg')"><img src="img/portfolio/Bild00002.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00006.jpeg')"><img src="img/portfolio/Bild00006.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00009.jpeg')"><img src="img/portfolio/Bild00009.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00013.jpeg')"><img src="img/portfolio/Bild00013.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00016.jpeg')"><img src="img/portfolio/Bild00016.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00019.jpeg')"><img src="img/portfolio/Bild00019.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00021.jpeg')"><img src="img/portfolio/Bild00021.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00025.jpeg')"><img src="img/portfolio/Bild00025.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00028.jpeg')"><img src="img/portfolio/Bild00028.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00029.jpeg')"><img src="img/portfolio/Bild00029.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00035.jpeg')"><img src="img/portfolio/Bild00035.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00037.jpeg')"><img src="img/portfolio/Bild00037.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00047.jpeg')"><img src="img/portfolio/Bild00047.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00054.jpeg')"><img src="img/portfolio/Bild00054.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00061.jpeg')"><img src="img/portfolio/Bild00061.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00063.jpeg')"><img src="img/portfolio/Bild00063.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00065.jpeg')"><img src="img/portfolio/Bild00065.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00067.jpeg')"><img src="img/portfolio/Bild00067.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00070.jpeg')"><img src="img/portfolio/Bild00070.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+      <div class="port-item reveal" data-cat="digital analog-digital" onclick="openLB('img/portfolio/Bild00076.jpeg')"><img src="img/portfolio/Bild00076.jpeg" loading="lazy" alt="Portfolio Werk"><div class="port-overlay">Ansehen</div></div>
+    </div>
+    <div class="portfolio-empty" id="portEmpty">Noch keine Werke in dieser Kategorie</div>
+  </section>
+
   <!-- SHOP TEASER -->
   <section class="wrap shop-teaser">
     <div class="shop-eyebrow">Kunst zum Anfassen</div>
@@ -190,6 +274,16 @@ body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(139,92,246,.6)}
     <a class="shop-btn" href="shop.html">Zum Shop</a>
   </section>
 </main>
+
+<div id="lightbox">
+  <span id="lb-close" onclick="closeLB()">&#x2715;</span>
+  <div style="position:relative;display:inline-flex;align-items:center;justify-content:center">
+    <img id="lb-img" src="" alt="">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+      <img src="img/watermark.jpg" alt="" style="width:55%;height:55%;object-fit:contain;opacity:.25;mix-blend-mode:screen">
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="wrap foot-inner">
@@ -230,6 +324,40 @@ let _mx=0,_my=0,_rx=0,_ry=0;
 document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+<script>
+function openLB(src){
+  const lb=document.getElementById('lightbox'),img=document.getElementById('lb-img');
+  img.src=src;lb.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLB(){
+  document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+document.addEventListener('contextmenu',e=>{if(e.target.tagName==='IMG')e.preventDefault();});
+document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG')e.preventDefault();});
+
+const _obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>_obs.observe(el));
+
+// Portfolio-Kategorie-Filter
+document.querySelectorAll('#portFilters .pf-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#portFilters .pf-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat=btn.dataset.cat;
+    let visible=0;
+    document.querySelectorAll('#portGrid .port-item').forEach(item=>{
+      const cats=(item.dataset.cat||'').split(' ').filter(Boolean);
+      const match=cat==='all'||cats.includes(cat);
+      item.style.display=match?'':'none';
+      if(match)visible++;
+    });
+    document.getElementById('portEmpty').classList.toggle('show',visible===0);
+  });
+});
 </script>
 </body>
 </html>
