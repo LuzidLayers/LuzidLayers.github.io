@@ -160,6 +160,12 @@
   #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(168,85,247,.35);transform:translate(-50%,-50%)}
   body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(168,85,247,1),0 0 40px rgba(236,72,153,.6)}
   body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(168,85,247,.6)}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -454,6 +460,8 @@
 </footer>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* animated bg — violet/pink particles */
 const c = document.getElementById('bg');
 const ctx = c.getContext('2d');
@@ -489,7 +497,7 @@ function draw(){
       }
     });
   });
-  requestAnimationFrame(draw);
+  if(!REDUCED_MOTION)requestAnimationFrame(draw);
 }
 window.addEventListener('resize',resize);
 resize(); draw();

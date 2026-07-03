@@ -215,6 +215,12 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
   font-family: 'C1st Font', serif; font-size: 9px;
   letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.18);
 }
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -322,6 +328,8 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
 </div>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas = document.getElementById('universe');
 const ctx = canvas.getContext('2d');
 let W, H, stars = [], frame = 0;
@@ -442,7 +450,7 @@ function updateHUD() {
 }
 
 function render() {
-  requestAnimationFrame(render); frame++;
+  if (!REDUCED_MOTION) requestAnimationFrame(render); frame++;
   if(analyser&&freqData){
     analyser.getByteFrequencyData(freqData);
     const len=freqData.length, bEnd=Math.floor(len*.08), mEnd=Math.floor(len*.45);

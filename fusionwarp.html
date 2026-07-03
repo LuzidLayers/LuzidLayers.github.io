@@ -306,6 +306,12 @@ footer a:hover{color:#39FF7A}
   .specs-grid{grid-template-columns:repeat(2,1fr)}
   .spec{border-right:none;border-bottom:1px solid rgba(57,255,122,.08)}
 }
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -596,6 +602,8 @@ footer a:hover{color:#39FF7A}
 </footer>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Cursor
 const _cd=document.getElementById('cd'),_cr=document.getElementById('cr');
 let _mx=0,_my=0,_rx=0,_ry=0;
@@ -727,7 +735,7 @@ document.querySelectorAll('a,button').forEach(el=>{
 
   const drawFns=[drawPlasma,drawStarfield,drawFlow,drawRings,drawLava];
 
-  function tick(){requestAnimationFrame(tick);t+=.016;drawFns[mode]();}
+  function tick(){if(!REDUCED_MOTION)requestAnimationFrame(tick);t+=.016;drawFns[mode]();}
   tick();
 
   window.setDemoMode=function(m){

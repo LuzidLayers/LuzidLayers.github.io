@@ -338,6 +338,12 @@
   /* REVEAL */
   .reveal { opacity: 0; transform: translateY(28px); transition: .8s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -817,6 +823,8 @@
 </footer>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
 let W, H, t = 0;
@@ -892,7 +900,7 @@ function draw() {
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x2, y2); ctx.stroke();
   }
 
-  requestAnimationFrame(draw);
+  if (!REDUCED_MOTION) requestAnimationFrame(draw);
 }
 
 window.addEventListener('resize', resize);

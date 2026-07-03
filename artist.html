@@ -147,6 +147,12 @@ a,button{cursor:none}
 #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(139,92,246,.35);transform:translate(-50%,-50%)}
 body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(139,92,246,1),0 0 40px rgba(139,92,246,.6)}
 body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(139,92,246,.6)}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -298,6 +304,8 @@ body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(139,92,246,.6)}
 </footer>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
 let W,H,cx,cy,pts=[];
 function rs(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;cx=W/2;cy=H/2;
@@ -316,7 +324,7 @@ function tick(){
     ctx.strokeStyle=`rgba(${Math.round(t*139)},${Math.round(229-t*137)},255,${.1+t*.55})`;
     ctx.lineWidth=.4+t*1.8;ctx.beginPath();ctx.moveTo(qx,qy);ctx.lineTo(px,py);ctx.stroke();
   }
-  requestAnimationFrame(tick);
+  if(!REDUCED_MOTION)requestAnimationFrame(tick);
 }tick();
 </script>
 <script>

@@ -51,6 +51,12 @@
   #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(139,92,246,.35);transform:translate(-50%,-50%)}
   body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(139,92,246,1),0 0 40px rgba(139,92,246,.6)}
   body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(139,92,246,.6)}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -130,6 +136,8 @@
 </footer>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const c=document.getElementById('warp'),x=c.getContext('2d');let W,H,cx,cy,stars=[];
 function rs(){W=c.width=innerWidth;H=c.height=innerHeight;cx=W/2;cy=H/2;
   stars=Array.from({length:Math.min(420,(W*H)/4500)},()=>({a:Math.random()*6.283,z:Math.random(),s:0.0015+Math.random()*0.004}));}
@@ -143,7 +151,7 @@ function tick(){
     const t=st.z;
     x.strokeStyle=`rgba(${Math.round(0+t*139)},${Math.round(229-t*137)},255,${0.12+t*0.6})`;
     x.lineWidth=0.5+t*2.0;x.beginPath();x.moveTo(qx,qy);x.lineTo(px,py);x.stroke();}
-  requestAnimationFrame(tick);
+  if(!REDUCED_MOTION)requestAnimationFrame(tick);
 }tick();
 </script>
 <script>

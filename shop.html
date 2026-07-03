@@ -132,6 +132,12 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 0;
 .foot-links{display:flex;gap:24px;font-size:9px;letter-spacing:.35em;
   text-transform:uppercase;color:rgba(255,255,255,.2)}
 .foot-links a:hover{color:rgba(255,255,255,.7)}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -270,6 +276,8 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 0;
 </footer>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Format switcher
 const fmtLinks = {
   a5: 'https://paypal.me/LuzidLayersWarngau/45EUR',
@@ -300,7 +308,7 @@ function tick(){
     const r0=Math.max(0,r-(6+p.z*40)),t=p.z;
     ctx.strokeStyle=`rgba(${Math.round(t*139)},${Math.round(92+t*163)},246,${.08+t*.5})`;
     ctx.lineWidth=.4+t*1.6;ctx.beginPath();ctx.moveTo(W/2+dx*r0,H/2+dy*r0);ctx.lineTo(W/2+dx*r,H/2+dy*r);ctx.stroke();}
-  requestAnimationFrame(tick);}tick();
+  if(!REDUCED_MOTION)requestAnimationFrame(tick);}tick();
 
 // Cursor
 const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');

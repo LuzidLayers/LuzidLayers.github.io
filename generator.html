@@ -89,6 +89,12 @@ a,button{cursor:none}
   border-radius:50%;border:1px solid rgba(255,255,255,.2);transform:translate(-50%,-50%)}
 body.ch #cursor-dot{width:13px;height:13px}
 body.ch #cursor-ring{width:52px;height:52px}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -125,6 +131,8 @@ body.ch #cursor-ring{width:52px;height:52px}
 </div>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas=document.getElementById('stage'),ctx=canvas.getContext('2d');
 let W,H,frame=0,animId=null;
 let pts=[],vel=[],phase=[];
@@ -203,6 +211,7 @@ function showResult(){
   document.getElementById('engine-tag').textContent=finalEng.name+' · '+finalPal.name;
   updateCursorColor();
   document.getElementById('result').classList.add('show');
+  if(REDUCED_MOTION){frame=1;eng.fn();} // statisches Frame des Ergebnisses
 }
 
 function resetRoulette(){
@@ -213,6 +222,7 @@ function resetRoulette(){
   pal=PALETTES[Math.floor(Math.random()*PALETTES.length)];
   eng=ENGINES[Math.floor(Math.random()*ENGINES.length)];
   seed=Math.random()*9999|0;initPts();frame=0;
+  if(REDUCED_MOTION){frame=1;eng.fn();} // statisches Frame
   resetCursorColor();
 }
 
@@ -396,7 +406,7 @@ function engineTunnel(){
 
 // ── RENDER LOOP ───────────────────────────────────────────────────────────────
 function loop(){
-  animId=requestAnimationFrame(loop);
+  if(!REDUCED_MOTION)animId=requestAnimationFrame(loop);
   if(state==='STOPPED'){ENGINES.find(e=>e===eng||e.name===eng.name)?.fn();return;}
   frame++;
   // spin: switch engine at current interval

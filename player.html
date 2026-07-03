@@ -105,6 +105,12 @@ a,button{cursor:none}
 body.ch #cursor-dot{width:12px;height:12px;
   box-shadow:0 0 16px rgba(0,229,255,1),0 0 40px rgba(0,229,255,.6)}
 body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(0,229,255,.6)}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -153,6 +159,8 @@ body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(0,229,255,.6)}
 </div>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
 let W,H,stars=[],frame=0;
 let analyser=null,freqData=null,waveData=null;
@@ -279,7 +287,7 @@ function updateVisBars(){
 
 // ── RENDER ───────────────────────────────────────────────────────────────────
 function render(){
-  requestAnimationFrame(render);frame++;
+  if(!REDUCED_MOTION)requestAnimationFrame(render);frame++;
   if(analyser&&freqData){
     analyser.getByteFrequencyData(freqData);
     const len=freqData.length,bEnd=Math.floor(len*.08),mEnd=Math.floor(len*.45);

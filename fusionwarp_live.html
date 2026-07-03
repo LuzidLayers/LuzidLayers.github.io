@@ -187,6 +187,12 @@
   #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(57,255,122,.35);transform:translate(-50%,-50%)}
   body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(57,255,122,1),0 0 40px rgba(198,241,53,.6)}
   body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(57,255,122,.6)}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -473,6 +479,8 @@
 </footer>
 
 <script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // ---- translations ----
 const T = {
   de: {
@@ -759,7 +767,7 @@ function tick(){
     // green → lime gradient by depth
     x.strokeStyle=`rgba(${Math.round(57+t*141)},${Math.round(255-t*64)},${Math.round(122-t*87)},${0.1+t*0.55})`;
     x.lineWidth=0.5+t*2.0;x.beginPath();x.moveTo(qx,qy);x.lineTo(px,py);x.stroke();}
-  requestAnimationFrame(tick);
+  if(!REDUCED_MOTION)requestAnimationFrame(tick);
 }tick();
 
 // ---- scroll reveal ----
