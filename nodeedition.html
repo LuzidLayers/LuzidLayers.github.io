@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fusionwarp Node Edition — Der Node-Editor für Visuals</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --black:#060A0F; --black2:#0A1018;
+    --cyan:#00E5FF; --violet:#8B5CF6; --white:#F5FBFF;
+    --grad:linear-gradient(100deg,var(--cyan),var(--violet));
+    --muted:rgba(190,225,255,.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;cursor:none}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--black);color:var(--white);
+    font-family:'C1st Font',system-ui,sans-serif;font-weight:300;
+    overflow-x:hidden;line-height:1.6;
+  }
+  h1,h2,h3,.mono{font-family:'C1st Font',sans-serif}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  section{position:relative;z-index:2}
+
+  /* animated bg — Node-Netz */
+  #bg{position:fixed;inset:0;z-index:0;opacity:.4}
+  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(6,10,15,.1) 0%,rgba(6,10,15,.5) 60%,var(--black) 100%)}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:30;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;backdrop-filter:blur(12px);
+    background:rgba(6,10,15,.4);border-bottom:1px solid rgba(0,229,255,.12)}
+  .nav-links{display:flex;gap:24px;align-items:center;font-weight:600;font-size:14px}
+  .nav-links a{color:var(--muted);transition:.2s}.nav-links a:hover{color:var(--white)}
+  @media(max-width:760px){.nav-links a{display:none}}
+
+  /* buttons */
+  .btn{display:inline-block;padding:13px 28px;border-radius:40px;font-weight:800;font-family:'C1st Font';
+    font-size:13px;letter-spacing:.5px;cursor:pointer;transition:.25s;border:none}
+  .btn-primary{background:var(--grad);color:#060A0F;box-shadow:0 0 30px rgba(0,229,255,.4)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,229,255,.7)}
+  .btn-ghost{border:1px solid rgba(255,255,255,.18);color:var(--white);background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{border-color:var(--cyan)}
+
+  /* hero */
+  header{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding-top:120px;padding-bottom:60px;position:relative;z-index:2}
+  .eyebrow{font-family:'C1st Font';font-size:12px;letter-spacing:5px;color:var(--cyan);
+    margin-bottom:22px;text-transform:uppercase;opacity:.9}
+  h1{font-size:clamp(44px,9vw,116px);font-weight:900;line-height:.92;letter-spacing:-2px;color:var(--white)}
+  .tagline{font-size:clamp(20px,3vw,30px);font-weight:300;margin:28px 0 14px;max-width:680px;color:rgba(245,251,255,.9)}
+  .sub{color:var(--muted);max-width:560px;margin-bottom:38px;font-size:17px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+
+  /* sections */
+  .label{font-family:'C1st Font';font-size:12px;letter-spacing:4px;color:var(--cyan);
+    text-transform:uppercase;margin-bottom:16px}
+  h2{font-size:clamp(30px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-.5px}
+  .pad{padding:120px 0}
+
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:54px}
+  .pillar{border:1px solid rgba(0,229,255,.15);border-radius:20px;padding:36px;
+    background:linear-gradient(160deg,rgba(0,229,255,.06),rgba(139,92,246,.03));transition:.3s}
+  .pillar:hover{transform:translateY(-6px);border-color:rgba(0,229,255,.4);
+    box-shadow:0 20px 60px -20px rgba(0,229,255,.3)}
+  .pillar .ico{font-size:36px;margin-bottom:20px}
+  .pillar h3{font-size:22px;font-weight:700;font-family:'C1st Font';margin-bottom:10px}
+  .pillar p{color:var(--muted);font-size:15px}
+
+  /* screenshot */
+  .shot{margin-top:54px;border-radius:20px;overflow:hidden;
+    border:1px solid rgba(0,229,255,.2);box-shadow:0 30px 90px -30px rgba(0,229,255,.25)}
+  .shot img{width:100%;display:block}
+  .shot-caption{font-family:'C1st Font';font-size:11px;letter-spacing:3px;color:var(--muted);
+    text-transform:uppercase;text-align:center;margin-top:18px}
+
+  /* node chips */
+  .modules{display:flex;flex-wrap:wrap;gap:12px;margin-top:48px}
+  .mod{padding:10px 20px;border-radius:30px;font-family:'C1st Font';font-size:11px;
+    letter-spacing:1.5px;border:1px solid rgba(0,229,255,.25);color:rgba(190,225,255,.8);
+    transition:.3s;cursor:default}
+  .mod:hover{border-color:var(--cyan);color:var(--white);background:rgba(0,229,255,.08)}
+
+  /* vs section */
+  .vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:54px;border-radius:20px;overflow:hidden}
+  @media(max-width:640px){.vs-grid{grid-template-columns:1fr}}
+  .vs-side{padding:48px 40px;background:rgba(255,255,255,.02)}
+  .vs-side.active{background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(139,92,246,.06));
+    border:1px solid rgba(0,229,255,.2)}
+  .vs-side .vs-label{font-family:'C1st Font';font-size:11px;letter-spacing:3px;
+    color:var(--muted);margin-bottom:16px;text-transform:uppercase}
+  .vs-side h3{font-size:24px;font-family:'C1st Font';margin-bottom:20px}
+  .vs-side ul{list-style:none;color:var(--muted);font-size:15px}
+  .vs-side ul li{padding:5px 0}.vs-side ul li::before{content:"· "}
+  .vs-side.active ul li::before{content:"✦ ";color:var(--cyan)}
+
+  /* timeline */
+  .timeline{margin-top:54px;display:flex;flex-direction:column;gap:0}
+  .tl-item{display:flex;gap:28px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .tl-item:last-child{border-bottom:none}
+  .tl-dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(0,229,255,.4);
+    flex-shrink:0;margin-top:6px;background:rgba(0,229,255,.1)}
+  .tl-dot.active{background:var(--grad);border-color:transparent;
+    box-shadow:0 0 16px rgba(0,229,255,.6)}
+  .tl-content h4{font-size:17px;font-weight:700;font-family:'C1st Font';margin-bottom:6px}
+  .tl-content p{color:var(--muted);font-size:14px}
+  .tl-phase{font-family:'C1st Font';font-size:10px;letter-spacing:2px;color:var(--cyan);
+    margin-bottom:6px;opacity:.7}
+
+  /* vision */
+  .vision{text-align:center;padding:160px 0}
+  .vision h2{font-size:clamp(34px,6vw,76px);max-width:900px;margin:0 auto}
+  .vision .claim{font-family:'C1st Font';letter-spacing:3px;color:var(--cyan);margin-top:30px;font-size:13px}
+
+  /* contact */
+  .contact-box{background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(139,92,246,.06));
+    border:1px solid rgba(0,229,255,.15);border-radius:24px;
+    padding:80px 60px;text-align:center;margin-top:80px}
+  @media(max-width:600px){.contact-box{padding:50px 24px}}
+  .contact-box h2{margin-bottom:16px}
+  .contact-box p{color:var(--muted);max-width:500px;margin:0 auto 32px;font-size:17px}
+
+  footer{border-top:1px solid rgba(0,229,255,.1);padding:60px 0 40px;color:var(--muted)}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;align-items:center}
+  .foot-links{display:flex;gap:26px;font-size:14px}.foot-links a:hover{color:var(--cyan)}
+  .logo{display:flex;align-items:center;gap:12px;font-family:'C1st Font';font-weight:900;letter-spacing:1px}
+  .logo .ne{width:38px;height:38px;border-radius:10px;background:var(--grad);
+    display:grid;place-items:center;font-size:13px;font-family:'C1st Font';color:#060A0F;
+    box-shadow:0 0 24px rgba(0,229,255,.5)}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  a,button{cursor:none}
+  #cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:rgba(0,229,255,.9);box-shadow:0 0 8px rgba(0,229,255,.9),0 0 20px rgba(0,229,255,.4);transform:translate(-50%,-50%);transition:width .15s,height .15s}
+  #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(0,229,255,.35);transform:translate(-50%,-50%)}
+  body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(0,229,255,1),0 0 40px rgba(139,92,246,.6)}
+  body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(0,229,255,.6)}
+
+/* Reduced Motion — Nutzer-Praeferenz respektieren */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<canvas id="bg"></canvas>
+<div class="veil"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="home.html?entered=1" style="font-family:'C1st Font';font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:rgba(0,229,255,.6);text-decoration:none;transition:color .2s"
+     onmouseover="this.style.color='rgba(0,229,255,1)'"
+     onmouseout="this.style.color='rgba(0,229,255,.6)'">← Universum</a>
+  <div class="nav-links">
+    <a href="#konzept">Konzept</a>
+    <a href="#nodes">Nodes</a>
+    <a href="#produkte">Produkte</a>
+    <a href="#timeline">Status</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="wrap">
+  <div class="eyebrow reveal">by LuZiD LaYeRs · Fusionwarp Familie</div>
+  <h1 class="reveal">Fusionwarp<br><span class="grad-text">Node Edition</span></h1>
+  <p class="tagline reveal">Der Node-Editor für Visuals.</p>
+  <p class="sub reveal">Frei verkabelbar. Audio-reaktiv. Jeder Node ein Beamer-Output. In Entwicklung.</p>
+  <div class="hero-cta reveal">
+    <a href="#konzept" class="btn btn-primary">Das Konzept</a>
+    <a href="#timeline" class="btn btn-ghost">In Entwicklung</a>
+  </div>
+</header>
+
+<!-- KONZEPT -->
+<section id="konzept" class="wrap pad">
+  <div class="label reveal">Konzept</div>
+  <h2 class="reveal">Visuals, die du <span class="grad-text">verkabelst.</span></h2>
+  <div class="pillars">
+    <div class="pillar reveal">
+      <div class="ico">🕸</div>
+      <h3>Frei verkabelbar</h3>
+      <p>Video → FX → Mix → Output — jeder Signalweg ist möglich. Ein Node-Graph wie in den großen Studio-Tools, aber mit eigenem Look und ohne Einstiegshürde.</p>
+    </div>
+    <div class="pillar reveal">
+      <div class="ico">🍄</div>
+      <h3>Myzel-Wires</h3>
+      <p>Verbindungen sind keine Striche, sondern organische Wurzel-Linien in Cyan und Violet — sie pulsieren zum Beat wie ein lebendes Nervensystem.</p>
+    </div>
+    <div class="pillar reveal">
+      <div class="ico">📽</div>
+      <h3>Mapping pro Node</h3>
+      <p>Jeder Node kann direkt als Projection-Mapping-Fenster auf Screen oder Beamer zeigen. Der Graph wird zur Regie für den ganzen Raum.</p>
+    </div>
+    <div class="pillar reveal">
+      <div class="ico">🎛</div>
+      <h3>Live in jedem Node</h3>
+      <p>Nodes im Hardware-Look mit Mini-Live-Preview und LED-Indikatoren. Audio-Bänder und LFOs modulieren jeden Parameter — live, beim Spielen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOT -->
+<section class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Prototyp</div>
+  <h2 class="reveal">Läuft <span class="grad-text">bereits.</span></h2>
+  <div class="shot reveal">
+    <img src="img/fusionwarp/fw-node-editor.png" alt="Screenshot des Fusionwarp Node Editors: dunkler Canvas mit verkabelten Audio-, Video-, FX- und Output-Nodes" loading="lazy">
+  </div>
+  <div class="shot-caption reveal">Echter Prototyp · kein Mockup</div>
+</section>
+
+<!-- NODES -->
+<section id="nodes" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Nodes</div>
+  <h2 class="reveal">7 Node-Typen. <span class="grad-text">Unendliche Wege.</span></h2>
+  <div class="modules reveal">
+    <span class="mod">AUDIO — Sub · Bass · Mid · High · Kick</span>
+    <span class="mod">VIDEO — Datei · Kamera</span>
+    <span class="mod">FX — alle Fusionwarp-Shader</span>
+    <span class="mod">TRANSFORM</span>
+    <span class="mod">MIX — Blending</span>
+    <span class="mod">LFO — Modulation</span>
+    <span class="mod">OUTPUT — Screen · Beamer · Mapping</span>
+  </div>
+</section>
+
+<!-- ZWEI PRODUKTE -->
+<section id="produkte" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Produktlinie</div>
+  <h2 class="reveal">Das Instrument. <span class="grad-text">Und das Labor.</span></h2>
+  <div class="vs-grid reveal">
+    <div class="vs-side">
+      <div class="vs-label">Fusionwarp</div>
+      <h3>Spielen</h3>
+      <ul>
+        <li>Sofort loslegen: Video rein, Musik an</li>
+        <li>Audio-reaktive Effekte, MIDI, Remote</li>
+        <li>Für DJs, Live-Acts, Einsteiger</li>
+      </ul>
+    </div>
+    <div class="vs-side active">
+      <div class="vs-label">Node Edition</div>
+      <h3>Komponieren</h3>
+      <ul>
+        <li>Eigene Signalwege bauen, Node für Node</li>
+        <li>Der Graph selbst ist das Kunstwerk</li>
+        <li>Für VJs, Installationen, Pros</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE / STATUS -->
+<section id="timeline" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Status</div>
+  <h2 class="reveal">In Entwicklung. <span class="grad-text">Kein Release-Datum.</span></h2>
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-dot active"></div>
+      <div class="tl-content">
+        <div class="tl-phase">JETZT</div>
+        <h4>Fusionwarp 1.0</h4>
+        <p>Die Haupt-App wird finalisiert — sie ist das Fundament, ihre Engine und Effekte leben in der Node Edition weiter.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot active"></div>
+      <div class="tl-content">
+        <div class="tl-phase">PARALLEL</div>
+        <h4>Node-Editor-Prototyp</h4>
+        <p>Läuft bereits als eigenständige App: Node-Graph, Verkabelung, Audio-Modulation, Live-Previews, Inspector.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-phase">DANACH</div>
+        <h4>Node Edition Release</h4>
+        <p>Eigenständiges Produkt mit voller künstlerischer Vision: Performance-Modus, Canvas = Bühne, animierte Myzel-Wires.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="wrap vision">
+  <h2 class="reveal">Nicht nur Bilder mischen.<br><span class="grad-text">Den Graph komponieren.</span></h2>
+  <div class="claim reveal">DER SIGNALWEG IST DIE KOMPOSITION</div>
+</section>
+
+<!-- KONTAKT -->
+<section class="wrap" style="padding-bottom:120px">
+  <div class="contact-box reveal">
+    <div class="label" style="display:flex;justify-content:center">Früher Zugang</div>
+    <h2>Interesse? <span class="grad-text">Meld dich jetzt.</span></h2>
+    <p>Die Node Edition entsteht gerade. Wer früh dabei sein will, schreibt eine Mail — Beta-Plätze werden zuerst vergeben.</p>
+    <a class="btn btn-primary" href="mailto:andreas.deflorin@luzidlayers.de?subject=Node%20Edition%20—%20Früher%20Zugang">E-Mail schreiben</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="logo">
+      <span class="ne">NE</span>
+      <div>
+        <div style="font-size:14px">Fusionwarp Node Edition</div>
+        <div style="font-weight:400;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:-1px">by LuZiD LaYeRs</div>
+      </div>
+    </div>
+    <div class="foot-links">
+      <a href="home.html">LuZiD LaYeRs</a>
+      <a href="fusionwarp_live.html">FusionWarp</a>
+      <a href="kroma.html">krom-A</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* animated bg — Node-Netz in Cyan/Violet */
+const c = document.getElementById('bg');
+const ctx = c.getContext('2d');
+let W, H, pts;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight;init()}
+function init(){
+  pts=Array.from({length:55},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+    r:Math.random()*2.2+1,
+    cyan:Math.random()<.6
+  }))
+}
+function draw(){
+  ctx.fillStyle='rgba(6,10,15,.18)';
+  ctx.fillRect(0,0,W,H);
+  // Wires zuerst — Nodes liegen oben drauf
+  pts.forEach((a,i)=>{
+    pts.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<140){
+        ctx.strokeStyle=`rgba(0,229,255,${.14*(1-d/140)})`;
+        ctx.lineWidth=.6;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      }
+    });
+  });
+  pts.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;
+    if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.cyan?'rgba(0,229,255,.65)':'rgba(139,92,246,.65)';
+    ctx.fill();
+    // kleiner Node-Rahmen um die größeren Punkte (Hardware-Look)
+    if(p.r>2.4){
+      ctx.strokeStyle='rgba(0,229,255,.25)';
+      ctx.lineWidth=.5;
+      ctx.strokeRect(p.x-p.r*2.4,p.y-p.r*2.4,p.r*4.8,p.r*4.8);
+    }
+  });
+  if(!REDUCED_MOTION)requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);
+resize(); draw();
+
+/* reveal on scroll */
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+<script>
+const _cd=document.getElementById('cursor-dot'),_cr=document.getElementById('cursor-ring');
+let _mx=0,_my=0,_rx=0,_ry=0;
+document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
+(function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+</body>
+</html>
