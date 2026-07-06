@@ -106,6 +106,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
   display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;
   font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#fff;z-index:4}
 .port-item:hover .port-overlay{opacity:1}
+.port-item::after{content:"";position:absolute;right:5%;bottom:5%;width:20%;aspect-ratio:1;
+  background-image:url('img/logo_watermark.png');background-size:contain;background-repeat:no-repeat;
+  opacity:.6;pointer-events:none;z-index:3;filter:drop-shadow(0 1px 4px rgba(0,0,0,.7))}
 
 /* LIGHTBOX */
 #lightbox{position:fixed;inset:0;z-index:100;background:rgba(0,8,6,.96);
