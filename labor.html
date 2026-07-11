@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Labor — Was in meinem Kopf los ist · LuZiD LaYeRs</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --black:#07090C; --black2:#0B0F14;
+    --cyan:#00E5FF; --violet:#8B5CF6; --green:#39FF7A; --white:#F5FBFF;
+    --grad:linear-gradient(100deg,var(--cyan),var(--violet));
+    --muted:rgba(200,225,255,.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;cursor:none}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--white);
+    font-family:'C1st Font',system-ui,sans-serif;font-weight:300;
+    overflow-x:hidden;line-height:1.6;}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  section{position:relative;z-index:2}
+
+  #bg{position:fixed;inset:0;z-index:0;opacity:.4}
+  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(7,9,12,.1) 0%,rgba(7,9,12,.5) 60%,var(--black) 100%)}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:30;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;backdrop-filter:blur(12px);
+    background:rgba(7,9,12,.4);border-bottom:1px solid rgba(0,229,255,.1)}
+  .nav-links{display:flex;gap:24px;align-items:center;font-weight:600;font-size:14px}
+  .nav-links a{color:var(--muted);transition:.2s}.nav-links a:hover{color:var(--white)}
+  @media(max-width:760px){.nav-links a{display:none}}
+
+  header{min-height:70vh;display:flex;flex-direction:column;justify-content:center;
+    padding-top:120px;padding-bottom:50px;position:relative;z-index:2}
+  .eyebrow{font-family:'C1st Font';font-size:12px;letter-spacing:5px;color:var(--green);
+    margin-bottom:22px;text-transform:uppercase;opacity:.9}
+  h1{font-size:clamp(44px,9vw,120px);font-weight:900;line-height:.92;letter-spacing:-2px}
+  .tagline{font-size:clamp(19px,3vw,28px);font-weight:300;margin:26px 0 14px;max-width:720px;color:rgba(245,251,255,.9)}
+  .sub{color:var(--muted);max-width:640px;margin-bottom:8px;font-size:16px}
+
+  .label{font-family:'C1st Font';font-size:12px;letter-spacing:4px;
+    text-transform:uppercase;margin:0 0 22px;color:var(--muted)}
+  .pad{padding:70px 0}
+
+  /* Karten-Raster */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+  .card{border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:26px 24px;
+    background:linear-gradient(160deg,rgba(255,255,255,.03),rgba(255,255,255,.008));
+    transition:.28s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:9px}
+  .card:hover{transform:translateY(-5px);border-color:var(--ac,rgba(0,229,255,.4));
+    box-shadow:0 22px 60px -26px var(--ac,rgba(0,229,255,.35))}
+  .card .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .card h3{font-size:19px;font-weight:800;font-family:'C1st Font';letter-spacing:.3px}
+  .card .ico{font-size:24px;line-height:1}
+  .card p{color:var(--muted);font-size:14px;line-height:1.5}
+  .badge{font-family:'C1st Font';font-size:9px;letter-spacing:2px;text-transform:uppercase;
+    padding:4px 9px;border-radius:20px;white-space:nowrap;font-weight:700}
+  .b-live{background:rgba(57,255,122,.14);color:var(--green);border:1px solid rgba(57,255,122,.3)}
+  .b-wip {background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.3)}
+  .b-idea{background:rgba(139,92,246,.14);color:var(--violet);border:1px solid rgba(139,92,246,.35)}
+
+  /* AKKURAT-Großkachel */
+  .feature{border:1px solid rgba(57,255,122,.2);border-radius:22px;padding:44px 40px;margin-bottom:16px;
+    background:linear-gradient(135deg,rgba(57,255,122,.06),rgba(0,229,255,.03));position:relative;overflow:hidden}
+  @media(max-width:600px){.feature{padding:34px 24px}}
+  .feature .kick{font-family:'C1st Font';font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+  .feature h2{font-size:clamp(30px,6vw,52px);font-weight:900;line-height:1;letter-spacing:-1px;margin-bottom:16px}
+  .feature p{color:rgba(245,251,255,.82);max-width:640px;font-size:16px;margin-bottom:18px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-family:'C1st Font';font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:7px 13px;border-radius:30px;border:1px solid rgba(57,255,122,.25);color:rgba(200,255,215,.85)}
+
+  .note{color:var(--muted);font-size:13px;margin-top:14px;font-style:italic}
+
+  footer{border-top:1px solid rgba(255,255,255,.07);padding:56px 0 40px;color:var(--muted);position:relative;z-index:2}
+  .foot-links{display:flex;gap:24px;font-size:14px;justify-content:center;flex-wrap:wrap}
+  .foot-links a:hover{color:var(--cyan)}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  a,button{cursor:none}
+  #cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:rgba(57,255,122,.9);box-shadow:0 0 8px rgba(57,255,122,.9),0 0 20px rgba(57,255,122,.4);transform:translate(-50%,-50%);transition:width .15s,height .15s}
+  #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(57,255,122,.35);transform:translate(-50%,-50%)}
+  body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(57,255,122,1),0 0 40px rgba(0,229,255,.6)}
+  body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(57,255,122,.6)}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<canvas id="bg"></canvas>
+<div class="veil"></div>
+
+<nav>
+  <a href="home.html?entered=1" style="font-family:'C1st Font';font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:rgba(57,255,122,.6);transition:color .2s"
+     onmouseover="this.style.color='rgba(57,255,122,1)'"
+     onmouseout="this.style.color='rgba(57,255,122,.6)'">← Universum</a>
+  <div class="nav-links">
+    <a href="#software">Software</a>
+    <a href="#bild">Schrift &amp; Bild</a>
+    <a href="#physisch">Physisch</a>
+    <a href="#akkurat">AKKURAT</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow reveal">Labor · by LuZiD LaYeRs</div>
+  <h1 class="reveal">Was in meinem<br><span class="grad-text">Kopf los ist.</span></h1>
+  <p class="tagline reveal">Eine Werkbank, kein Schaufenster.</p>
+  <p class="sub reveal">Ich kreiere mit jedem Werkzeug, das taugt — Bleistift, Software, KI, selbst geschriebene Programme. Manches läuft schon, manches ist halb fertig, manches lebt erst als Idee im Kopf. Hier steht alles nebeneinander, Schicht für Schicht. Genau das ist LuZiD LaYeRs.</p>
+</header>
+
+<!-- SOFTWARE & APPS -->
+<section id="software" class="wrap pad">
+  <div class="label reveal">Software &amp; Apps</div>
+  <div class="grid">
+    <a class="card reveal" href="fusionwarp_live.html" style="--ac:rgba(0,229,255,.5)">
+      <div class="top"><span class="ico">🌀</span><span class="badge b-live">Läuft</span></div>
+      <h3>Fusionwarp</h3>
+      <p>Meine native Mac-App: verwandelt Videos &amp; Bilder live in audio-reaktive Visuals. Der Kern von allem.</p>
+    </a>
+    <a class="card reveal" href="nodeedition.html" style="--ac:rgba(0,229,255,.5)">
+      <div class="top"><span class="ico">🕸</span><span class="badge b-wip">In Arbeit</span></div>
+      <h3>Node Edition</h3>
+      <p>Der Node-Editor für Visuals — frei verkabelbar, jeder Node ein Beamer-Output. Für VJs und Installationen.</p>
+    </a>
+    <a class="card reveal" href="kroma.html" style="--ac:rgba(139,92,246,.5)">
+      <div class="top"><span class="ico">🎛</span><span class="badge b-idea">Idee</span></div>
+      <h3>krom-A</h3>
+      <p>Ein Visual Synthesizer als Instrument — Klang und Bild als ein Gerät gedacht.</p>
+    </a>
+    <div class="card reveal" style="--ac:rgba(0,229,255,.5)">
+      <div class="top"><span class="ico">🖨</span><span class="badge b-live">Läuft</span></div>
+      <h3>PosterWarp</h3>
+      <p>Randlose A4/A3-Poster-Kacheln aus einem Bild — für den großformatigen Eigendruck.</p>
+    </div>
+    <a class="card reveal" href="generator.html" style="--ac:rgba(57,255,122,.5)">
+      <div class="top"><span class="ico">🎰</span><span class="badge b-live">Läuft</span></div>
+      <h3>Generator</h3>
+      <p>Roulette-Wallpaper-Generator — Zufall trifft Kuration, direkt im Browser.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCHRIFT & BILD -->
+<section id="bild" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Schrift &amp; Bild</div>
+  <div class="grid">
+    <a class="card reveal" href="fonts.html" style="--ac:rgba(57,255,122,.5)">
+      <div class="top"><span class="ico">🔤</span><span class="badge b-wip">In Arbeit</span></div>
+      <h3>LuZiD Fonts</h3>
+      <p>Eigene Schriften, Mensch × Maschine: von Hand begonnene Buchstaben, maschinell vervollständigt.</p>
+    </a>
+    <a class="card reveal" href="artist.html" style="--ac:rgba(57,255,122,.5)">
+      <div class="top"><span class="ico">🖼</span><span class="badge b-live">Läuft</span></div>
+      <h3>Bilder-Archiv</h3>
+      <p>Über tausend eigene Arbeiten — analog begonnen, digital verwandelt, oft wieder zurück.</p>
+    </a>
+    <div class="card reveal" style="--ac:rgba(139,92,246,.5)">
+      <div class="top"><span class="ico">🧊</span><span class="badge b-idea">Idee</span></div>
+      <h3>3D Layered Print</h3>
+      <p>Vier Bild-Schichten physisch gestapelt auf Acryl/Glas — Tiefe zum Anfassen, personalisiert mit eigener Musik.</p>
+    </div>
+    <div class="card reveal" style="--ac:rgba(139,92,246,.5)">
+      <div class="top"><span class="ico">📱</span><span class="badge b-idea">Idee</span></div>
+      <h3>Living Artwork</h3>
+      <p>Physischer Print + QR-Code: das Bild erwacht per Fusionwarp zum Leben, mit deiner eigenen Signatur-Animation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHYSISCH & SYSTEM -->
+<section id="physisch" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Physisch &amp; System</div>
+  <div class="grid">
+    <div class="card reveal" style="--ac:rgba(57,255,122,.5)">
+      <div class="top"><span class="ico">🪙</span><span class="badge b-wip">In Arbeit</span></div>
+      <h3>LUZ</h3>
+      <p>Eine eigene Kunstwährung aus Hausmaterial — Kupferfolie, Holo-Sticker, leitfähiger Faden. Geld als Objekt.</p>
+    </div>
+    <div class="card reveal" style="--ac:rgba(139,92,246,.5)">
+      <div class="top"><span class="ico">🪪</span><span class="badge b-idea">Idee</span></div>
+      <h3>LUZ-ID</h3>
+      <p>Ein Bürgerpass mit individuellem Fusionwarp-Kunstwerk statt Foto — Identität als Generativ-Grafik.</p>
+    </div>
+    <div class="card reveal" style="--ac:rgba(0,229,255,.5)">
+      <div class="top"><span class="ico">🛡</span><span class="badge b-wip">In Arbeit</span></div>
+      <h3>Wächter</h3>
+      <p>Ein Sicherheitssystem als Menüleisten-App: Kamera, Bewegungs-Melder, Alarm — selbst gebaut.</p>
+    </div>
+    <div class="card reveal" style="--ac:rgba(0,229,255,.5)">
+      <div class="top"><span class="ico">🔑</span><span class="badge b-live">Läuft</span></div>
+      <h3>KeyGuard</h3>
+      <p>Ein USB-Stick als physischer Schlüssel — der Mac sperrt, sobald er gezogen wird.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AKKURAT -->
+<section id="akkurat" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Die große Vision</div>
+  <div class="feature reveal">
+    <div class="kick">Marke &amp; Erlebnis · Konzept</div>
+    <h2>AKKURAT</h2>
+    <p>Die Dach-Ebene über allem: eine kuratierte Marke für Technik, Audio und Erlebnis — Kuration statt Masse. Im Kern ein Musik- und Kulturraum im Gewölbekeller, drumherum eigene Lautsprecher, In-Ears und Klang-Objekte. Ein Ort und eine Marke, wo Sound, Raum und Gestaltung aus einem Guss gedacht werden.</p>
+    <div class="chips">
+      <span class="chip">Club &amp; Kulturraum</span>
+      <span class="chip">AKKURAT Audio</span>
+      <span class="chip">VOID · LUCID Speaker</span>
+      <span class="chip">Klang-Objekte</span>
+      <span class="chip">Companion App</span>
+    </div>
+    <p class="note">Konzept &amp; Ästhetik — kaufmännische Details bleiben vertraulich.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-links">
+    <a href="home.html">LuZiD LaYeRs</a>
+    <a href="artist.html">Artist</a>
+    <a href="fusionwarp_live.html">FusionWarp</a>
+    <a href="fonts.html">Fonts</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </div>
+</footer>
+
+<script>
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* bg — treibende Ideen-Punkte in Cyan/Violet/Grün, lose verbunden */
+const c = document.getElementById('bg');
+const ctx = c.getContext('2d');
+let W, H, pts;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight;init()}
+function init(){
+  const cols=['rgba(0,229,255,.6)','rgba(139,92,246,.6)','rgba(57,255,122,.55)'];
+  pts=Array.from({length:52},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.32, vy:(Math.random()-.5)*.32,
+    r:Math.random()*2.1+1, col:cols[Math.floor(Math.random()*cols.length)]
+  }))
+}
+function draw(){
+  ctx.fillStyle='rgba(7,9,12,.18)';ctx.fillRect(0,0,W,H);
+  pts.forEach((a,i)=>{
+    pts.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<130){ctx.strokeStyle='rgba(150,200,255,'+(.10*(1-d/130))+')';ctx.lineWidth=.5;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+    });
+  });
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col;ctx.fill();
+  });
+  if(!REDUCED_MOTION)requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);resize();draw();
+
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+<script>
+const _cd=document.getElementById('cursor-dot'),_cr=document.getElementById('cursor-ring');
+let _mx=0,_my=0,_rx=0,_ry=0;
+document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
+(function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+</body>
+</html>
