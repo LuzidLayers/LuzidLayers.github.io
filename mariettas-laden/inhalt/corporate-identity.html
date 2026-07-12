@@ -1,0 +1,940 @@
+<title>Marietta's Hut Atelier — Corporate Identity</title>
+<style>
+  :root{
+    /* Markenwelt — bewusst festgelegt (gedrucktes Handbuch), kein Theme-Wechsel */
+    --forest:#132318;
+    --forest-2:#182b1d;
+    --forest-3:#1e3624;
+    --forest-4:#0e1b12;
+    --gold:#c9a45c;
+    --gold-bright:#e6cd94;
+    --gold-deep:#a8823c;
+    --cream:#f4eddd;
+    --cream-2:#ece1cb;
+    --linen:#e7dcc4;
+    --ink:#2a2116;
+    --ink-soft:#6f6349;
+    --ivory:#ece3d0;
+    --ivory-soft:#a9a184;
+    --line-gold:rgba(201,164,92,.26);
+    --line-gold-soft:rgba(201,164,92,.14);
+    --shadow:0 30px 70px -34px rgba(6,14,8,.75);
+    --shadow-soft:0 18px 44px -26px rgba(6,14,8,.6);
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --serif:"Hoefler Text","Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",Georgia,serif;
+    --sans:"Helvetica Neue",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    --script:"Snell Roundhand","Apple Chancery","Segoe Script","Brush Script MT",cursive;
+    --maxw:1080px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:
+      radial-gradient(120% 80% at 50% -10%, var(--forest-3), transparent 60%),
+      var(--forest);
+    color:var(--ivory);
+    font-family:var(--serif);font-size:1.02rem;line-height:1.72;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+
+  h1,h2,h3,h4{font-weight:400;margin:0;line-height:1.08;text-wrap:balance}
+  p{margin:0}
+  a{color:inherit;text-decoration:none}
+  img,svg,canvas{max-width:100%;display:block}
+
+  .wrap{width:min(var(--maxw),92vw);margin-inline:auto}
+  .eyebrow{font-family:var(--sans);font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;
+    font-weight:600;color:var(--gold);display:inline-flex;align-items:center;gap:.7em}
+  .label{font-family:var(--sans);font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;
+    font-weight:600;color:var(--ivory-soft)}
+  .mono{font-family:var(--sans);font-variant-numeric:tabular-nums}
+
+  /* ——— edelweiss divider ——— */
+  .star{width:1.5em;height:1.5em;color:var(--gold);flex:0 0 auto}
+  .rule{display:flex;align-items:center;gap:1rem;color:var(--line-gold)}
+  .rule::before,.rule::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line-gold),transparent)}
+
+  /* ——————————————————— COVER ——————————————————— */
+  .cover{position:relative;min-height:88vh;display:flex;flex-direction:column;justify-content:center;
+    padding:5rem 0 4rem;overflow:hidden;isolation:isolate}
+  .cover canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;opacity:.5}
+  .cover::after{content:"";position:absolute;inset:0;z-index:-1;
+    background:radial-gradient(80% 60% at 50% 42%, transparent 40%, rgba(14,27,18,.82))}
+  .coverlock{text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+  .coverlock .kicker{font-family:var(--sans);font-size:.72rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold)}
+  .coverlock h1{font-size:clamp(2.6rem,8vw,5.6rem);letter-spacing:.02em}
+  .coverlock .sub{font-family:var(--sans);font-size:.82rem;letter-spacing:.42em;text-transform:uppercase;color:var(--ivory-soft)}
+  .coverlock .script{font-family:var(--script);font-size:clamp(2.2rem,6vw,3.4rem);color:var(--gold-bright);line-height:1;margin-top:.2rem}
+  .coverdoc{margin-top:2.4rem;font-family:var(--sans);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ivory-soft)}
+
+  /* ——————————————————— SECTIONS ——————————————————— */
+  section{padding:4.6rem 0;position:relative}
+  .sechead{display:flex;flex-direction:column;gap:.9rem;margin-bottom:2.8rem;max-width:60ch}
+  .sechead h2{font-size:clamp(1.7rem,3.6vw,2.5rem)}
+  .sechead p{color:var(--ivory-soft);font-size:1.02rem}
+  .secnum{font-family:var(--sans);font-size:.7rem;letter-spacing:.3em;color:var(--gold-deep)}
+
+  .band{background:
+      linear-gradient(180deg,var(--cream),var(--cream-2));
+    color:var(--ink)}
+  .band .sechead p{color:var(--ink-soft)}
+  .band .eyebrow{color:var(--gold-deep)}
+  .band .secnum{color:var(--gold-deep)}
+  .band .rule,.band .rule::before,.band .rule::after{color:rgba(90,68,28,.22)}
+  .band .rule::before,.band .rule::after{background:linear-gradient(90deg,transparent,rgba(90,68,28,.28),transparent)}
+
+  /* ——— logo section ——— */
+  .logogrid{display:grid;grid-template-columns:1.2fr .8fr;gap:1.4rem}
+  @media(max-width:820px){.logogrid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line-gold);border-radius:14px;padding:1.8rem;position:relative;
+    background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.12))}
+  .band .card{border-color:rgba(90,68,28,.18);background:linear-gradient(180deg,#fbf6ea,#f1e8d3);box-shadow:var(--shadow-soft)}
+  .card .cardtag{position:absolute;top:1rem;right:1.2rem}
+  .logo-primary{background:var(--forest);color:var(--ivory);display:flex;align-items:center;justify-content:center;
+    min-height:280px;text-align:center}
+  .lock{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+  .lock .name{font-size:clamp(1.8rem,4vw,2.7rem);letter-spacing:.06em}
+  .lock .role{font-family:var(--sans);font-size:.72rem;letter-spacing:.46em;text-transform:uppercase;color:var(--gold)}
+  .lock .foot{font-family:var(--sans);font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ivory-soft);margin-top:.3rem}
+  .lock .divel{display:flex;align-items:center;gap:.8rem;color:var(--line-gold);width:min(240px,60%);margin:.2rem auto}
+  .lock .divel::before,.lock .divel::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line-gold),transparent)}
+
+  .logo-sub{display:grid;grid-template-rows:1fr 1fr;gap:1.4rem}
+  .badge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;min-height:120px;text-align:center}
+  .mono-M{font-family:var(--serif);font-size:3.4rem;color:var(--gold);position:relative;line-height:1}
+  .seal{width:118px;height:118px}
+
+  /* ——— color section ——— */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
+  .sw{border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,.15);box-shadow:var(--shadow-soft)}
+  .sw .chip{height:104px;position:relative}
+  .sw .meta{padding:.7rem .85rem .9rem;background:#fff8ec;color:var(--ink)}
+  .sw .meta .nm{font-family:var(--serif);font-size:1.02rem}
+  .sw .meta .hex{font-family:var(--sans);font-size:.72rem;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase}
+  .sw .meta .use{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);margin-top:.35rem;line-height:1.5}
+
+  /* ——— typography section ——— */
+  .typegrid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+  @media(max-width:820px){.typegrid{grid-template-columns:1fr}}
+  .spec{border:1px solid var(--line-gold);border-radius:14px;padding:1.6rem 1.8rem;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.12))}
+  .spec .big{font-family:var(--serif);font-size:clamp(3rem,7vw,4.6rem);line-height:.95;color:var(--ivory)}
+  .spec .scriptbig{font-family:var(--script);font-size:clamp(2.6rem,6vw,3.8rem);color:var(--gold-bright);line-height:1}
+  .spec .set{font-family:var(--sans);font-size:clamp(1.7rem,3.6vw,2.2rem);letter-spacing:.02em;color:var(--ivory);line-height:1.2}
+  .spec .glyphs{font-size:1.15rem;letter-spacing:.06em;color:var(--ivory-soft);margin-top:.9rem;word-spacing:.1em}
+  .spec .role{margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line-gold-soft)}
+  .spec .role b{color:var(--gold);font-weight:400;font-family:var(--sans);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase}
+  .spec .role p{color:var(--ivory-soft);font-size:.9rem;margin-top:.3rem}
+  .scale{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;align-items:baseline;margin-top:.4rem}
+  .scale span{color:var(--ivory)}
+
+  /* ——— values / icons ——— */
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+  @media(max-width:820px){.values{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.values{grid-template-columns:1fr}}
+  .val{border:1px solid rgba(90,68,28,.16);border-radius:14px;padding:1.5rem 1.4rem;background:linear-gradient(180deg,#fbf6ea,#f2e9d5);
+    display:flex;flex-direction:column;gap:.7rem;box-shadow:var(--shadow-soft)}
+  .val .ic{width:40px;height:40px;color:var(--gold-deep)}
+  .val h4{font-size:1.16rem;letter-spacing:.04em;color:var(--ink)}
+  .val p{font-size:.9rem;color:var(--ink-soft);line-height:1.6}
+
+  .iconrow{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:2.4rem;justify-content:center}
+  .iconrow .ic-cell{display:flex;flex-direction:column;align-items:center;gap:.6rem;width:96px}
+  .iconrow .ic-cell svg{width:44px;height:44px;color:var(--gold-deep)}
+  .iconrow .ic-cell span{font-family:var(--sans);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+
+  /* process */
+  .process{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;justify-content:center;margin-top:2.4rem}
+  .process .step{display:flex;flex-direction:column;align-items:center;gap:.55rem;width:118px;text-align:center}
+  .process .step svg{width:52px;height:40px;color:var(--gold)}
+  .process .step .st{font-family:var(--sans);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ivory)}
+  .process .step .sd{font-size:.78rem;color:var(--ivory-soft)}
+  .process .arrow{color:var(--gold-deep);font-size:1.1rem;opacity:.7;margin-bottom:1.6rem}
+  @media(max-width:640px){.process .arrow{display:none}}
+
+  /* ——— applications ——— */
+  .apps{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+  @media(max-width:820px){.apps{grid-template-columns:1fr}}
+  .app{border-radius:16px;overflow:hidden;border:1px solid var(--line-gold);background:linear-gradient(180deg,var(--forest-2),var(--forest));box-shadow:var(--shadow)}
+  .app .cap{padding:1rem 1.3rem;display:flex;justify-content:space-between;align-items:baseline;gap:1rem;border-top:1px solid var(--line-gold-soft)}
+  .app .cap .t{font-size:1.02rem;color:var(--ivory)}
+  .app .cap .d{font-family:var(--sans);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ivory-soft)}
+  .stage{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;padding:1.6rem;position:relative;
+    background:radial-gradient(120% 100% at 30% 10%, var(--forest-3), var(--forest-4))}
+
+  /* business card mock */
+  .bcard{width:min(320px,86%);aspect-ratio:1.62;border-radius:10px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,var(--forest-2),var(--forest));border:1px solid var(--line-gold);box-shadow:var(--shadow);
+    padding:1.1rem 1.2rem;display:flex;flex-direction:column;justify-content:space-between}
+  .bcard .bc-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .bcard .bc-name{font-size:1.15rem;color:var(--ivory);letter-spacing:.04em}
+  .bcard .bc-role{font-family:var(--sans);font-size:.54rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+  .bcard .bc-info{font-family:var(--sans);font-size:.58rem;letter-spacing:.06em;color:var(--ivory-soft);line-height:1.7}
+  .bcard .bc-mono{font-size:1.6rem;color:var(--gold)}
+
+  /* letterhead */
+  .letter{width:min(300px,80%);aspect-ratio:.72;background:linear-gradient(180deg,#fbf6ea,#f3ecda);border-radius:6px;
+    box-shadow:var(--shadow);padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:.8rem;color:var(--ink);overflow:hidden}
+  .letter .lh-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(90,68,28,.2);padding-bottom:.7rem}
+  .letter .lh-name{font-size:.98rem;letter-spacing:.03em}
+  .letter .lh-role{font-family:var(--sans);font-size:.46rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-deep)}
+  .letter .lh-lines{display:flex;flex-direction:column;gap:.42rem;margin-top:.4rem}
+  .letter .lh-lines i{display:block;height:5px;border-radius:3px;background:rgba(90,68,28,.14)}
+  .letter .lh-lines i:nth-child(4){width:62%}
+  .letter .lh-foot{margin-top:auto;font-family:var(--sans);font-size:.5rem;letter-spacing:.08em;color:var(--ink-soft);border-top:1px solid rgba(90,68,28,.16);padding-top:.5rem;text-align:center}
+
+  /* hangtag / hut-pass */
+  .tag{width:150px;aspect-ratio:.62;background:linear-gradient(160deg,#20301f,#16241a);border:1px solid var(--gold-deep);border-radius:8px;
+    position:relative;box-shadow:var(--shadow);padding:1.5rem .9rem 1rem;display:flex;flex-direction:column;align-items:center;gap:.55rem;color:var(--ivory)}
+  .tag::before{content:"";position:absolute;top:.5rem;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;border:1.5px solid var(--gold);background:var(--forest)}
+  .tag .tg-mono{font-size:1.5rem;color:var(--gold);margin-top:.3rem}
+  .tag .tg-t{font-family:var(--sans);font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+  .tag .tg-no{font-family:var(--sans);font-size:.56rem;letter-spacing:.12em;color:var(--ivory-soft)}
+  .tag .tg-line{width:70%;height:1px;background:var(--line-gold)}
+  .tag .tg-sig{font-family:var(--script);color:var(--gold-bright);font-size:1.1rem}
+
+  /* box + bag */
+  .parcel{display:flex;gap:1.2rem;align-items:flex-end}
+  .hbox{width:130px;height:96px;border-radius:8px;background:linear-gradient(135deg,#21311f,#15231a);border:1px solid var(--gold-deep);
+    box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;position:relative}
+  .hbox::after{content:"";position:absolute;inset:12px;border:1px solid var(--line-gold);border-radius:4px}
+  .hbox .hb-mono{font-size:2rem;color:var(--gold);position:relative}
+  .bag{width:96px;height:120px;border-radius:4px 4px 6px 6px;background:linear-gradient(180deg,#1b2a1b,#101d13);border:1px solid var(--gold-deep);
+    box-shadow:var(--shadow);position:relative;display:flex;align-items:center;justify-content:center}
+  .bag::before{content:"";position:absolute;top:-14px;left:22px;right:22px;height:26px;border:2px solid var(--gold-deep);border-bottom:none;border-radius:40px 40px 0 0}
+  .bag .bg-name{font-size:.62rem;letter-spacing:.06em;text-align:center;color:var(--gold);transform:rotate(-90deg);white-space:nowrap;font-family:var(--serif)}
+
+  /* wax seal */
+  .waxwrap{display:flex;gap:1.6rem;align-items:center;flex-wrap:wrap;justify-content:center}
+  .wax{width:120px;height:120px;border-radius:50%;position:relative;
+    background:radial-gradient(circle at 38% 32%,#d8b168,#b98b3e 45%,#8a6326 78%,#6f4f1e);
+    box-shadow:inset 0 6px 14px rgba(255,255,255,.28),inset 0 -8px 16px rgba(0,0,0,.42),var(--shadow);
+    display:flex;align-items:center;justify-content:center;color:#3a2a12}
+  .wax .wx-mono{font-size:2.6rem;font-family:var(--serif);text-shadow:0 1px 0 rgba(255,255,255,.25)}
+  .stamp{width:130px;height:130px;color:var(--gold)}
+
+  /* ——————————————————— BANKNOTE ——————————————————— */
+  .noteintro{max-width:64ch}
+  .noteintro .lead{font-size:1.12rem;color:var(--ivory)}
+  .notes{display:flex;flex-direction:column;gap:2.2rem;align-items:center;margin-top:2.6rem}
+  .noteframe{width:min(720px,96%)}
+  .notecap{font-family:var(--sans);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;text-align:center}
+  .note{position:relative;width:100%;aspect-ratio:160/78;border-radius:10px;overflow:hidden;isolation:isolate;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(201,164,92,.35);
+    background:linear-gradient(135deg,var(--forest-3),var(--forest) 55%,var(--forest-4))}
+  .note canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+  .note .frame{position:absolute;z-index:2;pointer-events:none}
+  .note .frame.f1{inset:2.4%;border:1.4px solid var(--gold);border-radius:5px;opacity:.85}
+  .note .frame.f2{inset:3.6%;border:1px solid var(--line-gold);border-radius:3px}
+  .note .content{position:absolute;inset:5.6%;z-index:3}
+
+  /* corners */
+  .corner{position:absolute;z-index:4;text-align:center;line-height:.9}
+  .corner .cv{font-family:var(--serif);font-size:clamp(1.1rem,3.2vw,1.9rem);color:var(--gold-bright)}
+  .corner .cl{font-family:var(--sans);font-size:clamp(.4rem,1.1vw,.56rem);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .corner.tl{top:5.4%;left:5%}.corner.tr{top:5.4%;right:5%}
+  .corner.bl{bottom:5.4%;left:5%}.corner.br{bottom:5.4%;right:5%}
+  .corner .cel{width:clamp(18px,4vw,30px);height:clamp(18px,4vw,30px);color:var(--gold);margin:0 auto .1rem}
+
+  /* front layout */
+  .note-front .content{display:grid;grid-template-columns:32% 1fr;gap:4%;align-items:center;padding:0 8%}
+  .portrait{position:relative;aspect-ratio:.82;max-width:150px;margin:0 auto;width:100%}
+  .portrait canvas{border-radius:50%/56%}
+  .portrait .pring{position:absolute;inset:0;border:1.5px solid var(--gold);border-radius:50%/56%;box-shadow:inset 0 0 0 3px rgba(201,164,92,.18)}
+  .portrait .phat{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .portrait .phat svg{width:64%;color:var(--gold-bright);filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+  .fronttext{display:flex;flex-direction:column;gap:.35rem;text-align:center}
+  .fronttext .bank{font-family:var(--sans);font-size:clamp(.56rem,1.5vw,.78rem);letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+  .fronttext .scriptname{font-family:var(--script);font-size:clamp(2rem,7vw,3.6rem);color:var(--gold-bright);line-height:.9;margin:.1rem 0}
+  .fronttext .place{font-family:var(--sans);font-size:clamp(.48rem,1.3vw,.66rem);letter-spacing:.3em;text-transform:uppercase;color:var(--ivory-soft)}
+  .fronttext .sig{font-family:var(--script);font-size:clamp(1rem,3vw,1.5rem);color:var(--gold);margin-top:.2rem}
+  .serial{position:absolute;z-index:4;font-family:var(--sans);font-size:clamp(.44rem,1.2vw,.62rem);letter-spacing:.14em;color:#d98a6a;font-variant-numeric:tabular-nums}
+  .serial.s1{top:6.2%;right:12%}
+  .serial.s2{bottom:6.2%;left:12%}
+  .notestamp{position:absolute;z-index:5;right:8%;bottom:9%;width:clamp(46px,11vw,74px);height:clamp(46px,11vw,74px);color:var(--gold);opacity:.92;
+    transform:rotate(-9deg);mix-blend-mode:screen}
+  .microstrip{position:absolute;left:6%;right:6%;bottom:2.6%;z-index:4;text-align:center;overflow:hidden;height:1.1em}
+  .microstrip span{font-family:var(--sans);font-size:.42rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);white-space:nowrap;opacity:.75}
+
+  /* back layout */
+  .note-back .content{display:grid;grid-template-columns:1fr;grid-template-rows:auto 1fr auto;gap:2%;padding:1% 9% 0;text-align:center;justify-items:center}
+  .note-back .bank{font-family:var(--sans);font-size:clamp(.56rem,1.5vw,.78rem);letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+  .engrave{position:relative;width:min(58%,320px);aspect-ratio:1.9;align-self:center}
+  .engrave canvas{border-radius:8px}
+  .engrave .eframe{position:absolute;inset:0;border:1px solid var(--gold);border-radius:8px;box-shadow:inset 0 0 0 3px rgba(201,164,92,.14)}
+  .engrave .ehat{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);width:26%;color:var(--gold-bright)}
+  .backbottom{display:flex;align-items:center;justify-content:space-between;width:100%;gap:1rem;padding-bottom:2%}
+  .backbottom .promise{text-align:left;flex:1}
+  .backbottom .promise .pmotto{font-size:clamp(.6rem,1.7vw,.9rem);color:var(--ivory);line-height:1.35}
+  .backbottom .promise .plife{font-family:var(--sans);font-size:clamp(.5rem,1.3vw,.66rem);letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-top:.4rem}
+  .backbottom .promise .paddr{font-family:var(--sans);font-size:clamp(.42rem,1.1vw,.56rem);letter-spacing:.06em;color:var(--ivory-soft);margin-top:.35rem}
+  .qr{width:clamp(44px,11vw,70px);flex:0 0 auto}
+  .qr canvas{border:2px solid var(--gold);border-radius:4px;background:var(--forest-4)}
+  .qr .qcap{font-family:var(--sans);font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:.25rem}
+
+  /* ——————————————————— FOOTER ——————————————————— */
+  footer{padding:4rem 0 3rem;border-top:1px solid var(--line-gold-soft);margin-top:2rem}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem}
+  .foot .col{display:flex;flex-direction:column;gap:.4rem;font-family:var(--sans);font-size:.8rem;color:var(--ivory-soft)}
+  .foot .col b{font-family:var(--serif);font-size:1.05rem;color:var(--ivory);font-weight:400;letter-spacing:.03em;margin-bottom:.3rem}
+  .foot .studio{font-family:var(--serif);font-size:1.6rem;letter-spacing:.28em;color:var(--gold)}
+  .foot .studio small{display:block;font-family:var(--sans);font-size:.56rem;letter-spacing:.34em;color:var(--ivory-soft);margin-top:.3rem}
+
+  /* intro fade */
+  @media(prefers-reduced-motion:no-preference){
+    .fade{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .fade.in{opacity:1;transform:none}
+  }
+</style>
+
+<!-- ————— ICON SPRITE ————— -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="ico-hat" viewBox="0 0 100 64">
+    <g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M9 47C9 41 22 45 50 45s41-4 41 2c0 6-19 10-41 10S9 53 9 47Z"/>
+      <path d="M28 46C26 29 30 16 40 13c3 6 7 6 10 1 3 5 7 5 10-1 10 3 14 16 12 33"/>
+      <path d="M30 41c13 4 27 4 40 0"/>
+    </g>
+  </symbol>
+  <symbol id="ico-heart" viewBox="0 0 48 48">
+    <path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" d="M24 40C10 31 5 23 5 16.5 5 11 9 7 14 7c4 0 7 2.4 10 6 3-3.6 6-6 10-6 5 0 9 4 9 9.5C43 23 38 31 24 40Z"/>
+  </symbol>
+  <symbol id="ico-leaf" viewBox="0 0 48 48">
+    <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 42V20"/>
+      <path d="M24 26C24 16 32 8 42 7c1 10-6 19-16 19h-2Z"/>
+      <path d="M24 33C24 25 17 18 8 18c-1 8 5 16 14 16h2Z"/>
+    </g>
+  </symbol>
+  <symbol id="ico-person" viewBox="0 0 48 48">
+    <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+      <circle cx="24" cy="17" r="9"/>
+      <path d="M7 42c1.5-10 8.5-15 17-15s15.5 5 17 15"/>
+    </g>
+  </symbol>
+  <symbol id="ico-diamond" viewBox="0 0 48 48">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
+      <path d="M13 8h22l9 12-20 22L4 20Z"/>
+      <path d="M4 20h40M13 8l7 12M35 8l-7 12M20 20l4 22M28 20l-4 22"/>
+    </g>
+  </symbol>
+  <symbol id="ico-edelweiss" viewBox="0 0 48 48">
+    <g fill="none" stroke="currentColor" stroke-width="1.7">
+      <g id="ew-petals">
+        <ellipse cx="24" cy="11.5" rx="3.4" ry="8"/>
+      </g>
+    </g>
+  </symbol>
+  <symbol id="ico-mountain" viewBox="0 0 64 40">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M2 34 20 10l9 12 7-8 14 20Z"/>
+      <path d="M16 17l4 4 4-4M31 17l3 3"/>
+      <path d="M2 34h60"/>
+    </g>
+  </symbol>
+  <symbol id="ico-scissors" viewBox="0 0 48 48">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="12" r="5"/><circle cx="11" cy="36" r="5"/>
+      <path d="M15 15 40 34M15 33 40 14M22 24l-7 5"/>
+    </g>
+  </symbol>
+  <symbol id="ico-feather" viewBox="0 0 48 48">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M40 8C22 10 12 22 10 38l4-2c14 0 24-10 26-28Z"/>
+      <path d="M14 36 32 18M18 30h8M22 24h8"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ————————————————— COVER ————————————————— -->
+<header class="cover">
+  <canvas id="cover-canvas" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="coverlock">
+      <div class="kicker">by Familie Schätz · Tegernsee</div>
+      <div class="rule" style="width:min(360px,70vw)"><svg class="star"><use href="#ico-edelweiss"/></svg></div>
+      <h1>MARIETTA'S</h1>
+      <div class="sub">Hut Atelier</div>
+      <div class="script">Handgemacht am Tegernsee</div>
+      <div class="coverdoc">Corporate Identity · Markenhandbuch · Ausgabe 2025</div>
+    </div>
+  </div>
+</header>
+
+<!-- ————————————————— 1 · MARKE ————————————————— -->
+<section>
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum">01 · Die Marke</span>
+      <h2>Ein Hut ist kein Accessoire.<br>Er ist ein Begleiter.</h2>
+      <p>Bei Marietta's kommt jeder Hut auf seinem eigenen Weg zu Ihnen: als sorgfältig ausgewählter Zukauf-Hut in bester Qualität, als Eigenanfertigung aus der Werkstatt — oder als Rohling, den wir von Hand veredeln, mit Band, Feder und Initialen. Kein Stück von der Stange, sondern immer ein Unikat für die besonderen Momente eines Lebens. Diese Haltung trägt alles, was die Marke nach außen zeigt.</p>
+    </div>
+    <div class="logogrid">
+      <div class="card fade" style="display:flex;flex-direction:column;justify-content:center;gap:1.4rem">
+        <p style="font-size:1.3rem;color:var(--ivory);line-height:1.5;font-style:italic">
+          „Jeder Hut erzählt eine Geschichte. Von der Hand, die ihn formt. Vom Ort, der ihn prägt. Und von Menschen, die das Echte zu schätzen wissen.“
+        </p>
+        <div class="rule"><svg class="star"><use href="#ico-edelweiss"/></svg></div>
+        <p class="label" style="color:var(--gold)">Der Markenkern in einem Satz</p>
+      </div>
+      <div class="card fade" style="display:flex;flex-direction:column;gap:1rem;justify-content:center">
+        <div><span class="label">Name</span><p style="color:var(--ivory);font-size:1.15rem">Marietta's Hut Atelier</p></div>
+        <div><span class="label">Trägerin</span><p style="color:var(--ivory)">Marietta Schätz · Familie Schätz</p></div>
+        <div><span class="label">Heimat</span><p style="color:var(--ivory)">Rathausplatz 5 · 83684 Tegernsee</p></div>
+        <div><span class="label">Versprechen</span><p style="color:var(--ivory)">Ausgewählt. Gefertigt. Veredelt. Für ein Leben lang.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 2 · LOGO ————————————————— -->
+<section class="band">
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum">02 · Logo & Marke</span>
+      <h2>Die Wortmarke &amp; ihre Zeichen</h2>
+      <p>Der Name steht in einer klassischen Antiqua, das Edelweiß trennt Marke und Ort. Für kleine Flächen — Siegel, Prägung, Social — gibt es das Monogramm und das runde Handwerkssiegel.</p>
+    </div>
+    <div class="logogrid">
+      <div class="card logo-primary fade">
+        <span class="cardtag label" style="color:var(--gold)">Primär-Lockup</span>
+        <div class="lock">
+          <div class="name">MARIETTA'S</div>
+          <div class="role">Hut Atelier</div>
+          <div class="divel"><svg class="star" style="width:1.2em;height:1.2em"><use href="#ico-edelweiss"/></svg></div>
+          <div class="foot">Handgemacht am Tegernsee</div>
+        </div>
+      </div>
+      <div class="logo-sub">
+        <div class="card badge fade">
+          <span class="cardtag label">Monogramm</span>
+          <div class="mono-M">M</div>
+          <div class="label" style="color:var(--gold-deep)">für Siegel, Knopf &amp; Futter</div>
+        </div>
+        <div class="card badge fade">
+          <span class="cardtag label">Handwerkssiegel</span>
+          <svg class="seal" viewBox="0 0 120 120" id="seal-svg" aria-label="Handgemacht mit Liebe Siegel"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 3 · FARBEN ————————————————— -->
+<section>
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum">03 · Farbwelt</span>
+      <h2>Wald, Messing &amp; Werkstatt-Creme</h2>
+      <p>Tiefes Tannengrün als Grund, warmes Alt-Gold als Akzent, ungebleichte Creme fürs Papier. Eine Palette wie die Werkstatt selbst — dunkles Holz, Messingbeschläge, Filz im Naturton.</p>
+    </div>
+    <div class="swatches fade">
+      <div class="sw"><div class="chip" style="background:#132318"></div><div class="meta"><div class="nm">Waldgrün</div><div class="hex">#132318</div><div class="use">Primärfarbe · Hintergründe, Autorität, Ruhe</div></div></div>
+      <div class="sw"><div class="chip" style="background:#1e3624"></div><div class="meta"><div class="nm">Tannentiefe</div><div class="hex">#1E3624</div><div class="use">Verläufe &amp; Karten auf Grün</div></div></div>
+      <div class="sw"><div class="chip" style="background:linear-gradient(135deg,#e6cd94,#c9a45c 55%,#a8823c)"></div><div class="meta"><div class="nm">Alt-Gold / Messing</div><div class="hex">#C9A45C</div><div class="use">Akzent · Linien, Schrift-Highlights, Prägung</div></div></div>
+      <div class="sw"><div class="chip" style="background:#f4eddd"></div><div class="meta"><div class="nm">Werkstatt-Creme</div><div class="hex">#F4EDDD</div><div class="use">Papierflächen, helle Bänder</div></div></div>
+      <div class="sw"><div class="chip" style="background:#ece1cb"></div><div class="meta"><div class="nm">Leinen</div><div class="hex">#ECE1CB</div><div class="use">Zweiter Cremeton, Trennungen</div></div></div>
+      <div class="sw"><div class="chip" style="background:#2a2116"></div><div class="meta"><div class="nm">Tinte</div><div class="hex">#2A2116</div><div class="use">Text auf Creme</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 4 · TYPOGRAFIE ————————————————— -->
+<section class="band">
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum">04 · Typografie</span>
+      <h2>Antiqua, Schreibschrift &amp; Grotesk</h2>
+      <p>Eine kontrastreiche Antiqua trägt die Marke, eine feine Schreibschrift die persönliche Note („Marietta's“, Signaturen), eine ruhige Grotesk die Kleinschrift — Labels, Adressen, Seriennummern.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="typegrid">
+      <div class="spec fade" style="background:linear-gradient(180deg,var(--forest-2),var(--forest));border-color:var(--line-gold)">
+        <div class="big">Aa</div>
+        <div class="glyphs">ABCDEFGHIJKLMN · abcdefghijk · 0123456789</div>
+        <div class="scale">
+          <span style="font-size:2rem">Unikat</span>
+          <span style="font-size:1.4rem">Handwerk</span>
+          <span style="font-size:1.05rem">am Tegernsee</span>
+        </div>
+        <div class="role"><b>Display-Antiqua</b><p>Hoefler Text / Palatino — Überschriften, Wortmarke, Fließtext. Weite 400, großzügige Laufweite bei Versalien.</p></div>
+      </div>
+      <div class="spec fade" style="background:linear-gradient(180deg,var(--forest-2),var(--forest));border-color:var(--line-gold)">
+        <div class="scriptbig">Marietta's</div>
+        <div class="set" style="margin-top:1.2rem">HANDGEMACHT<br>AM TEGERNSEE</div>
+        <div class="glyphs" style="font-family:var(--sans);font-size:.9rem;letter-spacing:.06em">Aa Bb Cc · 0123 · info@marietta-hutatelier.de</div>
+        <div class="role">
+          <b>Schreibschrift &amp; Grotesk</b>
+          <p>Schreibschrift (Snell Roundhand) nur sparsam für den Namen &amp; Signaturen. Grotesk (Helvetica Neue) für Labels &amp; Daten, versal, Sperrung ≈ 0,3 em.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 5 · WERTE & BILDWELT ————————————————— -->
+<section class="band" style="background:linear-gradient(180deg,#efe6d3,#e8ddc6)">
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum">05 · Werte &amp; Bildzeichen</span>
+      <h2>Sechs Werte — sechs Zeichen</h2>
+      <p>Feine Linien-Icons im Gold-Ton übersetzen die Markenwerte. Immer einlinig, gleiche Strichstärke, ruhig — nie flächig oder bunt.</p>
+    </div>
+    <div class="values fade">
+      <div class="val"><svg class="ic"><use href="#ico-hat"/></svg><h4>Handwerk</h4><p>Zukauf, Eigenfertigung und Handveredelung von Rohlingen — drei Wege mit derselben Liebe zum Detail.</p></div>
+      <div class="val"><svg class="ic"><use href="#ico-heart"/></svg><h4>Emotion</h4><p>Jeder Hut erzählt eine Geschichte und begleitet besondere Momente.</p></div>
+      <div class="val"><svg class="ic"><use href="#ico-leaf"/></svg><h4>Nachhaltigkeit</h4><p>Natürliche Materialien, langlebige Qualität, bewusster Umgang mit Ressourcen.</p></div>
+      <div class="val"><svg class="ic"><use href="#ico-person"/></svg><h4>Persönlich</h4><p>Der Mensch im Mittelpunkt — ehrliche Beratung und echte Wertschätzung.</p></div>
+      <div class="val"><svg class="ic"><use href="#ico-diamond"/></svg><h4>Exklusivität</h4><p>Individuelle Anfertigung und kleine Stückzahlen machen jeden Hut besonders.</p></div>
+      <div class="val"><svg class="ic"><use href="#ico-edelweiss"/></svg><h4>Heimat</h4><p>Verwurzelt am Tegernsee — inspiriert von Natur, Kultur und den Menschen hier.</p></div>
+    </div>
+    <div class="iconrow fade">
+      <div class="ic-cell"><svg><use href="#ico-scissors"/></svg><span>Zuschnitt</span></div>
+      <div class="ic-cell"><svg><use href="#ico-feather"/></svg><span>Feder</span></div>
+      <div class="ic-cell"><svg><use href="#ico-mountain"/></svg><span>Tegernsee</span></div>
+      <div class="ic-cell"><svg><use href="#ico-diamond"/></svg><span>Qualität</span></div>
+      <div class="ic-cell"><svg><use href="#ico-edelweiss"/></svg><span>Signet</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 6 · PROZESS ————————————————— -->
+<section>
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum">06 · Vom Rohling zum Unikat</span>
+      <h2>Fünf Schritte, ein Begleiter</h2>
+      <p>Die Entstehungsgeschichte jedes Hutes ist selbst ein Markenmotiv — als Bildfolge auf Website, Verpackung und Hut-Pass.</p>
+    </div>
+    <div class="process fade">
+      <div class="step"><svg><use href="#ico-hat"/></svg><span class="st">Rohling</span><span class="sd">wählen</span></div>
+      <span class="arrow">→</span>
+      <div class="step"><svg><use href="#ico-hat"/></svg><span class="st">Form</span><span class="sd">anpassen</span></div>
+      <span class="arrow">→</span>
+      <div class="step"><svg><use href="#ico-feather"/></svg><span class="st">Details</span><span class="sd">festlegen</span></div>
+      <span class="arrow">→</span>
+      <div class="step"><svg><use href="#ico-scissors"/></svg><span class="st">Personalisieren</span><span class="sd">veredeln</span></div>
+      <span class="arrow">→</span>
+      <div class="step"><svg><use href="#ico-edelweiss"/></svg><span class="st">Fertig</span><span class="sd">Ihr Unikat</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 7 · ANWENDUNGEN ————————————————— -->
+<section class="band" style="background:linear-gradient(180deg,#14251a,#0e1b12);color:var(--ivory)">
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum" style="color:var(--gold-deep)">07 · Anwendungen</span>
+      <h2 style="color:var(--ivory)">Die Marke im Alltag</h2>
+      <p style="color:var(--ivory-soft)">Vom ersten Kontakt bis zum Auspacken: durchgängig Grün, Gold und Creme, immer das Monogramm oder das Siegel als Anker.</p>
+    </div>
+    <div class="apps fade">
+      <div class="app">
+        <div class="stage">
+          <div class="bcard">
+            <div class="bc-top">
+              <div><div class="bc-name">Marietta Schätz</div><div class="bc-role">Hutmacherin</div></div>
+              <div class="bc-mono">M</div>
+            </div>
+            <div class="bc-info">Rathausplatz 5 · 83684 Tegernsee<br>+49 8022 987654 · marietta-hutatelier.de</div>
+          </div>
+        </div>
+        <div class="cap"><span class="t">Visitenkarte</span><span class="d">85 × 55 mm · Prägung Gold</span></div>
+      </div>
+
+      <div class="app">
+        <div class="stage">
+          <div class="letter">
+            <div class="lh-head"><div><div class="lh-name">Marietta's Hut Atelier</div><div class="lh-role">Handgemacht am Tegernsee</div></div><div style="font-size:1.2rem;color:var(--gold-deep)">M</div></div>
+            <div class="lh-lines"><i></i><i></i><i></i><i></i></div>
+            <div class="lh-foot">Rathausplatz 5 · 83684 Tegernsee · marietta-hutatelier.de</div>
+          </div>
+        </div>
+        <div class="cap"><span class="t">Briefpapier</span><span class="d">DIN A4 · Creme</span></div>
+      </div>
+
+      <div class="app">
+        <div class="stage">
+          <div class="tag">
+            <div class="tg-mono">M</div>
+            <div class="tg-t">Hut-Pass</div>
+            <div class="tg-no">No. 2025 · 017</div>
+            <div class="tg-line"></div>
+            <div style="font-family:var(--sans);font-size:.46rem;letter-spacing:.06em;color:var(--ivory-soft);text-align:center;line-height:1.6">Handgefertigt von<br>Marietta Schätz</div>
+            <div class="tg-sig">Marietta &#9829;</div>
+          </div>
+        </div>
+        <div class="cap"><span class="t">Hut-Pass &amp; Anhänger</span><span class="d">Seriennummer · Echtheit</span></div>
+      </div>
+
+      <div class="app">
+        <div class="stage">
+          <div class="parcel">
+            <div class="hbox"><div class="hb-mono">M</div></div>
+            <div class="bag"><div class="bg-name">Marietta's</div></div>
+          </div>
+        </div>
+        <div class="cap"><span class="t">Verpackung &amp; Tasche</span><span class="d">Hutschachtel · Tragetasche</span></div>
+      </div>
+
+      <div class="app" style="grid-column:1/-1">
+        <div class="stage" style="aspect-ratio:auto;padding:2.4rem">
+          <div class="waxwrap">
+            <div class="wax"><div class="wx-mono">M</div></div>
+            <svg class="stamp" viewBox="0 0 120 120" id="stamp-svg" aria-label="Prägestempel"></svg>
+            <div style="max-width:34ch">
+              <span class="label" style="color:var(--gold)">Siegel &amp; Prägung</span>
+              <p style="color:var(--ivory-soft);font-size:.92rem;margin-top:.5rem">Das Wachssiegel schließt Verpackung und Hut-Pass. Als Blindprägung erscheint das Monogramm auf Leder-Innenband, Schachtel und Umschlag — fühlbar, nicht nur sichtbar.</p>
+            </div>
+          </div>
+        </div>
+        <div class="cap"><span class="t">Wachssiegel &amp; Blindprägung</span><span class="d">Monogramm M · Rundsiegel</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 8 · DER SCHEIN ————————————————— -->
+<section>
+  <div class="wrap">
+    <div class="sechead fade">
+      <span class="secnum">08 · Der Flyer als Schein</span>
+      <h2>Ein Werbeträger, den man behält</h2>
+      <div class="noteintro">
+        <p class="lead">Statt eines Flyers, der weggeworfen wird: ein Sammlerschein im Stil einer Banknote — graviert, nummeriert, gesiegelt.</p>
+        <p style="color:var(--ivory-soft);margin-top:.8rem">Guilloche-Rosetten, Mikroschrift, Prägesiegel und eine echte Seriennummer machen aus dem Werbeträger ein kleines Objekt. Wertangabe: <b style="color:var(--gold)">1 Unikat</b> — die Währung des Ateliers ist das persönlich veredelte Einzelstück. Im selben Geist wie die LUZ-Kunstwährung, aber ganz auf Marietta's Welt gemünzt.</p>
+      </div>
+    </div>
+
+    <div class="notes">
+      <div class="noteframe fade">
+        <div class="notecap">Vorderseite</div>
+        <div class="note note-front">
+          <canvas data-note="front" aria-hidden="true"></canvas>
+          <div class="frame f1"></div><div class="frame f2"></div>
+          <div class="corner tl"><svg class="cel"><use href="#ico-edelweiss"/></svg><div class="cl">Unikat</div></div>
+          <div class="corner tr"><div class="cv">1</div><div class="cl">Unikat</div></div>
+          <div class="corner bl"><div class="cv">1</div><div class="cl">Unikat</div></div>
+          <div class="corner br"><svg class="cel"><use href="#ico-edelweiss"/></svg><div class="cl">Unikat</div></div>
+          <div class="serial s1">No 2025 · 017</div>
+          <div class="serial s2">No 2025 · 017</div>
+          <div class="content">
+            <div class="portrait">
+              <canvas data-note="portrait" aria-hidden="true"></canvas>
+              <div class="pring"></div>
+              <div class="phat"><svg viewBox="0 0 100 64"><use href="#ico-hat"/></svg></div>
+            </div>
+            <div class="fronttext">
+              <div class="bank">Marietta's Hut Atelier</div>
+              <div class="scriptname">Marietta's</div>
+              <div class="place">Handgemacht am Tegernsee</div>
+              <div class="sig">Marietta &#9829;</div>
+            </div>
+          </div>
+          <svg class="notestamp" viewBox="0 0 120 120" id="notestamp-svg" aria-hidden="true"></svg>
+          <div class="microstrip"><span id="microtext-front"></span></div>
+        </div>
+      </div>
+
+      <div class="noteframe fade">
+        <div class="notecap">Rückseite</div>
+        <div class="note note-back">
+          <canvas data-note="back" aria-hidden="true"></canvas>
+          <div class="frame f1"></div><div class="frame f2"></div>
+          <div class="corner tl"><div class="cv">1</div></div>
+          <div class="corner tr"><div class="cv">1</div></div>
+          <div class="content">
+            <div class="bank">Ein Hut fürs Leben</div>
+            <div class="engrave">
+              <canvas data-note="engrave" aria-hidden="true"></canvas>
+              <div class="eframe"></div>
+              <div class="ehat"><svg viewBox="0 0 100 64"><use href="#ico-hat"/></svg></div>
+            </div>
+            <div class="backbottom">
+              <div class="promise">
+                <div class="pmotto">Jeder Hut erzählt eine Geschichte.<br>Von der Hand, die ihn formt. Vom Ort, der ihn prägt.</div>
+                <div class="plife">Handgemacht am Tegernsee</div>
+                <div class="paddr">Rathausplatz 5 · 83684 Tegernsee · by Familie Schätz · marietta-hutatelier.de</div>
+              </div>
+              <div class="qr">
+                <canvas data-note="qr" width="120" height="120" aria-hidden="true"></canvas>
+                <div class="qcap">Mehr erleben</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— FOOTER ————————————————— -->
+<footer>
+  <div class="wrap foot">
+    <div class="col">
+      <b>Marietta's Hut Atelier</b>
+      Inhaberin: Marietta Schätz<br>
+      Rathausplatz 5 · 83684 Tegernsee<br>
+      +49 8022 987654<br>
+      marietta-hutatelier.de
+    </div>
+    <div class="col" style="text-align:right;align-items:flex-end">
+      <div class="studio">L·U·Z<small>Creative Studio · Konzept &amp; Gestaltung</small></div>
+      <span style="margin-top:1rem">Corporate Identity · Ausgabe 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var GOLD="#c9a45c", GOLDB="#e6cd94", GOLDD="#a8823c", INK="#0e1b12";
+
+  /* ————— build edelweiss petals (8, rotated) ————— */
+  (function(){
+    var g=document.getElementById("ew-petals"); if(!g) return;
+    var base=g.querySelector("ellipse");
+    for(var i=1;i<8;i++){
+      var e=base.cloneNode(true);
+      e.setAttribute("transform","rotate("+(i*45)+" 24 24)");
+      g.appendChild(e);
+    }
+    // center dots
+    var svg=g.closest("symbol");
+    var ns="http://www.w3.org/2000/svg";
+    var dots=document.createElementNS(ns,"g");
+    dots.setAttribute("fill","currentColor"); dots.setAttribute("stroke","none");
+    var pts=[[24,24,1.6],[24,21,1],[27,25,1],[21,25,1],[24,27,1]];
+    pts.forEach(function(p){var c=document.createElementNS(ns,"circle");c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",p[2]);dots.appendChild(c);});
+    g.parentNode.appendChild(dots);
+  })();
+
+  /* ————— circular seal / stamp text on a path ————— */
+  function buildSeal(svg, topText, botText, big){
+    if(!svg) return;
+    var ns="http://www.w3.org/2000/svg";
+    svg.innerHTML="";
+    function circle(r,w,dash){var c=document.createElementNS(ns,"circle");c.setAttribute("cx",60);c.setAttribute("cy",60);c.setAttribute("r",r);c.setAttribute("fill","none");c.setAttribute("stroke","currentColor");c.setAttribute("stroke-width",w);if(dash)c.setAttribute("stroke-dasharray",dash);svg.appendChild(c);}
+    circle(56,1.4); circle(46,3); circle(41,1);
+    // dotted inner ring
+    var dot=document.createElementNS(ns,"circle");dot.setAttribute("cx",60);dot.setAttribute("cy",60);dot.setAttribute("r",50);dot.setAttribute("fill","none");dot.setAttribute("stroke","currentColor");dot.setAttribute("stroke-width",1.4);dot.setAttribute("stroke-dasharray","1 4");dot.setAttribute("stroke-linecap","round");svg.appendChild(dot);
+    // text paths
+    var pTop=document.createElementNS(ns,"path");pTop.setAttribute("id",svg.id+"-top");pTop.setAttribute("d","M 60 60 m -43 0 a 43 43 0 1 1 86 0");pTop.setAttribute("fill","none");svg.appendChild(pTop);
+    var pBot=document.createElementNS(ns,"path");pBot.setAttribute("id",svg.id+"-bot");pBot.setAttribute("d","M 60 60 m -43 0 a 43 43 0 0 0 86 0");pBot.setAttribute("fill","none");svg.appendChild(pBot);
+    function textOn(id,txt){
+      var t=document.createElementNS(ns,"text");
+      t.setAttribute("fill","currentColor");t.setAttribute("font-family",'"Helvetica Neue",Arial,sans-serif');
+      t.setAttribute("font-size","9.2");t.setAttribute("letter-spacing","3.1");t.setAttribute("font-weight","600");
+      var tp=document.createElementNS(ns,"textPath");tp.setAttribute("href","#"+id);tp.setAttribute("startOffset","50%");tp.setAttribute("text-anchor","middle");
+      tp.textContent=txt;t.appendChild(tp);svg.appendChild(t);
+    }
+    textOn(svg.id+"-top",topText);
+    textOn(svg.id+"-bot",botText);
+    // center emblem
+    var use=document.createElementNS(ns,"use");use.setAttribute("href","#ico-edelweiss");use.setAttribute("x",42);use.setAttribute("y",39);use.setAttribute("width",36);use.setAttribute("height",36);svg.appendChild(use);
+    if(big){
+      var m=document.createElementNS(ns,"text");m.setAttribute("x",60);m.setAttribute("y",92);m.setAttribute("text-anchor","middle");m.setAttribute("fill","currentColor");m.setAttribute("font-family",'"Hoefler Text",Palatino,serif');m.setAttribute("font-size","15");m.textContent="Est. Tegernsee";svg.appendChild(m);
+    }
+  }
+  buildSeal(document.getElementById("seal-svg"),"HANDGEMACHT MIT LIEBE","TEGERNSEE · UNIKAT",false);
+  buildSeal(document.getElementById("stamp-svg"),"MARIETTA'S HUT ATELIER","HANDGEMACHT AM TEGERNSEE",false);
+  buildSeal(document.getElementById("notestamp-svg"),"GEPRÜFT · ECHT","MARIETTA'S · TEGERNSEE",false);
+
+  /* microtext strip */
+  var mt=document.getElementById("microtext-front");
+  if(mt){ mt.textContent=(" ·  HANDGEMACHT AM TEGERNSEE  ").repeat(10); }
+
+  /* ————— guilloché engine ————— */
+  function rosette(ctx,cx,cy,R,r,d,rev,color,alpha,lw){
+    ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.beginPath();
+    var ratio=(R-r)/r, cycles=r/gcd(Math.round(R),Math.round(r)), steps=720*cycles, s=rev?-1:1;
+    for(var i=0;i<=steps;i++){
+      var t=(i/steps)*Math.PI*2*cycles;
+      var x=cx+(R-r)*Math.cos(t)+s*d*Math.cos(ratio*t);
+      var y=cy+(R-r)*Math.sin(t)-d*Math.sin(ratio*t);
+      i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    }
+    ctx.stroke();ctx.restore();
+  }
+  function gcd(a,b){while(b){var t=b;b=a%b;a=t;}return a||1;}
+
+  function wavyBorder(ctx,w,h,inset,amp,waves,lines,color,alpha){
+    ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=.6;
+    for(var l=0;l<lines;l++){
+      var ph=l/lines*Math.PI*2, off=inset+l*1.6;
+      ctx.beginPath();
+      // top & bottom
+      [[off,1],[h-off,-1]].forEach(function(row){
+        var yy=row[0];
+        for(var x=off;x<=w-off;x+=3){
+          var y=yy+row[1]*amp*Math.sin((x/(w))*Math.PI*2*waves+ph);
+          (x===off)?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+      });
+      // left & right
+      [[off,1],[w-off,-1]].forEach(function(col){
+        var xx=col[0];ctx.moveTo(xx,off);
+        for(var y=off;y<=h-off;y+=3){
+          var x=xx+col[1]*amp*Math.sin((y/(h))*Math.PI*2*waves+ph);
+          ctx.lineTo(x,y);
+        }
+      });
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function lattice(ctx,w,h,color,alpha){
+    ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=.5;
+    var gap=7;
+    for(var y=0;y<h;y+=gap){
+      ctx.beginPath();
+      for(var x=0;x<=w;x+=4){
+        var yy=y+3*Math.sin((x/w)*Math.PI*10+y*.05);
+        (x===0)?ctx.moveTo(x,yy):ctx.lineTo(x,yy);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  var HATPATH=new Path2D("M9 47C9 41 22 45 50 45s41-4 41 2c0 6-19 10-41 10S9 53 9 47Z M28 46C26 29 30 16 40 13c3 6 7 6 10 1 3 5 7 5 10-1 10 3 14 16 12 33");
+  function watermarkHat(ctx,cx,cy,scale,color,alpha){
+    ctx.save();ctx.globalAlpha=alpha;ctx.translate(cx,cy);ctx.scale(scale,scale);ctx.translate(-50,-34);
+    ctx.strokeStyle=color;ctx.lineWidth=1.4;ctx.stroke(HATPATH);ctx.restore();
+  }
+
+  function fit(cv){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    var w=cv.clientWidth||cv.width, h=cv.clientHeight||cv.height;
+    cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+    var ctx=cv.getContext("2d");ctx.setTransform(dpr,0,0,dpr,0,0);
+    return {ctx:ctx,w:w,h:h};
+  }
+
+  function drawCover(cv){
+    var f=fit(cv),ctx=f.ctx,w=f.w,h=f.h;
+    ctx.clearRect(0,0,w,h);
+    var cx=w/2,cy=h*.42, R=Math.min(w,h)*.6;
+    rosette(ctx,cx,cy,R,R*0.42,R*0.30,false,GOLD,.16,.6);
+    rosette(ctx,cx,cy,R*0.78,R*0.33,R*0.24,true,GOLD,.13,.6);
+    rosette(ctx,cx,cy,R*1.15,R*0.5,R*0.34,false,GOLDD,.08,.6);
+  }
+
+  function drawFront(cv){
+    var f=fit(cv),ctx=f.ctx,w=f.w,h=f.h;
+    ctx.clearRect(0,0,w,h);
+    lattice(ctx,w,h,GOLD,.05);
+    wavyBorder(ctx,w,h,w*.028,3.4,10,3,GOLD,.28);
+    // right watermark hat + rosette
+    watermarkHat(ctx,w*.72,h*.5,Math.min(w,h)*.028,GOLDB,.10);
+    rosette(ctx,w*.72,h*.5,h*.34,h*.14,h*.10,false,GOLD,.10,.5);
+    // corner rosettes
+    [[w*.5,h*.5,0]].forEach(function(){});
+    rosette(ctx,w*.5,h*.5,h*.46,h*.19,h*.13,false,GOLD,.05,.5);
+  }
+
+  function drawBack(cv){
+    var f=fit(cv),ctx=f.ctx,w=f.w,h=f.h;
+    ctx.clearRect(0,0,w,h);
+    lattice(ctx,w,h,GOLD,.05);
+    wavyBorder(ctx,w,h,w*.028,3.4,10,3,GOLD,.26);
+    rosette(ctx,w*.5,h*.5,h*.5,h*.2,h*.14,false,GOLD,.07,.5);
+    rosette(ctx,w*.18,h*.5,h*.24,h*.1,h*.075,true,GOLDD,.1,.5);
+    rosette(ctx,w*.82,h*.5,h*.24,h*.1,h*.075,true,GOLDD,.1,.5);
+  }
+
+  function drawPortrait(cv){
+    var f=fit(cv),ctx=f.ctx,w=f.w,h=f.h;
+    ctx.clearRect(0,0,w,h);
+    ctx.save();
+    ctx.beginPath();ctx.ellipse(w/2,h/2,w/2,h*.56,0,0,Math.PI*2);ctx.clip();
+    var g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,"#1e3624");g.addColorStop(1,"#0e1b12");
+    ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    rosette(ctx,w/2,h/2,h*.36,h*.15,h*.11,false,GOLD,.5,.5);
+    rosette(ctx,w/2,h/2,h*.26,h*.11,h*.08,true,GOLDB,.4,.5);
+    ctx.restore();
+  }
+
+  function drawEngrave(cv){
+    var f=fit(cv),ctx=f.ctx,w=f.w,h=f.h;
+    ctx.clearRect(0,0,w,h);
+    ctx.save();
+    // sky gradient
+    var g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,"#16281c");g.addColorStop(1,"#0c170f");
+    ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    // engraved horizontal lines (sky)
+    ctx.strokeStyle=GOLD;ctx.globalAlpha=.16;ctx.lineWidth=.6;
+    for(var y=h*.12;y<h*.62;y+=3){ctx.beginPath();ctx.moveTo(w*.04,y);ctx.lineTo(w*.96,y);ctx.stroke();}
+    ctx.globalAlpha=1;
+    // mountains
+    function ridge(base,amp,col,al){
+      ctx.beginPath();ctx.moveTo(0,h);
+      ctx.lineTo(0,base);
+      var peaks=[[.18,-amp],[.32,-amp*.5],[.5,-amp*1.3],[.68,-amp*.6],[.84,-amp],[1,-amp*.3]];
+      var px=0,py=base;
+      peaks.forEach(function(p){ctx.lineTo(w*p[0],base+p[1]);});
+      ctx.lineTo(w,h);ctx.closePath();
+      ctx.fillStyle=col;ctx.globalAlpha=al;ctx.fill();ctx.globalAlpha=1;
+    }
+    ridge(h*.66,h*.34,"#1c3222",1);
+    ridge(h*.74,h*.22,"#132318",1);
+    // engraved contour lines on mountains
+    ctx.strokeStyle=GOLDB;ctx.globalAlpha=.22;ctx.lineWidth=.5;
+    for(var i=0;i<5;i++){ctx.beginPath();ctx.moveTo(w*.1,h*(.66+i*.05));ctx.lineTo(w*.9,h*(.66+i*.05));ctx.stroke();}
+    // lake
+    ctx.globalAlpha=.3;ctx.strokeStyle=GOLD;
+    for(var l=0;l<6;l++){ctx.beginPath();var yy=h*.82+l*2.5;ctx.moveTo(w*.15,yy);ctx.lineTo(w*.85,yy);ctx.stroke();}
+    ctx.globalAlpha=1;ctx.restore();
+  }
+
+  /* pseudo QR (decorative) */
+  function drawQR(cv){
+    var ctx=cv.getContext("2d"),n=21,cell=cv.width/n;
+    ctx.clearRect(0,0,cv.width,cv.height);
+    ctx.fillStyle=GOLDB;
+    // deterministic pattern
+    function on(r,c){var v=(r*7+c*13+((r*c)%5)*3+ (r%3)*(c%4))%7;return v<3;}
+    for(var r=0;r<n;r++)for(var c=0;c<n;c++){ if(on(r,c)) ctx.fillRect(c*cell,r*cell,cell+.6,cell+.6); }
+    // finder squares
+    function finder(x,y){
+      ctx.fillStyle=GOLDB;ctx.fillRect(x,y,cell*7,cell*7);
+      ctx.fillStyle=INK;ctx.fillRect(x+cell,y+cell,cell*5,cell*5);
+      ctx.fillStyle=GOLDB;ctx.fillRect(x+cell*2,y+cell*2,cell*3,cell*3);
+    }
+    finder(0,0);finder(cv.width-cell*7,0);finder(0,cv.height-cell*7);
+  }
+
+  var canvases=[].slice.call(document.querySelectorAll("[data-note]"));
+  function renderNotes(){
+    canvases.forEach(function(cv){
+      var k=cv.getAttribute("data-note");
+      if(k==="front")drawFront(cv);
+      else if(k==="back")drawBack(cv);
+      else if(k==="portrait")drawPortrait(cv);
+      else if(k==="engrave")drawEngrave(cv);
+      else if(k==="qr")drawQR(cv);
+    });
+  }
+  var coverCv=document.getElementById("cover-canvas");
+  function renderAll(){ if(coverCv)drawCover(coverCv); renderNotes(); }
+
+  // initial + resize
+  window.addEventListener("load",renderAll);
+  renderAll();
+  var rt;
+  window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(renderAll,180);});
+  if(window.ResizeObserver){
+    var ro=new ResizeObserver(function(){clearTimeout(rt);rt=setTimeout(renderAll,120);});
+    canvases.forEach(function(c){ro.observe(c);});
+  }
+
+  /* fade-in on scroll */
+  if(!matchMedia("(prefers-reduced-motion:reduce)").matches && "IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});
+    document.querySelectorAll(".fade").forEach(function(el){io.observe(el);});
+  }else{
+    document.querySelectorAll(".fade").forEach(function(el){el.classList.add("in");});
+  }
+})();
+</script>
