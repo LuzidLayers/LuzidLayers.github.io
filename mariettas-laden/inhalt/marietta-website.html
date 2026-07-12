@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Marietta's Hut Atelier — Handgemacht am Tegernsee</title>
 <style>
   :root{
@@ -72,7 +73,11 @@
     border-bottom:1px solid transparent}
   nav.scrolled{background:rgba(16,28,19,.86);backdrop-filter:blur(14px);padding-top:14px;padding-bottom:14px;
     border-bottom:1px solid var(--line-dark)}
-  .brand{font-family:var(--serif);font-size:1.02rem;letter-spacing:.06em;color:var(--ink-dark);display:flex;flex-direction:column;line-height:1.05}
+  .brand{font-family:var(--serif);font-size:1.02rem;letter-spacing:.06em;color:var(--ink-dark);display:flex;align-items:center;gap:12px;line-height:1.05}
+  .brand-mark{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.14rem;color:var(--gold);
+    box-shadow:inset 0 0 0 1px rgba(201,164,92,.18)}
+  .brand-text{display:flex;flex-direction:column}
   .brand b{font-weight:400;font-style:italic;font-size:1.28rem;letter-spacing:.01em}
   .brand span{font-family:var(--sans);font-size:.58rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-top:3px}
   .nav-links{display:flex;gap:30px;font-family:var(--sans);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
@@ -137,9 +142,9 @@
   /* ---------- WERTE ---------- */
   .values{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px;
     background:var(--line-band);border:1px solid var(--line-band)}
-  .value{background:var(--band);padding:40px 30px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;
+  .value{background:var(--band-2);padding:40px 30px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;
     transition:background .4s var(--ease)}
-  .value:hover{background:var(--band-2)}
+  .value:hover{background:var(--band)}
   .value svg{width:44px;height:44px;color:var(--band-gold)}
   .value h3{font-size:1.02rem;font-family:var(--sans);font-weight:600;letter-spacing:.18em;text-transform:uppercase}
   .value p{font-size:.96rem;color:var(--band-ink-soft);line-height:1.6;max-width:26ch}
@@ -233,6 +238,7 @@
   .foot-note{font-size:.7rem;color:#5f6b5c;margin-top:18px;max-width:60ch;line-height:1.6}
 
   /* ---------- HINWEIS-BANNER ---------- */
+  .banner[hidden]{display:none}
   .banner{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:center;gap:16px;
     background:linear-gradient(90deg,#8a2f24,#a8823c);color:#fff5e6;padding:11px 46px 11px 20px;
     font-family:var(--sans);font-size:.84rem;letter-spacing:.02em;text-align:center;box-shadow:0 6px 20px -8px rgba(0,0,0,.5)}
@@ -316,6 +322,109 @@
   }
   :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 </style>
+<style>
+/* ═══ Intro: Hut zeichnet sich selbst ═══ */
+#intro{position:fixed;inset:0;z-index:200;background:radial-gradient(110% 90% at 50% 38%,#1c3122,#0d1a11 78%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  transition:opacity .7s ease,visibility .7s}
+#intro.out{opacity:0;visibility:hidden;pointer-events:none}
+#intro-hat{width:min(430px,72vw);height:auto;filter:drop-shadow(0 24px 40px rgba(0,0,0,.5))}
+#intro-hat path,#intro-hat ellipse{stroke-dasharray:1;stroke-dashoffset:1;fill-opacity:0;
+  animation:ih-draw 1.05s cubic-bezier(.45,0,.25,1) forwards;
+  animation-delay:calc(var(--i)*0.055s)}
+@keyframes ih-draw{to{stroke-dashoffset:0}}
+#intro.fills #intro-hat path,#intro.fills #intro-hat ellipse{transition:fill-opacity .9s ease}
+#intro.fills #intro-hat [fill-opacity]{fill-opacity:revert-layer}
+#intro .i-name{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4vw,2.6rem);
+  color:var(--gold-bright);opacity:0;transform:translateY(10px);transition:opacity .8s ease .1s,transform .8s ease .1s}
+#intro .i-sub{font-family:var(--sans);font-size:.62rem;letter-spacing:.44em;text-transform:uppercase;
+  color:var(--ink-dark-soft);opacity:0;transition:opacity .8s ease .35s}
+#intro.fills .i-name{opacity:1;transform:none}
+#intro.fills .i-sub{opacity:.9}
+#intro .i-skip{position:absolute;bottom:26px;font-family:var(--sans);font-size:.58rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--ink-dark-soft);opacity:.55}
+@media (prefers-reduced-motion:reduce){#intro{display:none}}
+
+/* ═══ Hut-Cursor ═══ */
+@media (hover:hover) and (pointer:fine){
+  body{cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path d='M6 3 L9 5 L8 12 C5 13 3 15 3 17 C3 20 8 22 14 22 C20 22 25 20 25 17 C25 15 23 13 20 12 L19 7 C15 9 11 9 8 7 Z' fill='%23132318'/><path d='M7 4 L9.5 5.6 L8.8 11.4 C5.9 12.3 4 14 4 16.6 C4 19 8.5 21 14 21 C19.5 21 24 19 24 16.6 C24 14.4 22 12.4 19.2 11.5 L18.3 7.4 C14.8 9.2 11.2 9.2 8.6 7.3 Z' fill='%23c9a45c'/><path d='M8.8 11.4 C12 12.6 16.5 12.6 19.2 11.5' stroke='%23132318' stroke-width='1.1' fill='none'/></svg>") 6 3, auto}
+  a,button,.btn,.hatcard,.edit-fab,[role=button],label,input,textarea,select{
+  cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M7 3 L10 5 L9 12 C6 13 4 15 4 17.5 C4 20.5 9 23 15 23 C21 23 26 20.5 26 17.5 C26 15 24 13 21 12 L20 7 C16 9 12 9 9 7 Z' fill='%23132318'/><path d='M8 4 L10.5 5.6 L9.8 11.4 C6.9 12.3 5 14.3 5 17 C5 19.6 9.8 22 15 22 C20.2 22 25 19.6 25 17 C25 14.7 23 12.5 20.2 11.6 L19.3 7.4 C15.8 9.2 12.2 9.2 9.6 7.3 Z' fill='%23e0c184'/><path d='M9.8 11.4 C13 12.7 17.5 12.7 20.2 11.6' stroke='%23132318' stroke-width='1.2' fill='none'/><circle cx='25.5' cy='25.5' r='4.5' fill='%23c9a45c'/><path d='M23.5 25.5 L27.5 25.5 M25.5 23.5 L25.5 27.5' stroke='%23132318' stroke-width='1.3'/></svg>") 7 3, pointer}
+}
+
+/* ═══ Feinschliff ═══ */
+::selection{background:rgba(201,164,92,.4);color:inherit}
+#scrollbar{position:fixed;top:0;left:0;height:2px;width:0;z-index:120;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));box-shadow:0 0 8px rgba(201,164,92,.5)}
+.band{position:relative}
+.band::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23p)'/></svg>")}
+.btn{position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;transform:skewX(-22deg);
+  background:linear-gradient(90deg,transparent,rgba(255,248,225,.5),transparent);transition:left .1s}
+.btn:hover::after{left:130%;transition:left .65s ease}
+.hours tr{transition:background .25s}
+.hours tr:hover td{background:rgba(201,164,92,.07)}
+.hatcard .photo{cursor:zoom-in}
+#lightbox{position:fixed;inset:0;z-index:150;background:rgba(10,17,11,.93);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;
+  opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+#lightbox.open{opacity:1;visibility:visible}
+#lightbox img{max-width:88vw;max-height:78vh;border:1px solid var(--line-dark);box-shadow:0 40px 90px -30px #000}
+#lightbox .lb-cap{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--gold-bright)}
+#lightbox .lb-x{position:absolute;top:22px;right:30px;background:none;border:0;color:var(--ink-dark);
+  font-size:2rem;line-height:1;opacity:.7}
+#lightbox .lb-x:hover{opacity:1}
+@media (prefers-reduced-motion:reduce){.btn::after{display:none}}
+</style>
+<div id="intro" role="presentation">
+  <svg id="intro-hat" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+  <ellipse pathLength="1" style="--i:1" cx="200" cy="238" rx="150" ry="8" fill="#c9a45c" opacity=".12"/>
+  <!-- Krempe -->
+  <path pathLength="1" style="--i:2" d="M32 174 C60 130 340 130 368 174 C356 204 300 216 200 216 C100 216 44 204 32 174 Z"
+        fill="#c9a45c" fill-opacity=".07" stroke="#c9a45c" stroke-width="2.2"/>
+  <path pathLength="1" style="--i:3" d="M46 174 C76 140 324 140 354 174" stroke="#c9a45c" stroke-width=".7" opacity=".45"/>
+  <path pathLength="1" style="--i:4" d="M32 174 C60 130 340 130 368 174" stroke="#e0c184" stroke-width=".9" opacity=".55" stroke-dasharray="1.5 3"/>
+  <!-- Krone: konisch, Trachtenform, Gipfel weiter oben einsehbar -->
+  <path pathLength="1" style="--i:5" d="M112 168 C112 112 130 74 142 62 C168 45 232 45 258 62 C270 74 288 112 288 168"
+        fill="#c9a45c" fill-opacity=".05" stroke="#c9a45c" stroke-width="2.4"/>
+  <path pathLength="1" style="--i:6" d="M142 62 C158 78 242 78 258 62" fill="none" stroke="#c9a45c" stroke-width="1.6" opacity=".8"/>
+  <!-- Die 9 im Gipfel: klare Schlaufe + Schweif -->
+  <ellipse pathLength="1" style="--i:7" cx="174" cy="62" rx="19" ry="8.5" stroke="#e0c184" stroke-width="2.4"/>
+  <path pathLength="1" style="--i:8" d="M193 63 C206 68 228 68 244 62" stroke="#e0c184" stroke-width="2.4" fill="none"/>
+  
+  <!-- Seitenwand-Gravur -->
+  <path pathLength="1" style="--i:9" d="M124 158 C122 112 134 82 142 68" stroke="#c9a45c" stroke-width=".6" opacity=".3"/>
+  <path pathLength="1" style="--i:10" d="M276 158 C278 112 266 82 258 68" stroke="#c9a45c" stroke-width=".6" opacity=".3"/>
+  <!-- Kordel -->
+  <path pathLength="1" style="--i:11" d="M114 152 C160 170 240 170 286 152" stroke="#c9a45c" stroke-width="6" opacity=".75"/>
+  <path pathLength="1" style="--i:12" d="M114 152 C160 170 240 170 286 152" stroke="#e0c184" stroke-width="1.2"/>
+  <g stroke="#132318" stroke-width="1.1" opacity=".8">
+    <path pathLength="1" style="--i:13" d="M132 158 l5 -6 M148 162 l5 -6 M164 165 l5 -6 M180 167 l5 -6 M196 168 l5 -6 M212 167 l5 -6 M228 165 l5 -6 M244 162 l5 -6 M260 158 l5 -6"/>
+  </g>
+  <!-- Quasten -->
+  <path pathLength="1" style="--i:14" d="M128 156 c-4 6 -6 12 -4 18 M136 160 c-4 6 -5 11 -3 16" stroke="#e0c184" stroke-width="1.2"/>
+  <ellipse pathLength="1" style="--i:15" cx="123" cy="178" rx="3.4" ry="5" fill="#c9a45c" fill-opacity=".25" stroke="#e0c184" stroke-width="1"/>
+  <ellipse pathLength="1" style="--i:16" cx="132" cy="180" rx="3" ry="4.6" fill="#c9a45c" fill-opacity=".25" stroke="#e0c184" stroke-width="1"/>
+  <!-- Feder: steckt oben in der Kordel, zeigt steil nach oben rechts -->
+  <path pathLength="1" style="--i:17" d="M268 148 C284 118 300 92 320 72 C318 100 306 130 284 154" fill="#c9a45c" fill-opacity=".1" stroke="#e0c184" stroke-width="1.3"/>
+  <path pathLength="1" style="--i:18" d="M272 146 C286 122 300 100 316 80" stroke="#e0c184" stroke-width=".7" opacity=".7"/>
+  <path pathLength="1" style="--i:19" d="M284 128 l8 5 M292 116 l8 5 M300 104 l7 5" stroke="#e0c184" stroke-width=".6" opacity=".6"/>
+  <!-- Krempen-Schraffur -->
+  <g stroke="#c9a45c" stroke-width=".45" opacity=".28">
+    <path pathLength="1" style="--i:20" d="M64 192 C120 178 280 178 336 192"/>
+    <path pathLength="1" style="--i:21" d="M84 199 C136 186 264 186 316 199"/>
+    <path pathLength="1" style="--i:22" d="M110 205 C156 194 244 194 290 205"/>
+  </g>
+</svg>
+
+  <div class="i-name">Marietta&rsquo;s Hut Atelier</div>
+  <div class="i-sub">Handgemacht am Tegernsee</div>
+  <div class="i-skip">Klicken zum &Uuml;berspringen</div>
+</div>
+<div id="scrollbar"></div>
+<div id="lightbox" aria-hidden="true"><button class="lb-x" aria-label="Schließen">&times;</button><img alt=""><div class="lb-cap"></div></div>
+
 
 <!-- ============ HINWEIS-BANNER (kurzfristige Schließung) ============ -->
 <div class="banner" id="banner" role="status" hidden>
@@ -326,7 +435,8 @@
 <!-- ============ NAV ============ -->
 <nav id="nav">
   <a class="brand" href="#top" aria-label="Marietta's Hut Atelier">
-    <b>Marietta&rsquo;s</b><span>Hut Atelier</span>
+    <span class="brand-mark" aria-hidden="true">M</span>
+    <span class="brand-text"><b>Marietta&rsquo;s</b><span>Hut Atelier</span></span>
   </a>
   <div class="nav-links">
     <a href="#kollektion">Hüte</a>
@@ -541,14 +651,14 @@
       <svg class="seal" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">
         <circle cx="60" cy="60" r="54"/><circle cx="60" cy="60" r="46"/>
         <path id="cir" d="M60 22a38 38 0 1 1 0 76 38 38 0 1 1 0-76" fill="none" stroke="none"/>
-        <text font-family="var(--sans)" font-size="8.5" letter-spacing="3.4" fill="currentColor" stroke="none"><textPath href="#cir" startOffset="2%">HANDGEMACHT · MIT LIEBE · TEGERNSEE · </textPath></text>
+        <text font-family="var(--sans)" font-size="6.1" letter-spacing="1.75" fill="currentColor" stroke="none"><textPath href="#cir" startOffset="0">HANDGEMACHT · MIT LIEBE · TEGERNSEE ·</textPath></text>
         <path d="M60 44c1.5 5 4 6.5 10 6.5-4.5 1.2-8.5 5-10 18-1.5-13-5.5-16.8-10-18 6 0 8.5-1.5 10-6.5Z" fill="currentColor" stroke="none"/>
       </svg>
     </div>
     <div class="foot-bot">
       <span>© 2026 Marietta&rsquo;s Hut Atelier</span>
       <span>Handwerk · Emotion · Heimat</span>
-      <span>Konzept &amp; Gestaltung — LuZiD Creative Studio</span>
+      <span>Konzept &amp; Gestaltung — Luzid Layers</span>
     </div>
     <p class="foot-note">Konzeptstudie im neuen Markenauftritt. Der Markenname sowie E-Mail-/Web-Adresse sind Konzept-Platzhalter; Anschrift, Telefon und Öffnungszeiten entsprechen dem Ladengeschäft (Rosenstraße 16, Tegernsee).</p>
   </div>
@@ -593,6 +703,7 @@
   const nav=document.getElementById('nav');
   const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>60);
   onScroll();addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',()=>{const b=document.getElementById('banner');if(b)document.documentElement.style.setProperty('--bh',b.hidden?'0px':b.offsetHeight+'px');},{passive:true});
 
   const io=new IntersectionObserver((es)=>{
     es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
@@ -658,4 +769,45 @@
     persist();sessionStorage.removeItem('mla_banner_off');renderPublic();closeEditor();
   };
   renderPublic();
+</script>
+
+<script>
+/* Intro-Ablauf */
+(function(){
+  var iv=document.getElementById('intro');
+  if(!iv||matchMedia('(prefers-reduced-motion: reduce)').matches){if(iv)iv.remove();return;}
+  var done=false;
+  function fills(){iv.classList.add('fills');}
+  function out(){if(done)return;done=true;iv.classList.add('out');setTimeout(function(){iv.remove();},800);}
+  setTimeout(fills,1700);
+  setTimeout(out,3100);
+  iv.addEventListener('click',out);
+})();
+/* Scroll-Fortschritt + Portrait-Parallax */
+(function(){
+  var bar=document.getElementById('scrollbar');
+  var por=document.querySelector('.hero-portrait');
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function upd(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    if(bar) bar.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+    if(por&&!rm){var y=h.scrollTop; if(y<900) por.style.transform='translateY('+(y*0.12)+'px)';}
+  }
+  addEventListener('scroll',upd,{passive:true}); upd();
+})();
+/* Lightbox für Kollektion */
+(function(){
+  var lb=document.getElementById('lightbox'); if(!lb) return;
+  var im=lb.querySelector('img'), cap=lb.querySelector('.lb-cap');
+  document.querySelectorAll('.hatcard').forEach(function(c){
+    var ph=c.querySelector('.photo img'), t=c.querySelector('h3');
+    if(!ph) return;
+    c.querySelector('.photo').addEventListener('click',function(){
+      im.src=ph.src; cap.textContent=t?t.textContent:''; lb.classList.add('open'); lb.setAttribute('aria-hidden','false');
+    });
+  });
+  function close(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');}
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.classList.contains('lb-x'))close();});
+  addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
 </script>
