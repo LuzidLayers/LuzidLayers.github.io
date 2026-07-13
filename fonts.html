@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LuZiD Fonts — Schriften mit Charakter</title>
 <link rel="stylesheet" href="fonts.css">
+<script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
   /* Handgemachte Fonts — nur auf dieser Seite geladen */
   @font-face{font-family:'Luzid Wurm';src:url(fonts/LuzidWurm.woff2) format('woff2');font-display:swap}
@@ -28,7 +29,7 @@
   html{scroll-behavior:smooth}
   body{
     background:var(--black);color:var(--white);
-    font-family:'C1st Font',system-ui,sans-serif;font-weight:300;
+    font-family:var(--brand-font),'C1st Font',system-ui,sans-serif;font-weight:300;
     overflow-x:hidden;line-height:1.6;
   }
   .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -50,7 +51,7 @@
 
   header{min-height:62vh;display:flex;flex-direction:column;justify-content:flex-end;
     padding-top:140px;padding-bottom:40px;position:relative;z-index:2}
-  .eyebrow{font-family:'C1st Font';font-size:12px;letter-spacing:5px;color:var(--green);
+  .eyebrow{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:5px;color:var(--green);
     margin-bottom:22px;text-transform:uppercase;opacity:.9}
   h1{font-size:clamp(44px,9vw,110px);font-weight:900;line-height:.92;letter-spacing:-2px}
   .sub{color:var(--muted);max-width:600px;margin:26px 0 0;font-size:17px}
@@ -60,7 +61,7 @@
     display:flex;gap:14px;align-items:center;flex-wrap:wrap;
     background:rgba(6,13,8,.75);backdrop-filter:blur(14px);
     border:1px solid rgba(57,255,122,.18);border-radius:16px;padding:14px 18px}
-  .toolbar label{font-family:'C1st Font';font-size:10px;letter-spacing:3px;
+  .toolbar label{font-family:var(--brand-font),'C1st Font';font-size:10px;letter-spacing:3px;
     text-transform:uppercase;color:var(--muted)}
   #sampletext{flex:1;min-width:200px;background:rgba(255,255,255,.05);
     border:1px solid rgba(57,255,122,.2);border-radius:10px;
@@ -68,7 +69,7 @@
   #sampletext:focus{border-color:var(--green)}
   #sizeslider{accent-color:var(--green);width:130px}
   #resetfont{display:none;padding:8px 18px;border-radius:30px;border:1px solid rgba(57,255,122,.4);
-    background:rgba(57,255,122,.1);color:var(--green);font-family:'C1st Font';
+    background:rgba(57,255,122,.1);color:var(--green);font-family:var(--brand-font),'C1st Font';
     font-size:11px;letter-spacing:2px;text-transform:uppercase}
 
   /* Font-Karten */
@@ -81,7 +82,7 @@
   .fontcard.activefont{border-color:var(--green);
     box-shadow:0 0 0 1px var(--green),0 24px 70px -24px rgba(57,255,122,.4)}
   .fonthead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
-  .fontname{font-family:'C1st Font';font-size:13px;letter-spacing:4px;
+  .fontname{font-family:var(--brand-font),'C1st Font';font-size:13px;letter-spacing:4px;
     text-transform:uppercase;color:var(--green)}
   .fontmeta{font-size:12px;color:var(--muted);letter-spacing:1px}
   .sample{font-size:var(--samplesize,42px);line-height:1.5;margin:26px 0 22px;
@@ -90,14 +91,14 @@
     letter-spacing:2px;word-wrap:break-word;margin-bottom:26px}
   .usebtn{display:inline-block;padding:10px 22px;border-radius:30px;
     border:1px solid rgba(57,255,122,.35);background:rgba(57,255,122,.07);
-    color:var(--white);font-family:'C1st Font';font-size:11px;letter-spacing:2px;
+    color:var(--white);font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:2px;
     text-transform:uppercase;transition:.25s}
   .usebtn:hover{background:var(--green);color:#060D08;box-shadow:0 0 30px rgba(57,255,122,.5)}
   .fontcard.activefont .usebtn{background:var(--green);color:#060D08}
 
   .soon-card{border:1px dashed rgba(57,255,122,.25);border-radius:22px;padding:40px;
     text-align:center;color:var(--muted)}
-  .soon-card .big{font-family:'C1st Font';font-size:20px;letter-spacing:3px;
+  .soon-card .big{font-family:var(--brand-font),'C1st Font';font-size:20px;letter-spacing:3px;
     color:rgba(242,255,246,.7);margin-bottom:8px}
 
   footer{border-top:1px solid rgba(57,255,122,.1);padding:60px 0 40px;color:var(--muted);position:relative;z-index:2}
@@ -128,7 +129,7 @@
 <div class="veil"></div>
 
 <nav>
-  <a href="home.html?entered=1" style="font-family:'C1st Font';font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:rgba(57,255,122,.6);transition:color .2s"
+  <a href="home.html?entered=1" style="font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:rgba(57,255,122,.6);transition:color .2s"
      onmouseover="this.style.color='rgba(57,255,122,1)'"
      onmouseout="this.style.color='rgba(57,255,122,.6)'">← Universum</a>
   <div class="nav-links">
@@ -260,8 +261,8 @@
         <div class="fontname">C1st</div>
         <div class="fontmeta">die LuZiD-LaYeRs-Hausschrift</div>
       </div>
-      <div class="sample" style="font-family:'C1st Font'">Franz jagt im komplett verwahrlosten Taxi quer durch Bayern</div>
-      <div class="alphabet" style="font-family:'C1st Font'">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 ÄÖÜäöüß</div>
+      <div class="sample" style="font-family:var(--brand-font),'C1st Font'">Franz jagt im komplett verwahrlosten Taxi quer durch Bayern</div>
+      <div class="alphabet" style="font-family:var(--brand-font),'C1st Font'">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 ÄÖÜäöüß</div>
       <button class="usebtn">Seite in diesem Font anzeigen</button>
     </div>
 

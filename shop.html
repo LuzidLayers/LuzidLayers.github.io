@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop — LuZiD LaYeRs</title>
 <link rel="stylesheet" href="fonts.css">
+<script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;cursor:none}
 html{scroll-behavior:smooth}
-body{background:#000;color:#fff;font-family:'C1st Font',serif;font-weight:300;overflow-x:hidden;line-height:1.7}
+body{background:#000;color:#fff;font-family:var(--brand-font),'C1st Font',serif;font-weight:300;overflow-x:hidden;line-height:1.7}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1100px;margin:0 auto;padding:0 36px}
 
@@ -34,18 +35,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
   display:flex;align-items:center;justify-content:space-between;
   padding:22px 36px;backdrop-filter:blur(14px);
   background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06)}
-.nav-back{font-family:'C1st Font',serif;font-size:11px;letter-spacing:.35em;
+.nav-back{font-family:var(--brand-font),'C1st Font',serif;font-size:11px;letter-spacing:.35em;
   text-transform:uppercase;color:rgba(139,92,246,.6);transition:color .2s}
 .nav-back:hover{color:rgba(139,92,246,1)}
 .nav-links{display:flex;gap:28px;font-size:10px;letter-spacing:.35em;text-transform:uppercase}
-.nav-links a{color:rgba(255,255,255,.3);font-family:'C1st Font',serif;transition:color .2s}
+.nav-links a{color:rgba(255,255,255,.3);font-family:var(--brand-font),'C1st Font',serif;transition:color .2s}
 .nav-links a:hover{color:rgba(255,255,255,.8)}
 
 /* HERO */
 .hero{padding:140px 0 60px}
 .hero-eyebrow{font-size:10px;letter-spacing:.6em;text-transform:uppercase;
   color:rgba(139,92,246,.7);margin-bottom:20px}
-.hero-h{font-family:'C1st Font',serif;font-size:clamp(44px,7vw,90px);
+.hero-h{font-family:var(--brand-font),'C1st Font',serif;font-size:clamp(44px,7vw,90px);
   line-height:.95;letter-spacing:.04em;color:#fff;margin-bottom:18px}
 .hero-sub{font-size:clamp(14px,1.6vw,18px);color:rgba(255,255,255,.35);max-width:560px;line-height:1.7}
 
@@ -68,18 +69,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
 .product-body{padding:28px;flex:1;display:flex;flex-direction:column;gap:10px}
 .product-type{font-size:9px;letter-spacing:.4em;text-transform:uppercase;
   color:rgba(139,92,246,.7)}
-.product-card h3{font-family:'C1st Font',serif;font-size:clamp(20px,2.5vw,26px);color:#fff;line-height:1.1}
+.product-card h3{font-family:var(--brand-font),'C1st Font',serif;font-size:clamp(20px,2.5vw,26px);color:#fff;line-height:1.1}
 .product-card > .product-body > p{color:rgba(255,255,255,.4);font-size:14px;line-height:1.6;flex:1}
 
 /* Format tabs */
 .fmt-tabs{display:flex;gap:8px;margin:16px 0 8px;flex-wrap:wrap}
-.fmt-btn{padding:7px 18px;border-radius:30px;font-family:'C1st Font',serif;font-size:10px;
+.fmt-btn{padding:7px 18px;border-radius:30px;font-family:var(--brand-font),'C1st Font',serif;font-size:10px;
   letter-spacing:.25em;cursor:pointer;border:1px solid rgba(255,255,255,.12);
   background:transparent;color:rgba(255,255,255,.35);transition:all .2s}
 .fmt-btn.active,.fmt-btn:hover{border-color:rgba(139,92,246,.6);color:rgba(139,92,246,.9);
   background:rgba(139,92,246,.06)}
 
-.price{font-family:'C1st Font',serif;font-size:28px;font-weight:700;
+.price{font-family:var(--brand-font),'C1st Font',serif;font-size:28px;font-weight:700;
   background:linear-gradient(100deg,#8B5CF6,#00E5FF);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .price-sub{font-size:11px;color:rgba(255,255,255,.3);display:block;margin-top:-2px}
@@ -87,7 +88,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
 .format-detail strong{color:rgba(255,255,255,.6)}
 
 .buy-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.btn{display:inline-block;padding:12px 26px;border-radius:40px;font-family:'C1st Font',serif;
+.btn{display:inline-block;padding:12px 26px;border-radius:40px;font-family:var(--brand-font),'C1st Font',serif;
   font-size:10px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;
   transition:all .25s;border:none}
 .btn-primary{background:linear-gradient(100deg,#8B5CF6,#6366f1);color:#fff;
@@ -114,10 +115,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
 .ss-img img{width:100%;height:100%;object-fit:cover;border-radius:16px}
 .ss-eyebrow{font-size:9px;letter-spacing:.5em;text-transform:uppercase;
   color:rgba(0,229,255,.6);margin-bottom:14px}
-.ss-h{font-family:'C1st Font',serif;font-size:clamp(26px,3vw,38px);color:#fff;margin-bottom:14px}
+.ss-h{font-family:var(--brand-font),'C1st Font',serif;font-size:clamp(26px,3vw,38px);color:#fff;margin-bottom:14px}
 .ss-p{font-size:15px;color:rgba(255,255,255,.4);margin-bottom:20px;line-height:1.6}
 .ss-prices{display:flex;gap:32px;margin-bottom:28px;flex-wrap:wrap;align-items:flex-end}
-.ss-price .amount{font-family:'C1st Font',serif;font-size:32px;
+.ss-price .amount{font-family:var(--brand-font),'C1st Font',serif;font-size:32px;
   background:linear-gradient(100deg,#00E5FF,#8B5CF6);
   -webkit-background-clip:text;background-clip:text;color:transparent;display:block}
 .ss-price .slabel{font-size:9px;letter-spacing:.3em;text-transform:uppercase;
@@ -128,7 +129,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
 footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 0;
   position:relative;z-index:2;margin-top:120px}
 .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.foot-logo{font-family:'C1st Font',serif;font-size:14px;letter-spacing:.17em;color:rgba(255,255,255,.25)}
+.foot-logo{font-family:var(--brand-font),'C1st Font',serif;font-size:14px;letter-spacing:.17em;color:rgba(255,255,255,.25)}
 .foot-links{display:flex;gap:24px;font-size:9px;letter-spacing:.35em;
   text-transform:uppercase;color:rgba(255,255,255,.2)}
 .foot-links a:hover{color:rgba(255,255,255,.7)}

@@ -7,6 +7,20 @@
        url(fonts/C1stFontGuter-Regular.ttf) format('truetype');
 }
 
+/* ── LuZiD Fonts (Auswahl-Screen auf home.html) ── */
+@font-face{font-family:'Luzid Wurm';src:url(fonts/LuzidWurm.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid PinkSketch';src:url(fonts/LuzidPinkSketch.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid GruenGelb';src:url(fonts/LuzidGruenGelb.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid Camo';src:url(fonts/LuzidCamo.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid Speedlines';src:url(fonts/LuzidSpeedlines.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid Candy';src:url(fonts/LuzidCandy.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid Knochen';src:url(fonts/LuzidKnochen.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid Kugelschreiber';src:url(fonts/LuzidKugelschreiber.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid Melting';src:url(fonts/LuzidMelting.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Luzid Marker';src:url(fonts/LuzidMarker.woff2) format('woff2');font-display:swap}
+
+:root { --brand-font: 'Luzid Speedlines'; }
+
 /* latin */
 @font-face {
   font-family: 'Orbitron';

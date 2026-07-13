@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Web Player — LuZiD LaYeRs</title>
 <link rel="stylesheet" href="fonts.css">
+<script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;cursor:none}
 html,body{width:100%;height:100%;overflow:hidden;background:#000}
-body{font-family:'C1st Font',serif;color:#fff}
+body{font-family:var(--brand-font),'C1st Font',serif;color:#fff}
 
 canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
 
@@ -18,7 +19,7 @@ canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
   transition:opacity 1.8s ease}
 #intro.out{opacity:0;pointer-events:none}
 
-.intro-brand{font-family:'C1st Font',serif;font-size:clamp(28px,5vw,54px);
+.intro-brand{font-family:var(--brand-font),'C1st Font',serif;font-size:clamp(28px,5vw,54px);
   letter-spacing:.18em;color:#fff;margin-bottom:6px;
   text-shadow:0 0 30px rgba(0,229,255,.5),0 0 80px rgba(0,229,255,.15);
   animation:breathe 4s ease-in-out infinite}
@@ -53,7 +54,7 @@ canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
 .mode-btn.demo:hover::before{opacity:1}
 
 .mode-icon{font-size:32px;line-height:1}
-.mode-name{font-family:'C1st Font',serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.mode-name{font-family:var(--brand-font),'C1st Font',serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 .mode-desc{font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.25);text-align:center;line-height:1.5}
 
 /* error hint */
@@ -65,7 +66,7 @@ canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
   display:flex;align-items:center;justify-content:space-between;
   padding:22px 36px;opacity:0;transition:opacity 1s ease;pointer-events:none}
 #nav.show{opacity:1;pointer-events:all}
-.nav-back{font-family:'C1st Font',serif;font-size:9px;letter-spacing:.35em;
+.nav-back{font-family:var(--brand-font),'C1st Font',serif;font-size:9px;letter-spacing:.35em;
   text-transform:uppercase;color:rgba(0,229,255,.5);text-decoration:none;transition:color .2s}
 .nav-back:hover{color:rgba(0,229,255,1)}
 
@@ -82,10 +83,10 @@ canvas#universe{position:fixed;inset:0;width:100%;height:100%;display:block}
 .status-dot{width:6px;height:6px;border-radius:50%;background:rgba(0,229,255,.8);
   animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.4)}50%{box-shadow:0 0 0 5px rgba(0,229,255,0)}}
-.status-text{font-family:'C1st Font',serif;font-size:9px;letter-spacing:.35em;
+.status-text{font-family:var(--brand-font),'C1st Font',serif;font-size:9px;letter-spacing:.35em;
   text-transform:uppercase;color:rgba(255,255,255,.4)}
 
-.stop-btn{font-family:'C1st Font',serif;font-size:8px;letter-spacing:.3em;
+.stop-btn{font-family:var(--brand-font),'C1st Font',serif;font-size:8px;letter-spacing:.3em;
   text-transform:uppercase;color:rgba(255,255,255,.2);border:none;background:transparent;
   padding:4px 10px;transition:color .2s}
 .stop-btn:hover{color:rgba(255,100,100,.7)}

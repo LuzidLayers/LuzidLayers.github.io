@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FuSioNWaRp — Audio-Visual Synthesizer</title>
 <link rel="stylesheet" href="fonts.css">
+<script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;cursor:none}
 html{scroll-behavior:smooth}
@@ -32,17 +33,17 @@ nav{
   background:linear-gradient(to bottom,rgba(6,10,7,.95),transparent);
 }
 .nav-back{
-  font-family:'C1st Font',sans-serif;font-size:11px;letter-spacing:.2em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:11px;letter-spacing:.2em;
   color:rgba(57,255,122,.6);text-decoration:none;text-transform:uppercase;
   transition:color .2s;
 }
 .nav-back:hover{color:#39FF7A}
 .nav-brand{
-  font-family:'C1st Font',sans-serif;font-size:13px;letter-spacing:.25em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:13px;letter-spacing:.25em;
   color:rgba(57,255,122,.4);text-transform:uppercase;
 }
 .nav-cta{
-  font-family:'C1st Font',sans-serif;font-size:11px;letter-spacing:.15em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:11px;letter-spacing:.15em;
   color:#39FF7A;text-decoration:none;text-transform:uppercase;
   border:1px solid rgba(57,255,122,.4);padding:7px 16px;border-radius:4px;
   transition:all .2s;
@@ -70,7 +71,7 @@ nav{
 }
 .hero-content{position:relative;z-index:2;padding:0 24px}
 .hero-title{
-  font-family:'C1st Font',sans-serif;
+  font-family:var(--brand-font),'C1st Font',sans-serif;
   font-size:clamp(42px,8vw,96px);
   font-weight:700;letter-spacing:.18em;
   background:linear-gradient(110deg,#39FF7A,#C6F135,#39FF7A);
@@ -80,7 +81,7 @@ nav{
 }
 @keyframes shimmer{to{background-position:200% center}}
 .hero-sub{
-  font-family:'C1st Font',sans-serif;
+  font-family:var(--brand-font),'C1st Font',sans-serif;
   font-size:clamp(10px,1.8vw,14px);letter-spacing:.4em;
   color:rgba(198,241,53,.6);text-transform:uppercase;margin-top:10px;
 }
@@ -91,20 +92,20 @@ nav{
 }
 .hero-btns{display:flex;gap:14px;justify-content:center;margin-top:36px;flex-wrap:wrap}
 .btn-primary{
-  font-family:'C1st Font',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   background:#39FF7A;color:#060A07;padding:14px 32px;border-radius:4px;
   text-decoration:none;transition:all .2s;font-weight:700;
 }
 .btn-primary:hover{background:#C6F135;transform:translateY(-2px)}
 .btn-ghost{
-  font-family:'C1st Font',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   border:1px solid rgba(57,255,122,.5);color:#39FF7A;padding:14px 32px;border-radius:4px;
   text-decoration:none;transition:all .2s;
 }
 .btn-ghost:hover{border-color:#39FF7A;background:rgba(57,255,122,.08);transform:translateY(-2px)}
 .scroll-hint{
   position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-  font-family:'C1st Font',sans-serif;font-size:10px;letter-spacing:.3em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:10px;letter-spacing:.3em;
   color:rgba(57,255,122,.3);text-transform:uppercase;
   animation:bob 2.5s ease-in-out infinite;
 }
@@ -114,11 +115,11 @@ nav{
 section{padding:100px 24px}
 .section-inner{max-width:1100px;margin:0 auto}
 .section-label{
-  font-family:'C1st Font',sans-serif;font-size:10px;letter-spacing:.5em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:10px;letter-spacing:.5em;
   color:#39FF7A;text-transform:uppercase;margin-bottom:14px;
 }
 .section-title{
-  font-family:'C1st Font',sans-serif;
+  font-family:var(--brand-font),'C1st Font',sans-serif;
   font-size:clamp(24px,4vw,42px);font-weight:700;letter-spacing:.12em;
   color:#E8FFE8;line-height:1.2;margin-bottom:20px;
 }
@@ -153,7 +154,7 @@ section{padding:100px 24px}
 }
 .gimg:hover .gover{opacity:1}
 .gover-label{
-  font-family:'C1st Font',sans-serif;font-size:9px;letter-spacing:.3em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:9px;letter-spacing:.3em;
   color:rgba(57,255,122,.8);text-transform:uppercase;
 }
 
@@ -172,7 +173,7 @@ section{padding:100px 24px}
 .feat:hover{background:rgba(57,255,122,.05);border-color:rgba(57,255,122,.18)}
 .feat-icon{font-size:22px;margin-bottom:14px}
 .feat-name{
-  font-family:'C1st Font',sans-serif;font-size:12px;letter-spacing:.25em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:12px;letter-spacing:.25em;
   color:#39FF7A;text-transform:uppercase;margin-bottom:10px;
 }
 .feat-desc{font-size:14px;color:rgba(232,255,232,.55);line-height:1.65}
@@ -190,7 +191,7 @@ section{padding:100px 24px}
 #demo-canvas{width:100%;height:100%;display:block}
 .demo-hint{
   position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
-  font-family:'C1st Font',sans-serif;font-size:9px;letter-spacing:.35em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:9px;letter-spacing:.35em;
   color:rgba(57,255,122,.3);text-transform:uppercase;pointer-events:none;
   transition:opacity .5s;
 }
@@ -200,7 +201,7 @@ section{padding:100px 24px}
   padding:20px 24px 0;
 }
 .demo-preset-btn{
-  font-family:'C1st Font',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
   padding:6px 16px;border-radius:3px;border:1px solid rgba(57,255,122,.2);
   color:rgba(57,255,122,.5);background:transparent;transition:all .2s;
 }
@@ -223,7 +224,7 @@ section{padding:100px 24px}
 .node-text .section-body{margin-bottom:24px}
 .node-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .tag{
-  font-family:'C1st Font',sans-serif;font-size:9px;letter-spacing:.2em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:9px;letter-spacing:.2em;
   color:rgba(57,255,122,.7);border:1px solid rgba(57,255,122,.2);
   padding:5px 12px;border-radius:3px;text-transform:uppercase;
 }
@@ -243,11 +244,11 @@ section{padding:100px 24px}
   background:linear-gradient(to top,rgba(6,10,7,.85) 0%,transparent 60%);
 }
 .mod-name{
-  font-family:'C1st Font',sans-serif;font-size:16px;letter-spacing:.3em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:16px;letter-spacing:.3em;
   color:#39FF7A;text-transform:uppercase;font-weight:700;
 }
 .mod-sub{
-  font-family:'C1st Font',sans-serif;font-size:9px;letter-spacing:.2em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:9px;letter-spacing:.2em;
   color:rgba(57,255,122,.5);text-transform:uppercase;margin-top:4px;
 }
 
@@ -269,11 +270,11 @@ section{padding:100px 24px}
 .spec{padding:32px 24px;border-right:1px solid rgba(57,255,122,.08)}
 .spec:last-child{border-right:none}
 .spec-num{
-  font-family:'C1st Font',sans-serif;font-size:clamp(28px,4vw,44px);
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:clamp(28px,4vw,44px);
   font-weight:700;color:#39FF7A;letter-spacing:.05em;
 }
 .spec-label{
-  font-family:'C1st Font',sans-serif;font-size:9px;letter-spacing:.3em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:9px;letter-spacing:.3em;
   color:rgba(57,255,122,.45);text-transform:uppercase;margin-top:6px;
 }
 
@@ -289,7 +290,7 @@ section{padding:100px 24px}
 footer{
   border-top:1px solid rgba(57,255,122,.1);
   padding:32px 24px;text-align:center;
-  font-family:'C1st Font',sans-serif;font-size:10px;letter-spacing:.2em;
+  font-family:var(--brand-font),'C1st Font',sans-serif;font-size:10px;letter-spacing:.2em;
   color:rgba(57,255,122,.25);text-transform:uppercase;
 }
 footer a{color:rgba(57,255,122,.4);text-decoration:none}

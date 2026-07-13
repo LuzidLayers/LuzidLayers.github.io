@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Fusionwarp Node Edition — Der Node-Editor für Visuals</title>
 <link rel="stylesheet" href="fonts.css">
+<script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
   :root{
     --black:#060A0F; --black2:#0A1018;
@@ -16,10 +17,10 @@
   html{scroll-behavior:smooth}
   body{
     background:var(--black);color:var(--white);
-    font-family:'C1st Font',system-ui,sans-serif;font-weight:300;
+    font-family:var(--brand-font),'C1st Font',system-ui,sans-serif;font-weight:300;
     overflow-x:hidden;line-height:1.6;
   }
-  h1,h2,h3,.mono{font-family:'C1st Font',sans-serif}
+  h1,h2,h3,.mono{font-family:var(--brand-font),'C1st Font',sans-serif}
   .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
@@ -40,7 +41,7 @@
   @media(max-width:760px){.nav-links a{display:none}}
 
   /* buttons */
-  .btn{display:inline-block;padding:13px 28px;border-radius:40px;font-weight:800;font-family:'C1st Font';
+  .btn{display:inline-block;padding:13px 28px;border-radius:40px;font-weight:800;font-family:var(--brand-font),'C1st Font';
     font-size:13px;letter-spacing:.5px;cursor:pointer;transition:.25s;border:none}
   .btn-primary{background:var(--grad);color:#060A0F;box-shadow:0 0 30px rgba(0,229,255,.4)}
   .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,229,255,.7)}
@@ -50,7 +51,7 @@
   /* hero */
   header{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
     padding-top:120px;padding-bottom:60px;position:relative;z-index:2}
-  .eyebrow{font-family:'C1st Font';font-size:12px;letter-spacing:5px;color:var(--cyan);
+  .eyebrow{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:5px;color:var(--cyan);
     margin-bottom:22px;text-transform:uppercase;opacity:.9}
   h1{font-size:clamp(44px,9vw,116px);font-weight:900;line-height:.92;letter-spacing:-2px;color:var(--white)}
   .tagline{font-size:clamp(20px,3vw,30px);font-weight:300;margin:28px 0 14px;max-width:680px;color:rgba(245,251,255,.9)}
@@ -58,7 +59,7 @@
   .hero-cta{display:flex;gap:16px;flex-wrap:wrap}
 
   /* sections */
-  .label{font-family:'C1st Font';font-size:12px;letter-spacing:4px;color:var(--cyan);
+  .label{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:4px;color:var(--cyan);
     text-transform:uppercase;margin-bottom:16px}
   h2{font-size:clamp(30px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-.5px}
   .pad{padding:120px 0}
@@ -70,19 +71,19 @@
   .pillar:hover{transform:translateY(-6px);border-color:rgba(0,229,255,.4);
     box-shadow:0 20px 60px -20px rgba(0,229,255,.3)}
   .pillar .ico{font-size:36px;margin-bottom:20px}
-  .pillar h3{font-size:22px;font-weight:700;font-family:'C1st Font';margin-bottom:10px}
+  .pillar h3{font-size:22px;font-weight:700;font-family:var(--brand-font),'C1st Font';margin-bottom:10px}
   .pillar p{color:var(--muted);font-size:15px}
 
   /* screenshot */
   .shot{margin-top:54px;border-radius:20px;overflow:hidden;
     border:1px solid rgba(0,229,255,.2);box-shadow:0 30px 90px -30px rgba(0,229,255,.25)}
   .shot img{width:100%;display:block}
-  .shot-caption{font-family:'C1st Font';font-size:11px;letter-spacing:3px;color:var(--muted);
+  .shot-caption{font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:3px;color:var(--muted);
     text-transform:uppercase;text-align:center;margin-top:18px}
 
   /* node chips */
   .modules{display:flex;flex-wrap:wrap;gap:12px;margin-top:48px}
-  .mod{padding:10px 20px;border-radius:30px;font-family:'C1st Font';font-size:11px;
+  .mod{padding:10px 20px;border-radius:30px;font-family:var(--brand-font),'C1st Font';font-size:11px;
     letter-spacing:1.5px;border:1px solid rgba(0,229,255,.25);color:rgba(190,225,255,.8);
     transition:.3s;cursor:default}
   .mod:hover{border-color:var(--cyan);color:var(--white);background:rgba(0,229,255,.08)}
@@ -93,9 +94,9 @@
   .vs-side{padding:48px 40px;background:rgba(255,255,255,.02)}
   .vs-side.active{background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(139,92,246,.06));
     border:1px solid rgba(0,229,255,.2)}
-  .vs-side .vs-label{font-family:'C1st Font';font-size:11px;letter-spacing:3px;
+  .vs-side .vs-label{font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:3px;
     color:var(--muted);margin-bottom:16px;text-transform:uppercase}
-  .vs-side h3{font-size:24px;font-family:'C1st Font';margin-bottom:20px}
+  .vs-side h3{font-size:24px;font-family:var(--brand-font),'C1st Font';margin-bottom:20px}
   .vs-side ul{list-style:none;color:var(--muted);font-size:15px}
   .vs-side ul li{padding:5px 0}.vs-side ul li::before{content:"· "}
   .vs-side.active ul li::before{content:"✦ ";color:var(--cyan)}
@@ -108,15 +109,15 @@
     flex-shrink:0;margin-top:6px;background:rgba(0,229,255,.1)}
   .tl-dot.active{background:var(--grad);border-color:transparent;
     box-shadow:0 0 16px rgba(0,229,255,.6)}
-  .tl-content h4{font-size:17px;font-weight:700;font-family:'C1st Font';margin-bottom:6px}
+  .tl-content h4{font-size:17px;font-weight:700;font-family:var(--brand-font),'C1st Font';margin-bottom:6px}
   .tl-content p{color:var(--muted);font-size:14px}
-  .tl-phase{font-family:'C1st Font';font-size:10px;letter-spacing:2px;color:var(--cyan);
+  .tl-phase{font-family:var(--brand-font),'C1st Font';font-size:10px;letter-spacing:2px;color:var(--cyan);
     margin-bottom:6px;opacity:.7}
 
   /* vision */
   .vision{text-align:center;padding:160px 0}
   .vision h2{font-size:clamp(34px,6vw,76px);max-width:900px;margin:0 auto}
-  .vision .claim{font-family:'C1st Font';letter-spacing:3px;color:var(--cyan);margin-top:30px;font-size:13px}
+  .vision .claim{font-family:var(--brand-font),'C1st Font';letter-spacing:3px;color:var(--cyan);margin-top:30px;font-size:13px}
 
   /* contact */
   .contact-box{background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(139,92,246,.06));
@@ -129,9 +130,9 @@
   footer{border-top:1px solid rgba(0,229,255,.1);padding:60px 0 40px;color:var(--muted)}
   .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;align-items:center}
   .foot-links{display:flex;gap:26px;font-size:14px}.foot-links a:hover{color:var(--cyan)}
-  .logo{display:flex;align-items:center;gap:12px;font-family:'C1st Font';font-weight:900;letter-spacing:1px}
+  .logo{display:flex;align-items:center;gap:12px;font-family:var(--brand-font),'C1st Font';font-weight:900;letter-spacing:1px}
   .logo .ne{width:38px;height:38px;border-radius:10px;background:var(--grad);
-    display:grid;place-items:center;font-size:13px;font-family:'C1st Font';color:#060A0F;
+    display:grid;place-items:center;font-size:13px;font-family:var(--brand-font),'C1st Font';color:#060A0F;
     box-shadow:0 0 24px rgba(0,229,255,.5)}
 
   .reveal{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.7,.2,1)}
@@ -160,7 +161,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="home.html?entered=1" style="font-family:'C1st Font';font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:rgba(0,229,255,.6);text-decoration:none;transition:color .2s"
+  <a href="home.html?entered=1" style="font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:rgba(0,229,255,.6);text-decoration:none;transition:color .2s"
      onmouseover="this.style.color='rgba(0,229,255,1)'"
      onmouseout="this.style.color='rgba(0,229,255,.6)'">← Universum</a>
   <div class="nav-links">
