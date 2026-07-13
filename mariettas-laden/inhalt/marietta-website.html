@@ -357,8 +357,7 @@
 #scrollbar{position:fixed;top:0;left:0;height:2px;width:0;z-index:120;
   background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));box-shadow:0 0 8px rgba(201,164,92,.5)}
 .band{position:relative}
-.band::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23p)'/></svg>")}
+
 .btn{position:relative;overflow:hidden}
 .btn::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;transform:skewX(-22deg);
   background:linear-gradient(90deg,transparent,rgba(255,248,225,.5),transparent);transition:left .1s}
