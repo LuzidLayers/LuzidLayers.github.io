@@ -311,6 +311,28 @@
   .btn-sm.ghost:hover{background:rgba(201,164,92,.1)}
   @media(max-width:560px){.ev-row{grid-template-columns:1fr}.ev-row textarea{grid-column:1}}
 
+
+  /* Redaktion: Hüte & Bilder */
+  .hut-row{display:grid;grid-template-columns:64px 1fr 1fr;gap:10px;align-items:start;
+    border:1px solid var(--line-dark);padding:12px;margin-bottom:12px;border-radius:2px}
+  .hut-row .thumb{width:64px;height:64px;border:1px dashed var(--line-dark);border-radius:2px;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;background:#10201580}
+  .hut-row .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .hut-row .thumb span{font-size:1.4rem;color:var(--gold);opacity:.7}
+  .hut-row .thumb input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .hut-row .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;grid-column:2/4}
+  .hut-row .grid .wide{grid-column:1/3}
+  .modal select{font-family:var(--serif);font-size:1rem;color:var(--ink-dark);background:#10201580;
+    border:1px solid var(--line-dark);padding:11px 13px;width:100%;border-radius:2px}
+  .hut-row .hd{grid-column:2/4;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .hut-row .hd label{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:.82rem;color:var(--ink-dark);cursor:pointer}
+  .hut-row .hd input[type=checkbox]{width:16px;height:16px;accent-color:#a8823c}
+  /* Karten aus der Redaktion */
+  .hatcard .specs{list-style:none;margin:10px 0 0;padding:10px 0 0;border-top:1px solid var(--line-dark);
+    display:flex;flex-direction:column;gap:4px;font-family:var(--sans);font-size:.78rem;color:var(--ink-dark-soft)}
+  .hatcard .specs b{color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;margin-right:6px}
+  .hatcard .price{margin-top:8px;font-size:1.05rem;color:var(--gold-bright);font-family:var(--serif)}
+
   /* reveal */
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
   .reveal.in{opacity:1;transform:none}
@@ -687,6 +709,11 @@
         <div id="ev-editor"></div>
         <button type="button" class="btn-add" id="ev-add">+ Termin hinzufügen</button>
       </fieldset>
+      <fieldset class="fld-group">
+        <legend>Hüte &amp; Bilder</legend>
+        <div id="hut-editor"></div>
+        <button type="button" class="btn-add" id="hut-add">+ Hut mit Foto hinzufügen</button>
+      </fieldset>
     </div>
     <div class="sheet-foot">
       <p class="hint">Ihre Eingaben werden in diesem Browser gespeichert. In der fertigen Website landen sie mit einem Klick direkt online.</p>
@@ -712,7 +739,7 @@
   /* ---------- REDAKTION: Inhalte per Browser/Smartphone pflegen ---------- */
   const STORE='mla_content_v1';
   const MON=['Jan.','Feb.','März','Apr.','Mai','Juni','Juli','Aug.','Sep.','Okt.','Nov.','Dez.'];
-  const DEFAULT={closed:{on:false,msg:'Heute Nachmittag geschlossen — ab morgen wieder für Sie da.'},events:[
+  const DEFAULT={items:[],closed:{on:false,msg:'Heute Nachmittag geschlossen — ab morgen wieder für Sie da.'},events:[
     {date:'2026-07-19',title:'Sommer-Kollektion 2026',text:'Neue Strohhüte und Panamas sind da — kommen Sie zum Anprobieren vorbei.'},
     {date:'2026-08-02',title:'Tag der offenen Werkstatt',text:'Filzen, Formen und Garnieren live erleben — schauen Sie uns über die Schulter.'},
     {date:'2026-09-13',title:'Trachten-Beratung zur Wiesn',text:'Der passende Hut zu Dirndl und Lederhose — mit persönlicher Beratung.'}
@@ -752,12 +779,77 @@
   const openEditor=()=>{document.getElementById('f-closed').checked=!!(state.closed&&state.closed.on);
     document.getElementById('f-closed-msg').value=(state.closed&&state.closed.msg)||'';
     const ed=document.getElementById('ev-editor');ed.innerHTML='';(state.events||[]).forEach(e=>ed.appendChild(evRow(e)));
+    const hd=document.getElementById('hut-editor');hd.innerHTML='';(state.items||[]).forEach(it=>{const r=hutRow(it);hd.appendChild(r);hutBindFile(r);});
     modal.classList.add('open');};
   const closeEditor=()=>modal.classList.remove('open');
   document.getElementById('edit-open').onclick=openEditor;
   document.getElementById('edit-close').onclick=closeEditor;
   document.getElementById('edit-cancel').onclick=closeEditor;
   document.getElementById('ev-add').onclick=()=>document.getElementById('ev-editor').appendChild(evRow());
+  /* --- Hüte & Bilder --- */
+  const HERSTELLUNG=['Eigenfertigung','Handveredelt','Zukauf'];
+  const hutRow=(it={})=>{const d=document.createElement('div');d.className='hut-row';
+    d.innerHTML='<div class="thumb">'+(it.img?'<img src="'+it.img+'">':'<span>+</span>')+
+      '<input type="file" accept="image/*" title="Foto wählen"></div>'+
+      '<div class="grid">'+
+      '<input type="text" class="h-name wide" placeholder="Name des Huts (z. B. Tegernseer)">'+
+      '<input type="text" class="h-mat" placeholder="Material (z. B. Wollfilz)">'+
+      '<select class="h-her">'+HERSTELLUNG.map(h=>'<option>'+h+'</option>').join('')+'</select>'+
+      '<input type="text" class="h-preis" placeholder="Preis (z. B. 189 €)">'+
+      '<input type="text" class="h-gr" placeholder="Größen (z. B. 55–61 / auf Maß)">'+
+      '</div>'+
+      '<div class="hd"><label><input type="checkbox" class="h-pers"> personalisierbar (Band, Initialen, Feder)</label>'+
+      '<button type="button" class="ev-del">Entfernen</button></div>';
+    d.dataset.img=it.img||'';
+    d.querySelector('.h-name').value=it.name||'';
+    d.querySelector('.h-mat').value=it.mat||'';
+    d.querySelector('.h-her').value=it.her||HERSTELLUNG[0];
+    d.querySelector('.h-preis').value=it.preis||'';
+    d.querySelector('.h-gr').value=it.gr||'';
+    d.querySelector('.h-pers').checked=!!it.pers;
+    d.querySelector('.ev-del').onclick=()=>d.remove();
+    return d;};
+  function hutBindFile(d){
+    const inp=d.querySelector('input[type=file]');
+    inp.onchange=function(){const file=this.files[0];if(!file)return;
+      const img=new Image();
+      img.onload=()=>{const M=900,k=Math.min(1,M/Math.max(img.width,img.height));
+        const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        d.dataset.img=c.toDataURL('image/jpeg',.8);
+        d.querySelector('.thumb').innerHTML='<img src="'+d.dataset.img+'">'+
+          '<input type="file" accept="image/*" title="Foto wählen">';
+        URL.revokeObjectURL(img.src); hutBindFile(d);
+      };
+      img.src=URL.createObjectURL(file);
+    };
+  }
+  document.getElementById('hut-add').onclick=()=>{
+    const r=hutRow(); document.getElementById('hut-editor').appendChild(r); hutBindFile(r);
+  };
+  function renderItems(){
+    document.querySelectorAll('.hatcard.dyn').forEach(el=>el.remove());
+    const grid=document.querySelector('.coll'); if(!grid) return;
+    (state.items||[]).forEach(it=>{
+      const el=document.createElement('article'); el.className='hatcard dyn in';
+      const specs=[];
+      if(it.mat) specs.push('<li><b>Material</b>'+esc(it.mat)+'</li>');
+      if(it.her) specs.push('<li><b>Herstellung</b>'+esc(it.her)+'</li>');
+      specs.push('<li><b>Personalisierbar</b>'+(it.pers?'ja — Band, Initialen, Feder':'nein')+'</li>');
+      if(it.gr) specs.push('<li><b>Größen</b>'+esc(it.gr)+'</li>');
+      el.innerHTML=(it.img?'<div class="photo"><img src="'+it.img+'" alt=""></div>':'')+
+        '<div class="body"><span class="tag">'+esc(it.her||'Atelier')+'</span><h3>'+esc(it.name||'Hut')+'</h3>'+
+        '<ul class="specs">'+specs.join('')+'</ul>'+
+        (it.preis?'<div class="price">'+esc(it.preis)+'</div>':'')+'</div>';
+      const ph=el.querySelector('.photo');
+      if(ph) ph.addEventListener('click',()=>{const lb=document.getElementById('lightbox');
+        if(!lb) return; lb.querySelector('img').src=it.img;
+        lb.querySelector('.lb-cap').textContent=it.name||''; lb.classList.add('open');});
+      grid.appendChild(el);
+    });
+  }
+  function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+  renderItems();
   modal.onclick=e=>{if(e.target===modal)closeEditor();};
   addEventListener('keydown',e=>{if(e.key==='Escape')closeEditor();});
   document.getElementById('edit-save').onclick=()=>{
@@ -765,7 +857,14 @@
     state.events=[...document.querySelectorAll('#ev-editor .ev-row')].map(r=>({
       date:r.querySelector('.e-date').value,title:r.querySelector('.e-title').value.trim(),text:r.querySelector('.e-text').value.trim()
     })).filter(e=>e.title||e.text||e.date);
-    persist();sessionStorage.removeItem('mla_banner_off');renderPublic();closeEditor();
+    state.items=[...document.querySelectorAll('#hut-editor .hut-row')].map(r=>({
+      img:r.dataset.img||'',name:r.querySelector('.h-name').value.trim(),
+      mat:r.querySelector('.h-mat').value.trim(),her:r.querySelector('.h-her').value,
+      preis:r.querySelector('.h-preis').value.trim(),gr:r.querySelector('.h-gr').value.trim(),
+      pers:r.querySelector('.h-pers').checked
+    })).filter(it=>it.name||it.img);
+    try{persist();}catch(e){alert('Speichern nicht möglich — vermutlich zu viele/zu große Fotos. Bitte ein Foto entfernen.');return;}
+    sessionStorage.removeItem('mla_banner_off');renderPublic();renderItems();closeEditor();
   };
   renderPublic();
 </script>
