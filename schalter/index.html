@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex">
+<title>LuZiD Schalter</title>
+<style>
+  :root{color-scheme:dark;--bg:#0b0f0c;--card:#141b15;--line:#243128;--ink:#e8efe8;
+    --soft:#8fa393;--green:#4ade80;--red:#f87171;--amber:#fbbf24;--accent:#22d3ee}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{background:var(--bg);color:var(--ink);min-height:100vh;
+    font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;
+    padding:calc(env(safe-area-inset-top) + 20px) 16px 40px;max-width:520px;margin:0 auto}
+  h1{font-size:1.15rem;font-weight:700;letter-spacing:.14em;text-align:center;margin-bottom:4px}
+  .sub{text-align:center;color:var(--soft);font-size:.8rem;margin-bottom:22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .name{font-weight:700;font-size:1rem}
+  .url{color:var(--soft);font-size:.75rem;margin-top:2px}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#555;margin-right:7px;vertical-align:1px}
+  .dot.on{background:var(--green);box-shadow:0 0 8px var(--green)}
+  .dot.off{background:var(--red)}
+  .dot.wait{background:var(--amber);animation:blink 1s infinite}
+  @keyframes blink{50%{opacity:.3}}
+  .state{font-size:.8rem;color:var(--soft);text-align:right}
+  .until{font-size:.7rem;color:var(--soft);margin-top:2px}
+  .btns{display:flex;gap:10px;margin-top:14px}
+  button{flex:1;border:0;border-radius:12px;padding:14px 0;font-size:1rem;font-weight:700;
+    color:#08110b;cursor:pointer}
+  button:active{transform:scale(.97)}
+  button:disabled{opacity:.4}
+  .b-an{background:var(--green)}
+  .b-aus{background:var(--red)}
+  .dauer{margin-top:12px}
+  .dauer label{font-size:.78rem;color:var(--soft);display:block;margin-bottom:6px}
+  select{width:100%;background:#0e1410;color:var(--ink);border:1px solid var(--line);
+    border-radius:10px;padding:11px;font-size:.95rem;-webkit-appearance:none;appearance:none}
+  .msg{margin-top:10px;font-size:.82rem;color:var(--accent);min-height:1.2em}
+  .msg.err{color:var(--red)}
+  details{margin-top:20px;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  summary{font-size:.85rem;color:var(--soft);cursor:pointer}
+  details input{width:100%;margin-top:10px;background:#0e1410;color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;padding:11px;font-size:.9rem}
+  details .save{margin-top:10px;background:var(--accent);border-radius:10px;padding:11px 0;width:100%}
+  .hint{font-size:.74rem;color:var(--soft);line-height:1.5;margin-top:10px}
+</style>
+</head>
+<body>
+  <h1>LUZID SCHALTER</h1>
+  <p class="sub">Seiten an- und ausschalten &middot; wirkt in Sekunden</p>
+
+  <div class="card" id="card-hauptseite">
+    <div class="row">
+      <div>
+        <div class="name">LuZiD LaYeRs</div>
+        <div class="url">luzidlayers.de</div>
+      </div>
+      <div class="state"><div><span class="dot" id="dot-hauptseite"></span><span id="st-hauptseite">prüfe…</span></div><div class="until" id="until-hauptseite"></div></div>
+    </div>
+    <div class="btns">
+      <button class="b-an" onclick="schalten('hauptseite','an')">AN</button>
+      <button class="b-aus" onclick="schalten('hauptseite','aus')">AUS</button>
+    </div>
+    <div class="msg" id="msg-hauptseite"></div>
+  </div>
+
+  <div class="card" id="card-mariettas">
+    <div class="row">
+      <div>
+        <div class="name">Mariettas Laden</div>
+        <div class="url">luzidlayers.de/m</div>
+      </div>
+      <div class="state"><div><span class="dot" id="dot-mariettas"></span><span id="st-mariettas">prüfe…</span></div><div class="until" id="until-mariettas"></div></div>
+    </div>
+    <div class="btns">
+      <button class="b-an" onclick="schalten('mariettas','an')">AN</button>
+      <button class="b-aus" onclick="schalten('mariettas','aus')">AUS</button>
+    </div>
+    <div class="msg" id="msg-mariettas"></div>
+  </div>
+
+  <div class="card dauer">
+    <label for="dauer">Beim Einschalten: automatisch wieder aus nach&hellip;</label>
+    <select id="dauer">
+      <option>unbegrenzt</option>
+      <option>1 Stunde</option>
+      <option>2 Stunden</option>
+      <option>4 Stunden</option>
+    </select>
+  </div>
+
+  <details id="setup">
+    <summary>Einrichtung / Passwort</summary>
+    <input type="password" id="token" placeholder="Schalter-Passwort einfügen">
+    <button class="save" onclick="saveToken()">Passwort speichern</button>
+    <p class="hint">Das Passwort wird nur auf diesem Gerät gespeichert (nicht in GitHub, nicht öffentlich
+    sichtbar) und direkt an die eigene Netlify-Funktion geschickt.</p>
+  </details>
+
+<script>
+let token = localStorage.getItem("ll_schalter_token") || "";
+if (token) document.getElementById("token").value = token;
+else document.getElementById("setup").open = true;
+
+function saveToken(){
+  token = document.getElementById("token").value.trim();
+  localStorage.setItem("ll_schalter_token", token);
+  document.getElementById("setup").open = false;
+  alert("Passwort gespeichert.");
+}
+
+function fmtUntil(ms){
+  if (!ms) return "";
+  const d = Math.max(0, ms - Date.now());
+  if (d <= 0) return "";
+  const h = Math.floor(d / 3600000), m = Math.round((d % 3600000) / 60000);
+  return "schaltet automatisch aus in " + (h ? h + " Std " : "") + m + " Min";
+}
+
+function render(bereich, data){
+  const off = data.offline;
+  const dot = document.getElementById("dot-" + bereich);
+  dot.className = "dot " + (off ? "off" : "on");
+  document.getElementById("st-" + bereich).textContent = off ? "AUS" : "AN";
+  document.getElementById("until-" + bereich).textContent = (!off && data.until) ? fmtUntil(data.until) : "";
+}
+
+async function status(){
+  try{
+    const r = await fetch("/api/status?ts=" + Date.now(), { cache: "no-store" });
+    const j = await r.json();
+    render("hauptseite", j.hauptseite);
+    render("mariettas", j.mariettas);
+    return j;
+  }catch(e){
+    ["hauptseite","mariettas"].forEach(b => {
+      document.getElementById("st-" + b).textContent = "nicht erreichbar";
+    });
+    return null;
+  }
+}
+
+function msg(bereich, text, err){
+  const m = document.getElementById("msg-" + bereich);
+  m.textContent = text;
+  m.className = "msg" + (err ? " err" : "");
+}
+
+async function schalten(bereich, zustand){
+  if (!token){
+    document.getElementById("setup").open = true;
+    msg(bereich, "Bitte zuerst das Passwort einrichten.", true);
+    return;
+  }
+  const dauer = document.getElementById("dauer").value;
+  msg(bereich, "Schalte…");
+  document.getElementById("dot-" + bereich).className = "dot wait";
+
+  const r = await fetch("/api/schalten", {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-schalter-secret": token },
+    body: JSON.stringify({ bereich, zustand, dauer })
+  }).catch(() => null);
+
+  if (!r || !r.ok){
+    msg(bereich, r && r.status === 401 ? "Passwort falsch." : "Fehler beim Schalten.", true);
+    status();
+    return;
+  }
+  const extra = (zustand === "an" && dauer !== "unbegrenzt") ? " · Timer: aus nach " + dauer : "";
+  msg(bereich, "Erledigt (" + zustand.toUpperCase() + ")" + extra);
+  status();
+}
+
+status();
+setInterval(status, 30000);
+</script>
+</body>
+</html>
