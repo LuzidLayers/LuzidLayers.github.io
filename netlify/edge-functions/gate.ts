@@ -3,7 +3,7 @@
 // und /api/schalten. Alles läuft privat über Netlify Blobs — nichts davon
 // ist in GitHub sichtbar, nur dieser Quellcode (das Passwort steht in einer
 // Netlify-Umgebungsvariable, nicht im Repo).
-import { getStore } from "npm:@netlify/blobs@8.2.0";
+import { getStore } from "https://esm.sh/@netlify/blobs@8.2.0";
 import type { Context } from "https://edge.netlify.com";
 
 const WARTUNG_HTML = `<!DOCTYPE html>
