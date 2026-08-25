@@ -4,6 +4,24 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>krom-A — Pro Visual Instrument für Musiker & Performer</title>
+<meta name="description" content="Ein eigenständiges visuelles Instrument für Musiker und Performer.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LuZiD LaYeRs">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="krom-A — Visual Instrument">
+<meta property="og:description" content="Ein eigenständiges visuelles Instrument für Musiker und Performer.">
+<meta property="og:url" content="https://luzidlayers.de/kroma.html">
+<meta property="og:image" content="https://luzidlayers.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="krom-A — Visual Instrument">
+<meta name="twitter:description" content="Ein eigenständiges visuelles Instrument für Musiker und Performer.">
+<meta name="twitter:image" content="https://luzidlayers.de/og-image.jpg">
+<meta name="theme-color" content="#07090C">
 <link rel="stylesheet" href="fonts.css">
 <script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
@@ -149,7 +167,7 @@
 
   footer{border-top:1px solid rgba(168,85,247,.1);padding:60px 0 40px;color:var(--muted)}
   .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;align-items:center}
-  .foot-links{display:flex;gap:26px;font-size:14px}.foot-links a:hover{color:var(--violet)}
+  .foot-links{display:flex;gap:26px;font-size:14px;flex-wrap:wrap}.foot-links a:hover{color:var(--violet)}
 
   .reveal{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
@@ -417,7 +435,7 @@
       <div class="tl-content">
         <div class="tl-phase">Launch</div>
         <h4>krom-A 1.0</h4>
-        <p>Vollständiges System. Eigener Preis. Eigene Identität. Nächstes Kapitel von LuZiD LaYeRs.</p>
+        <p>Vollständiges System. Eigene Identität. Das nächste Kapitel von LuZiD LaYeRs.</p>
       </div>
     </div>
   </div>
@@ -517,5 +535,6 @@ document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
 </script>
+<script src="schriftwahl.js" defer></script>
 </body>
 </html>

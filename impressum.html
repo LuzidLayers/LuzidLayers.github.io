@@ -4,6 +4,24 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Impressum — LuZiD LaYeRs</title>
+<meta name="description" content="Impressum und Kontakt.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LuZiD LaYeRs">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Impressum — LuZiD LaYeRs">
+<meta property="og:description" content="Impressum und Kontakt.">
+<meta property="og:url" content="https://luzidlayers.de/impressum.html">
+<meta property="og:image" content="https://luzidlayers.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Impressum — LuZiD LaYeRs">
+<meta name="twitter:description" content="Impressum und Kontakt.">
+<meta name="twitter:image" content="https://luzidlayers.de/og-image.jpg">
+<meta name="theme-color" content="#07090C">
 <link rel="stylesheet" href="fonts.css">
 <script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
@@ -46,7 +64,7 @@
   .todo b{color:var(--cyan)}
 
   footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 0 40px;color:var(--muted);position:relative;z-index:2}
-  .foot-links{display:flex;gap:26px;font-size:14px;margin-top:14px}
+  .foot-links{display:flex;gap:26px;font-size:14px;margin-top:14px;flex-wrap:wrap}
   a,button{cursor:none}
   #cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:rgba(139,92,246,.9);box-shadow:0 0 8px rgba(139,92,246,.9),0 0 20px rgba(139,92,246,.4);transform:translate(-50%,-50%);transition:width .15s,height .15s}
   #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(139,92,246,.35);transform:translate(-50%,-50%)}
@@ -70,7 +88,7 @@
   <a class="back" href="home.html?entered=1">← Universum</a>
   <div style="display:flex;gap:28px;align-items:center">
     <a href="fusionwarp_live.html" style="color:rgba(255,255,255,.35);font-family:var(--brand-font),'C1st Font';font-size:10px;letter-spacing:.35em;text-transform:uppercase;text-decoration:none">FusionWarp</a>
-    <a href="future.html" style="color:rgba(255,255,255,.35);font-family:var(--brand-font),'C1st Font';font-size:10px;letter-spacing:.35em;text-transform:uppercase;text-decoration:none">Coming Soon</a>
+    <a href="downloads.html" style="color:rgba(255,255,255,.35);font-family:var(--brand-font),'C1st Font';font-size:10px;letter-spacing:.35em;text-transform:uppercase;text-decoration:none">Downloads</a>
   </div>
 </nav>
 
@@ -162,5 +180,6 @@ document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
 </script>
+<script src="schriftwahl.js" defer></script>
 </body>
 </html>

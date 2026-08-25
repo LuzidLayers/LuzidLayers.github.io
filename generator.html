@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Visual Generator — LuZiD LaYeRs</title>
+<meta name="description" content="Buzzer drücken, Zufall entscheiden lassen, Wallpaper in 4K herunterladen. Direkt im Browser.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LuZiD LaYeRs">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Wallpaper-Generator — LuZiD LaYeRs">
+<meta property="og:description" content="Buzzer drücken, Zufall entscheiden lassen, Wallpaper in 4K herunterladen. Direkt im Browser.">
+<meta property="og:url" content="https://luzidlayers.de/generator.html">
+<meta property="og:image" content="https://luzidlayers.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wallpaper-Generator — LuZiD LaYeRs">
+<meta name="twitter:description" content="Buzzer drücken, Zufall entscheiden lassen, Wallpaper in 4K herunterladen. Direkt im Browser.">
+<meta name="twitter:image" content="https://luzidlayers.de/og-image.jpg">
+<meta name="theme-color" content="#07090C">
 <link rel="stylesheet" href="fonts.css">
 <script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
@@ -125,7 +143,8 @@ body.ch #cursor-ring{width:52px;height:52px}
   <div class="result-name" id="result-name"></div>
   <div class="result-sub" id="result-sub"></div>
   <div class="result-btns">
-    <button class="rbtn rbtn-dl" onclick="downloadWallpaper()">↓ Wallpaper</button>
+    <button class="rbtn rbtn-dl" onclick="downloadWallpaper('desktop',this)">↓ Wallpaper 4K</button>
+    <button class="rbtn rbtn-dl" onclick="downloadWallpaper('handy',this)">↓ Handy</button>
     <a class="rbtn rbtn-saver" href="Fusionwarp_Screensaver.zip" download>↓ Screensaver</a>
     <button class="rbtn rbtn-again" onclick="resetRoulette()">⟳ Nochmal</button>
   </div>
@@ -134,8 +153,8 @@ body.ch #cursor-ring{width:52px;height:52px}
 <script>
 // Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const canvas=document.getElementById('stage'),ctx=canvas.getContext('2d');
-let W,H,frame=0,animId=null;
+const canvas=document.getElementById('stage');let ctx=canvas.getContext('2d');
+let W,H,frame=0,animId=null,exporting=false;
 let pts=[],vel=[],phase=[];
 
 // ── PALETTES & ENGINES ──────────────────────────────────────────────────────
@@ -265,10 +284,77 @@ function resetCursorColor(){
   document.getElementById('cursor-dot').style.boxShadow='0 0 8px rgba(255,255,255,.6)';
 }
 
-function downloadWallpaper(){
-  const a=document.createElement('a');
-  a.download=`LuZiD-LaYeRs-${finalEng.name.replace(/ /g,'-')}.png`;
-  a.href=canvas.toDataURL('image/png');a.click();
+// -- WALLPAPER-EXPORT ---------------------------------------------------------
+// Rendert das Ergebnis in echter Zielaufloesung NEU, statt das Fenster
+// abzufotografieren. Sonst kaeme ein ~1440x900-Bild raus, das als Wallpaper
+// unbrauchbar ist.
+const FORMATE={
+  desktop:{w:3840,h:2160,scale:2,   label:'Wallpaper 4K'},
+  handy:  {w:1290,h:2796,scale:1.45,label:'Handy'}
+};
+
+async function downloadWallpaper(format,btn){
+  if(exporting)return;
+  const F=FORMATE[format]||FORMATE.desktop;
+  const label=btn?btn.textContent:'';
+  exporting=true;
+  if(btn){btn.disabled=true;btn.style.opacity='.6';}
+
+  // Globalen Zeichen-Zustand sichern - die Engines malen auf Globals
+  const _ctx=ctx,_W=W,_H=H,_pts=pts,_vel=vel,_phase=phase,_frame=frame;
+
+  const off=document.createElement('canvas');
+  off.width=F.w;off.height=F.h;
+  const octx=off.getContext('2d');
+
+  try{
+    // Grundflaeche deckend fuellen - die Engines malen mit Alpha-Spuren darueber
+    octx.fillStyle=`rgb(${pal.bg.join(',')})`;
+    octx.fillRect(0,0,F.w,F.h);
+    octx.scale(F.scale,F.scale);
+
+    ctx=octx;W=F.w/F.scale;H=F.h/F.scale;
+    initPts();frame=0;
+
+    // In Haeppchen rendern, damit der Browser nicht einfriert
+    const FRAMES=340;
+    for(let i=0;i<FRAMES;i++){
+      frame++;eng.fn();
+      if(i%34===0){
+        if(btn)btn.textContent=`Rendert ${Math.round(i/FRAMES*100)} %`;
+        await new Promise(r=>requestAnimationFrame(r));
+      }
+    }
+  }catch(err){
+    console.error('Wallpaper-Export fehlgeschlagen:',err);
+    if(btn)btn.textContent='Fehler - nochmal?';
+    setTimeout(()=>{if(btn)btn.textContent=label;},2500);
+    return;
+  }finally{
+    // Zeichen-Zustand immer zurueckgeben, auch wenn oben etwas schiefgeht
+    ctx=_ctx;W=_W;H=_H;pts=_pts;vel=_vel;phase=_phase;frame=_frame;
+    exporting=false;
+    if(btn){btn.disabled=false;btn.style.opacity='';btn.textContent=label;}
+  }
+
+  const eName=(finalEng||eng).name.replace(/ /g,'-');
+  saveCanvas(off,`LuZiD-LaYeRs-${eName}-${F.w}x${F.h}.png`);
+}
+
+// Speichern ueber Blob: toDataURL sprengt bei 4K in Safari die URL-Laenge,
+// und der Link muss im DOM haengen, sonst schluckt Firefox den Klick.
+function saveCanvas(cv,filename){
+  const fire=url=>{
+    const a=document.createElement('a');
+    a.href=url;a.download=filename;a.rel='noopener';
+    document.body.appendChild(a);a.click();
+    setTimeout(()=>{a.remove();if(url.slice(0,5)==='blob:')URL.revokeObjectURL(url);},4000);
+  };
+  if(cv.toBlob){
+    cv.toBlob(b=>{b?fire(URL.createObjectURL(b)):fire(cv.toDataURL('image/png'));},'image/png');
+  }else{
+    fire(cv.toDataURL('image/png'));
+  }
 }
 
 // ── ENGINES ──────────────────────────────────────────────────────────────────
@@ -408,6 +494,7 @@ function engineTunnel(){
 // ── RENDER LOOP ───────────────────────────────────────────────────────────────
 function loop(){
   if(!REDUCED_MOTION)animId=requestAnimationFrame(loop);
+  if(exporting)return; // waehrend des Exports gehoert ctx dem Export
   if(state==='STOPPED'){ENGINES.find(e=>e===eng||e.name===eng.name)?.fn();return;}
   frame++;
   // spin: switch engine at current interval
@@ -437,5 +524,6 @@ document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
 </script>
+<script src="schriftwahl.js" defer></script>
 </body>
 </html>

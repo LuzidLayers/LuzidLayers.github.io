@@ -335,5 +335,6 @@ document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
 </script>
+<script src="schriftwahl.js" defer></script>
 </body>
 </html>

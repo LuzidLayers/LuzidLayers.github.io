@@ -1,0 +1,36 @@
+LuZiD Fonts — Schriften mit Charakter
+Andreas Deflorin · luzidlayers.de
+
+10 handgemachte Schriften. Kostenlos für private und
+kommerzielle Nutzung. Weiterverkauf nicht gestattet.
+
+
+INSTALLIEREN
+
+macOS    Doppelklick auf die .ttf-Datei → "Schrift installieren".
+         Oder alle markieren und in Schriftsammlung.app ziehen.
+
+Windows  Rechtsklick auf die .ttf-Datei → "Installieren".
+         Oder alle markieren → Rechtsklick → "Für alle Benutzer installieren".
+
+Linux    Dateien nach ~/.local/share/fonts/ kopieren,
+         dann im Terminal: fc-cache -f -v
+
+
+ENTHALTEN
+
+Luzid Camo             Luzid Melting
+Luzid Candy            Luzid Pink Sketch
+Luzid GruenGelb        Luzid Speedlines
+Luzid Knochen          Luzid Wurm
+Luzid Kugelschreiber   Luzid Marker
+
+
+HINWEIS
+
+Luzid Marker enthält nur Buchstaben — Ziffern und Sonderzeichen
+werden von der Systemschrift ersetzt.
+Luzid Kugelschreiber enthält keine großen Umlaute (Ä Ö Ü).
+
+
+Fragen: andreas.deflorin@luzidlayers.de

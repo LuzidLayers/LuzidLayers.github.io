@@ -3,3 +3,12 @@
 # Mac system files
 .DS_Store
 **/.DS_Store
+
+# Zwischenlager fuer Arbeitspakete - gehoert nicht ins Repo
+_archiv/
+
+# Nicht auf die oeffentliche Seite
+Fusionwarp 2.saver/
+DECA8_BlobSlicer.html
+DECA8_SmartSlicer.html
+font-preview.html

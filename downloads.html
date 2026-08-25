@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Downloads — LuZiD LaYeRs</title>
+<meta name="description" content="Wallpaper in 4K, ein macOS-Bildschirmschoner, elf handgemachte Schriften und kleine Werkzeuge. Alles kostenlos, ohne Anmeldung.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LuZiD LaYeRs">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Downloads — LuZiD LaYeRs">
+<meta property="og:description" content="Wallpaper in 4K, ein macOS-Bildschirmschoner, elf handgemachte Schriften und kleine Werkzeuge. Alles kostenlos, ohne Anmeldung.">
+<meta property="og:url" content="https://luzidlayers.de/downloads.html">
+<meta property="og:image" content="https://luzidlayers.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Downloads — LuZiD LaYeRs">
+<meta name="twitter:description" content="Wallpaper in 4K, ein macOS-Bildschirmschoner, elf handgemachte Schriften und kleine Werkzeuge. Alles kostenlos, ohne Anmeldung.">
+<meta name="twitter:image" content="https://luzidlayers.de/og-image.jpg">
+<meta name="theme-color" content="#07090C">
+<link rel="stylesheet" href="fonts.css">
+<script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
+<style>
+  :root{
+    --black:#07090C; --black2:#0B0F14;
+    --cyan:#00E5FF; --violet:#8B5CF6; --green:#39FF7A; --white:#F5FBFF;
+    --grad:linear-gradient(100deg,var(--cyan),var(--violet));
+    --muted:rgba(200,225,255,.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;cursor:none}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--white);
+    font-family:var(--brand-font),'C1st Font',system-ui,sans-serif;font-weight:300;
+    overflow-x:hidden;line-height:1.6;}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+  section{position:relative;z-index:2}
+
+  #bg{position:fixed;inset:0;z-index:0;opacity:.4}
+  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(7,9,12,.1) 0%,rgba(7,9,12,.5) 60%,var(--black) 100%)}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:30;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;backdrop-filter:blur(12px);
+    background:rgba(7,9,12,.4);border-bottom:1px solid rgba(0,229,255,.1)}
+  .nav-back{font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:.35em;
+    text-transform:uppercase;color:rgba(57,255,122,.6);transition:color .2s}
+  .nav-back:hover{color:rgba(57,255,122,1)}
+  .nav-links{display:flex;gap:24px;align-items:center;font-weight:600;font-size:14px}
+  .nav-links a{color:var(--muted);transition:.2s}.nav-links a:hover{color:var(--white)}
+  @media(max-width:760px){.nav-links a{display:none}}
+
+  header{min-height:46vh;display:flex;flex-direction:column;justify-content:center;
+    padding-top:120px;padding-bottom:10px;position:relative;z-index:2}
+  .eyebrow{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:5px;color:var(--green);
+    margin-bottom:22px;text-transform:uppercase;opacity:.9}
+  h1{font-size:clamp(44px,9vw,92px);font-weight:900;line-height:.95;letter-spacing:-2px}
+  .tagline{font-size:clamp(17px,2.4vw,21px);font-weight:300;margin:22px 0 10px;max-width:660px;color:rgba(245,251,255,.9)}
+  .sub{color:var(--muted);max-width:620px;font-size:15.5px}
+
+  .pad{padding:54px 0}
+  .label{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:4px;
+    text-transform:uppercase;margin:0 0 6px;color:var(--muted)}
+  .label-sub{color:rgba(200,225,255,.35);font-size:13.5px;margin-bottom:26px;max-width:60ch}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+  .card{border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:28px 26px 26px;
+    background:linear-gradient(160deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+    display:flex;flex-direction:column;gap:11px;transition:all .25s;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .25s;
+    background:radial-gradient(500px 200px at 20% -10%,var(--ac,rgba(57,255,122,.13)),transparent 70%)}
+  .card:hover{border-color:var(--acb,rgba(57,255,122,.4));transform:translateY(-3px)}
+  .card:hover::before{opacity:1}
+  .card > *{position:relative;z-index:1}
+  .c-type{font-family:var(--brand-font),'C1st Font';font-size:9.5px;letter-spacing:2.4px;
+    text-transform:uppercase;color:var(--acc,var(--green));opacity:.85}
+  .c-h{font-size:24px;font-weight:800;letter-spacing:-.5px;line-height:1.2}
+  .c-p{color:var(--muted);font-size:14px;line-height:1.65;flex:1}
+  .c-meta{font-size:11.5px;color:rgba(200,225,255,.32);letter-spacing:.04em}
+  .c-btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px}
+
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:40px;
+    font-family:var(--brand-font),'C1st Font';font-size:10.5px;letter-spacing:.26em;
+    text-transform:uppercase;cursor:none;transition:all .25s;border:none;white-space:nowrap}
+  .btn-primary{background:linear-gradient(100deg,var(--green),var(--cyan));color:#04140a;font-weight:700;
+    box-shadow:0 0 18px rgba(57,255,122,.25)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(57,255,122,.45)}
+  .btn-ghost{border:1px solid rgba(255,255,255,.16);color:rgba(245,251,255,.75);background:transparent}
+  .btn-ghost:hover{border-color:rgba(0,229,255,.7);color:#fff;background:rgba(0,229,255,.07)}
+
+  .soon .c-type{color:var(--violet)}
+  .soon{border-style:dashed;border-color:rgba(139,92,246,.22)}
+  .soon:hover{border-color:rgba(139,92,246,.5)}
+  .soon-tag{display:inline-block;font-family:var(--brand-font),'C1st Font';font-size:9px;
+    letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;
+    background:rgba(139,92,246,.13);color:#c4b5fd;border:1px solid rgba(139,92,246,.3);align-self:flex-start}
+
+  .note-box{border-left:2px solid rgba(139,92,246,.4);padding:15px 20px;margin-top:34px;
+    background:rgba(139,92,246,.05);border-radius:0 12px 12px 0;
+    color:rgba(230,220,255,.72);font-size:13.5px;line-height:1.65}
+
+  footer{border-top:1px solid rgba(255,255,255,.07);padding:56px 0 40px;color:var(--muted);position:relative;z-index:2;margin-top:40px}
+  .foot-links{display:flex;gap:24px;font-size:14px;justify-content:center;flex-wrap:wrap}
+  .foot-links a:hover{color:var(--cyan)}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  a,button{cursor:none}
+  #cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:rgba(57,255,122,.9);box-shadow:0 0 8px rgba(57,255,122,.9),0 0 20px rgba(57,255,122,.4);transform:translate(-50%,-50%);transition:width .15s,height .15s}
+  #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(57,255,122,.35);transform:translate(-50%,-50%)}
+  body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(57,255,122,1),0 0 40px rgba(0,229,255,.6)}
+  body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(57,255,122,.6)}
+
+  @media (pointer:coarse){*{cursor:auto}#cursor-dot,#cursor-ring{display:none}}
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+  }
+
+  /* Der Kopfbereich lief unter die feste Navigationsleiste: .wrap setzt
+     padding:0 28px und schlaegt damit die header-Regel. Deshalb header.wrap. */
+  header.wrap{padding-top:120px}
+  @media (max-width:760px){
+    header, header.wrap{min-height:auto;justify-content:flex-start;
+      padding-top:104px;padding-bottom:28px}
+  }
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="bg"></canvas>
+<div class="veil"></div>
+
+<nav>
+  <a class="nav-back" href="home.html?entered=1">← Universum</a>
+  <div class="nav-links">
+    <a href="artist.html">Artist</a>
+    <a href="labor.html">Labor</a>
+    <a href="fonts.html">Fonts</a>
+    <a href="fusionwarp_live.html">FusionWarp</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow reveal">Zum Mitnehmen · alles kostenlos</div>
+  <h1 class="reveal">Nimm was<br><span class="grad-text">mit.</span></h1>
+  <p class="tagline reveal">Wallpaper, ein Bildschirmschoner, elf Schriften und ein paar kleine Werkzeuge.</p>
+  <p class="sub reveal">Alles hier ist gratis und ohne Anmeldung — einfach laden und benutzen. Für private wie kommerzielle Arbeit. Nur weiterverkaufen solltest du es nicht.</p>
+</header>
+
+<section class="wrap pad">
+  <div class="label reveal">Gratis &amp; sofort</div>
+  <div class="label-sub reveal">Vier Sachen, die du direkt mitnehmen kannst.</div>
+  <div class="grid">
+
+    <div class="card reveal" style="--ac:rgba(255,60,172,.14);--acb:rgba(255,60,172,.45);--acc:#FF3CAC">
+      <span class="c-type">Bildgenerator · im Browser</span>
+      <div class="c-h">Wallpaper-Roulette</div>
+      <p class="c-p">Drück den Buzzer, lass den Zufall entscheiden — sieben Engines, acht Farbwelten. Was dabei herauskommt, lädst du direkt als 4K-Bild oder im Hochformat fürs Handy.</p>
+      <div class="c-meta">Kein Download nötig · Ergebnis als PNG · 3840 × 2160 oder 1290 × 2796</div>
+      <div class="c-btns">
+        <a href="generator.html" class="btn btn-primary">Ausprobieren</a>
+      </div>
+    </div>
+
+    <div class="card reveal" style="--ac:rgba(139,92,246,.14);--acb:rgba(139,92,246,.45);--acc:#A78BFA">
+      <span class="c-type">macOS · Bildschirmschoner</span>
+      <div class="c-h">FusionWarp Screensaver</div>
+      <p class="c-p">Dein Mac als lebendiges Kunstwerk. Dieselbe Engine wie FusionWarp, nur auf dem Sperrbildschirm — in Echtzeit berechnet, nie zweimal gleich.</p>
+      <div class="c-meta">macOS 13+ · 250 KB · Apple Silicon &amp; Intel</div>
+      <div class="c-btns">
+        <a href="screensaver.html" class="btn btn-primary">Zur Anleitung</a>
+        <a href="Fusionwarp_Screensaver.zip" download class="btn btn-ghost">↓ Direkt laden</a>
+      </div>
+    </div>
+
+    <div class="card reveal" style="--ac:rgba(57,255,122,.13);--acb:rgba(57,255,122,.45);--acc:#39FF7A">
+      <span class="c-type">macOS · Menüleisten-App</span>
+      <div class="c-h">FunkenCursor</div>
+      <p class="c-p">Dein Mauszeiger sprüht Funken — systemweit, in jeder App. Ein Icon in der Menüleiste, sonst nichts. Kein Fenster, keine Ablenkung.</p>
+      <div class="c-meta">macOS 13+ · 204 KB · Apple Silicon &amp; Intel</div>
+      <div class="c-btns">
+        <a href="funkencursor.html" class="btn btn-primary">Zur Anleitung</a>
+        <a href="FunkenCursor.zip" download class="btn btn-ghost">↓ Direkt laden</a>
+      </div>
+    </div>
+
+    <div class="card reveal" style="--ac:rgba(0,229,255,.13);--acb:rgba(0,229,255,.45);--acc:#00E5FF">
+      <span class="c-type">Schriften · Mac, Windows, Linux</span>
+      <div class="c-h">LuZiD Fonts</div>
+      <p class="c-p">Elf handgemachte Schriften — von Kugelschreiber über Knochen bis Camo. Entstanden zwischen Bleistift und Code. Als installierbare Dateien, einzeln oder alle auf einmal.</p>
+      <div class="c-meta">11 Schriften · TTF &amp; OTF · 1,1 MB gesamt</div>
+      <div class="c-btns">
+        <a href="fonts.html" class="btn btn-primary">Ansehen &amp; testen</a>
+        <a href="LuzidFonts.zip" download class="btn btn-ghost">↓ Alle laden</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Läuft im Browser</div>
+  <div class="label-sub reveal">Nichts zu installieren — einfach aufmachen.</div>
+  <div class="grid">
+
+    <div class="card reveal" style="--ac:rgba(0,229,255,.13);--acb:rgba(0,229,255,.45);--acc:#00E5FF">
+      <span class="c-type">Web-Werkzeug</span>
+      <div class="c-h">Web Player</div>
+      <p class="c-p">Musik reinwerfen, zusehen. Die Visuals reagieren live auf das, was gerade läuft — Bass, Mitten, Höhen, Stille.</p>
+      <div class="c-btns">
+        <a href="player.html" class="btn btn-primary">Öffnen</a>
+      </div>
+    </div>
+
+    <div class="card reveal" style="--ac:rgba(57,255,122,.13);--acb:rgba(57,255,122,.45);--acc:#39FF7A">
+      <span class="c-type">Web-Werkzeug · Labor</span>
+      <div class="c-h">Was sonst noch da ist</div>
+      <p class="c-p">Node Editor, krom-A, Slicer-Experimente und alles, was gerade halb fertig auf der Werkbank liegt — im Labor gesammelt.</p>
+      <div class="c-btns">
+        <a href="labor.html" class="btn btn-primary">Ins Labor</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Kommt noch</div>
+  <div class="label-sub reveal">Daran wird gerade gearbeitet. Noch nichts zu kaufen — wenn du Bescheid wissen willst, schreib mir einfach.</div>
+  <div class="grid">
+
+    <div class="card soon reveal">
+      <span class="soon-tag">In Vorbereitung</span>
+      <span class="c-type">Kunstdruck · Giclée · limitiert</span>
+      <div class="c-h">Art Prints</div>
+      <p class="c-p">Ein eingefrorener Moment aus einem lebenden Universum. Giclée auf Hahnemühle Photo Rag, signiert und nummeriert, maximal 30 Stück je Motiv.</p>
+      <div class="c-btns">
+        <a href="mailto:andreas.deflorin@luzidlayers.de?subject=Interesse%20Art%20Prints" class="btn btn-ghost">Sag mir Bescheid</a>
+      </div>
+    </div>
+
+    <div class="card soon reveal">
+      <span class="soon-tag">Auf Anfrage</span>
+      <span class="c-type">Original · Unikat</span>
+      <div class="c-h">Originalwerke</div>
+      <p class="c-p">Einmalige Arbeiten, kein Duplikat, keine Kopie — mit Echtheitszertifikat und Signatur.</p>
+      <div class="c-btns">
+        <a href="mailto:andreas.deflorin@luzidlayers.de?subject=Anfrage%20Original" class="btn btn-ghost">Anfragen</a>
+        <a href="artist.html" class="btn btn-ghost">Arbeiten ansehen</a>
+      </div>
+    </div>
+
+    <div class="card soon reveal">
+      <span class="soon-tag">In Arbeit</span>
+      <span class="c-type">Software · macOS</span>
+      <div class="c-h">FusionWarp</div>
+      <p class="c-p">Die vollständige Engine: acht Ebenen, MIDI-Mapping, Preset-Slots, Live-Modus. Der Screensaver oben ist ein kleiner Vorgeschmack darauf.</p>
+      <div class="c-btns">
+        <a href="fusionwarp_live.html" class="btn btn-ghost">Was das ist</a>
+        <a href="mailto:andreas.deflorin@luzidlayers.de?subject=FusionWarp%20-%20auf%20die%20Liste" class="btn btn-ghost">Auf die Liste</a>
+      </div>
+    </div>
+
+    <div class="card soon reveal">
+      <span class="soon-tag">Angekündigt</span>
+      <span class="c-type">Software · macOS</span>
+      <div class="c-h">Abdunkler</div>
+      <p class="c-p">Noch ein Steckbrief in Arbeit — mehr dazu, sobald Details und Screenshots da sind.</p>
+      <div class="c-btns">
+        <a href="mailto:andreas.deflorin@luzidlayers.de?subject=Interesse%20Abdunkler" class="btn btn-ghost">Sag mir Bescheid</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note-box reveal">Diese Seite ist gerade erst online gegangen — verkauft wird noch nichts. Wenn dich etwas interessiert, schreib mir eine Mail an <a href="mailto:andreas.deflorin@luzidlayers.de" style="color:#c4b5fd;text-decoration:underline">andreas.deflorin@luzidlayers.de</a>, dann meld ich mich, sobald es so weit ist.</div>
+</section>
+
+<footer>
+  <div class="wrap foot-links">
+    <a href="home.html">LuZiD LaYeRs</a>
+    <a href="artist.html">Artist</a>
+    <a href="labor.html">Labor</a>
+    <a href="fonts.html">Fonts</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </div>
+</footer>
+
+<script>
+/* Hintergrund: treibende Punkte, lose verbunden */
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const c = document.getElementById('bg'), ctx = c.getContext('2d');
+let W, H, pts;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight;init()}
+function init(){
+  pts=[];
+  const n = Math.min(70, Math.round(innerWidth/22));
+  for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.6+.5,
+    h:[0,229,255],t:Math.random()});
+  pts.forEach(p=>{const r=Math.random();p.h=r<.4?[0,229,255]:r<.75?[139,92,246]:[57,255,122]});
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i];
+    if(!REDUCED_MOTION){p.x+=p.vx;p.y+=p.vy;}
+    if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.284);
+    ctx.fillStyle=`rgba(${p.h.join(',')},.5)`;ctx.fill();
+    for(let j=i+1;j<pts.length;j++){
+      const q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);
+      if(d<130){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+        ctx.strokeStyle=`rgba(${p.h.join(',')},${.1*(1-d/130)})`;ctx.lineWidth=.6;ctx.stroke();}
+    }
+  }
+  if(!REDUCED_MOTION)requestAnimationFrame(draw);
+}
+addEventListener('resize',resize);resize();draw();
+
+/* Einblenden beim Scrollen */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* Eigener Mauszeiger */
+const _cd=document.getElementById('cursor-dot'),_cr=document.getElementById('cursor-ring');
+let _mx=0,_my=0,_rx=0,_ry=0;
+document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
+(function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+<script src="schriftwahl.js" defer></script>
+</body>
+</html>

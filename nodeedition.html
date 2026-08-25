@@ -3,7 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fusionwarp Node Edition — Der Node-Editor für Visuals</title>
+<title>FusionWarp Node-Editor — Visuals als Knotengraph verkabeln</title>
+<meta name="description" content="Visuals als Knotengraph bauen — der Node-Editor lebt direkt in FusionWarp, kein separates Programm.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LuZiD LaYeRs">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="FusionWarp Node-Editor — Visuals als Knotengraph verkabeln">
+<meta property="og:description" content="Visuals als Knotengraph bauen — der Node-Editor lebt direkt in FusionWarp, kein separates Programm.">
+<meta property="og:url" content="https://luzidlayers.de/nodeedition.html">
+<meta property="og:image" content="https://luzidlayers.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FusionWarp Node-Editor — Visuals als Knotengraph verkabeln">
+<meta name="twitter:description" content="Visuals als Knotengraph bauen — der Node-Editor lebt direkt in FusionWarp, kein separates Programm.">
+<meta name="twitter:image" content="https://luzidlayers.de/og-image.jpg">
+<meta name="theme-color" content="#07090C">
 <link rel="stylesheet" href="fonts.css">
 <script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
 <style>
@@ -129,7 +147,7 @@
 
   footer{border-top:1px solid rgba(0,229,255,.1);padding:60px 0 40px;color:var(--muted)}
   .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;align-items:center}
-  .foot-links{display:flex;gap:26px;font-size:14px}.foot-links a:hover{color:var(--cyan)}
+  .foot-links{display:flex;gap:26px;font-size:14px;flex-wrap:wrap}.foot-links a:hover{color:var(--cyan)}
   .logo{display:flex;align-items:center;gap:12px;font-family:var(--brand-font),'C1st Font';font-weight:900;letter-spacing:1px}
   .logo .ne{width:38px;height:38px;border-radius:10px;background:var(--grad);
     display:grid;place-items:center;font-size:13px;font-family:var(--brand-font),'C1st Font';color:#060A0F;
@@ -174,13 +192,13 @@
 
 <!-- HERO -->
 <header class="wrap">
-  <div class="eyebrow reveal">by LuZiD LaYeRs · Fusionwarp Familie</div>
-  <h1 class="reveal">Fusionwarp<br><span class="grad-text">Node Edition</span></h1>
+  <div class="eyebrow reveal">Teil von FusionWarp · kein separates Programm</div>
+  <h1 class="reveal">Fusionwarp<br><span class="grad-text">Node-Editor</span></h1>
   <p class="tagline reveal">Der Node-Editor für Visuals.</p>
-  <p class="sub reveal">Frei verkabelbar. Audio-reaktiv. Jeder Node ein Beamer-Output. In Entwicklung.</p>
+  <p class="sub reveal">Frei verkabelbar. Audio-reaktiv. Jeder Node ein Beamer-Output. Jetzt eingebaut in FusionWarp.</p>
   <div class="hero-cta reveal">
     <a href="#konzept" class="btn btn-primary">Das Konzept</a>
-    <a href="#timeline" class="btn btn-ghost">In Entwicklung</a>
+    <a href="fusionwarp_live.html" class="btn btn-ghost">← Zu FusionWarp</a>
   </div>
 </header>
 
@@ -237,13 +255,14 @@
   </div>
 </section>
 
-<!-- ZWEI PRODUKTE -->
+<!-- ZWEI ARBEITSWEISEN -->
 <section id="produkte" class="wrap pad" style="padding-top:0">
-  <div class="label reveal">Produktlinie</div>
+  <div class="label reveal">Eine App, zwei Arbeitsweisen</div>
   <h2 class="reveal">Das Instrument. <span class="grad-text">Und das Labor.</span></h2>
+  <p class="reveal" style="color:var(--muted);max-width:600px;font-size:16px;margin:14px 0 0">Beides steckt in derselben FusionWarp-App — du wechselst die Ansicht, nicht das Programm.</p>
   <div class="vs-grid reveal">
     <div class="vs-side">
-      <div class="vs-label">Fusionwarp</div>
+      <div class="vs-label">Direkt spielen</div>
       <h3>Spielen</h3>
       <ul>
         <li>Sofort loslegen: Video rein, Musik an</li>
@@ -252,7 +271,7 @@
       </ul>
     </div>
     <div class="vs-side active">
-      <div class="vs-label">Node Edition</div>
+      <div class="vs-label">Node-Editor</div>
       <h3>Komponieren</h3>
       <ul>
         <li>Eigene Signalwege bauen, Node für Node</li>
@@ -266,30 +285,30 @@
 <!-- TIMELINE / STATUS -->
 <section id="timeline" class="wrap pad" style="padding-top:0">
   <div class="label reveal">Status</div>
-  <h2 class="reveal">In Entwicklung. <span class="grad-text">Kein Release-Datum.</span></h2>
+  <h2 class="reveal">Eingebaut. <span class="grad-text">Und wird weiter geschärft.</span></h2>
   <div class="timeline reveal">
     <div class="tl-item">
       <div class="tl-dot active"></div>
       <div class="tl-content">
         <div class="tl-phase">JETZT</div>
         <h4>Fusionwarp 1.0</h4>
-        <p>Die Haupt-App wird finalisiert — sie ist das Fundament, ihre Engine und Effekte leben in der Node Edition weiter.</p>
+        <p>Die Haupt-App wird finalisiert — Engine und Effekte sind dieselben, ob man direkt spielt oder im Node-Editor verkabelt.</p>
       </div>
     </div>
     <div class="tl-item">
       <div class="tl-dot active"></div>
       <div class="tl-content">
-        <div class="tl-phase">PARALLEL</div>
-        <h4>Node-Editor-Prototyp</h4>
-        <p>Läuft bereits als eigenständige App: Node-Graph, Verkabelung, Audio-Modulation, Live-Previews, Inspector.</p>
+        <div class="tl-phase">JETZT</div>
+        <h4>Node-Editor</h4>
+        <p>Läuft direkt in FusionWarp — kein separates Programm: Node-Graph, Verkabelung, Audio-Modulation, Live-Previews, Inspector.</p>
       </div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-content">
         <div class="tl-phase">DANACH</div>
-        <h4>Node Edition Release</h4>
-        <p>Eigenständiges Produkt mit voller künstlerischer Vision: Performance-Modus, Canvas = Bühne, animierte Myzel-Wires.</p>
+        <h4>Volle Vision</h4>
+        <p>Performance-Modus, Canvas als Bühne, animierte Myzel-Wires — als Ausbau innerhalb von FusionWarp, kein eigenes Produkt.</p>
       </div>
     </div>
   </div>
@@ -306,8 +325,8 @@
   <div class="contact-box reveal">
     <div class="label" style="display:flex;justify-content:center">Früher Zugang</div>
     <h2>Interesse? <span class="grad-text">Meld dich jetzt.</span></h2>
-    <p>Die Node Edition entsteht gerade. Wer früh dabei sein will, schreibt eine Mail — Beta-Plätze werden zuerst vergeben.</p>
-    <a class="btn btn-primary" href="mailto:andreas.deflorin@luzidlayers.de?subject=Node%20Edition%20—%20Früher%20Zugang">E-Mail schreiben</a>
+    <p>Der Node-Editor steckt in FusionWarp selbst. Wer früh dabei sein will, meldet sich für FusionWarp — der Node-Editor ist automatisch mit dabei.</p>
+    <a class="btn btn-primary" href="mailto:andreas.deflorin@luzidlayers.de?subject=FusionWarp%20Node-Editor%20—%20Früher%20Zugang">E-Mail schreiben</a>
   </div>
 </section>
 
@@ -393,5 +412,6 @@ document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
 </script>
+<script src="schriftwahl.js" defer></script>
 </body>
 </html>
