@@ -4,11 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LuZiD LaYeRs</title>
+<meta name="description" content="Visual Artist, Creative Technologist und VJ aus Warngau. Ein Universum aus Bildern, Schriften, Software und Werkzeugen — vieles davon kostenlos.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LuZiD LaYeRs">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="LuZiD LaYeRs">
+<meta property="og:description" content="Visual Artist, Creative Technologist und VJ aus Warngau. Ein Universum aus Bildern, Schriften, Software und Werkzeugen — vieles davon kostenlos.">
+<meta property="og:url" content="https://luzidlayers.de/">
+<meta property="og:image" content="https://luzidlayers.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LuZiD LaYeRs">
+<meta name="twitter:description" content="Visual Artist, Creative Technologist und VJ aus Warngau. Ein Universum aus Bildern, Schriften, Software und Werkzeugen — vieles davon kostenlos.">
+<meta name="twitter:image" content="https://luzidlayers.de/og-image.jpg">
+<meta name="theme-color" content="#07090C">
 <link rel="stylesheet" href="fonts.css">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-body { font-family: 'C1st Font', serif; color: #fff; }
+body { font-family: var(--brand-font), 'C1st Font', serif; color: #fff; }
 
 /* ── CUSTOM CURSOR ── */
 #cursor-dot {
@@ -47,7 +65,7 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
 #intro.out { opacity: 0; pointer-events: none; }
 
 .intro-brand {
-  font-family: 'C1st Font', serif;
+  font-family: var(--brand-font), 'C1st Font', serif;
   font-size: clamp(38px, 7vw, 88px);
   letter-spacing: 0.18em; color: #fff;
   text-shadow: 0 0 30px rgba(0,229,255,0.5), 0 0 80px rgba(0,229,255,0.2);
@@ -68,7 +86,7 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
   margin-bottom: 32px;
 }
 .intro-prompt {
-  font-family: 'C1st Font', serif; font-size: clamp(13px,2vw,18px);
+  font-family: var(--brand-font), 'C1st Font', serif; font-size: clamp(13px,2vw,18px);
   letter-spacing: 0.35em; color: rgba(255,255,255,0.6); text-transform: uppercase;
   margin-bottom: 48px; animation: prompt-pulse 2.5s ease-in-out infinite;
 }
@@ -103,6 +121,60 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
   margin-left: 5px;
 }
 
+/* ── FONT-AUSWAHL ── */
+#font-pick {
+  display: none; flex-direction: column; align-items: center;
+  max-width: 720px; padding: 0 24px;
+}
+#font-pick.show { display: flex; }
+.pick-title {
+  font-family: var(--brand-font), 'C1st Font', serif;
+  font-size: clamp(20px, 3vw, 30px); letter-spacing: 0.12em; color: #fff;
+  margin-bottom: 6px; text-align: center;
+}
+.pick-sub {
+  font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); margin-bottom: 36px; text-align: center;
+}
+.font-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px; width: 100%;
+}
+.font-card {
+  position: relative; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15); border-radius: 10px;
+  padding: 18px 10px 14px; text-align: center;
+  background: rgba(255,255,255,0.02);
+  transition: border-color .25s, background .25s, box-shadow .25s, transform .2s;
+}
+.font-card:hover {
+  border-color: rgba(0,229,255,0.6); background: rgba(0,229,255,0.06);
+  box-shadow: 0 0 24px rgba(0,229,255,0.15); transform: translateY(-2px);
+}
+.font-card.recommended {
+  border-color: rgba(0,229,255,0.55);
+  box-shadow: 0 0 20px rgba(0,229,255,0.18);
+}
+.font-card .fc-sample {
+  font-size: 26px; color: #fff; margin-bottom: 10px;
+  line-height: 1.1; word-break: break-word;
+}
+.font-card .fc-name {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.font-card .fc-badge {
+  position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: #00E5FF; background: #050505; padding: 2px 8px;
+  border: 1px solid rgba(0,229,255,0.5); border-radius: 20px;
+}
+.pick-skip {
+  margin-top: 30px; font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); cursor: pointer; transition: color .2s;
+}
+.pick-skip:hover { color: rgba(255,255,255,0.7); }
+
 /* ── NAV ── */
 #nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 30;
@@ -112,7 +184,7 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
 }
 #nav.show { opacity: 1; pointer-events: all; }
 .nav-logo {
-  font-family: 'C1st Font', serif; font-size: 17px; letter-spacing: 0.17em;
+  font-family: var(--brand-font), 'C1st Font', serif; font-size: 17px; letter-spacing: 0.17em;
   color: rgba(255,255,255,0.85); text-decoration: none;
   text-shadow: 0 0 20px rgba(0,229,255,0.3);
   transition: text-shadow .3s;
@@ -180,7 +252,7 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
 }
 .dest:hover .dest-label { opacity: 1; }
 .dest-name {
-  font-family: 'C1st Font', serif;
+  font-family: var(--brand-font), 'C1st Font', serif;
   font-size: clamp(11px, 1.4vw, 15px);
   letter-spacing: 0.25em; text-transform: uppercase;
   color: #fff;
@@ -212,7 +284,7 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
   background: rgba(0,229,255,0.5); transition: height 0.04s ease, background 0.04s;
 }
 .hud-status {
-  font-family: 'C1st Font', serif; font-size: 9px;
+  font-family: var(--brand-font), 'C1st Font', serif; font-size: 9px;
   letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.18);
 }
 
@@ -231,12 +303,21 @@ canvas#universe { position: fixed; inset: 0; width: 100%; height: 100%; display:
 
 <!-- INTRO -->
 <div id="intro">
-  <div class="intro-brand">LuZiD LaYeRs</div>
-  <div class="intro-role">Visual Artist · Creative Technologist · VJ</div>
-  <div class="intro-line"></div>
-  <div class="intro-prompt">Betritt das Universum</div>
-  <div class="enter-ring" onclick="startExperience()" role="button" aria-label="Enter">
-    <div class="enter-circle"><div class="play-tri"></div></div>
+  <div id="intro-step1">
+    <div class="intro-brand">LuZiD LaYeRs</div>
+    <div class="intro-role">Visual Artist · Creative Technologist · VJ</div>
+    <div class="intro-line"></div>
+    <div class="intro-prompt">Betritt das Universum</div>
+    <div class="enter-ring" onclick="showFontPick()" role="button" aria-label="Enter">
+      <div class="enter-circle"><div class="play-tri"></div></div>
+    </div>
+  </div>
+
+  <div id="font-pick">
+    <div class="pick-title">Wähle deine Schrift</div>
+    <div class="pick-sub">Gilt für diesen Besuch</div>
+    <div class="font-grid" id="font-grid"></div>
+    <div class="pick-skip" onclick="chooseFont('Luzid Speedlines')">Weiter mit Luzid Speedlines</div>
   </div>
 </div>
 
@@ -513,6 +594,44 @@ function lerpColor(a,b,t){
   return[Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];
 }
 
+const LUZID_FONTS = [
+  { name: 'Luzid Speedlines', recommended: true },
+  { name: 'C1st Font' },
+  { name: 'Luzid Wurm' },
+  { name: 'Luzid PinkSketch' },
+  { name: 'Luzid GruenGelb' },
+  { name: 'Luzid Camo' },
+  { name: 'Luzid Candy' },
+  { name: 'Luzid Knochen' },
+  { name: 'Luzid Kugelschreiber' },
+  { name: 'Luzid Melting' },
+  { name: 'Luzid Marker' },
+];
+
+function buildFontGrid() {
+  const grid = document.getElementById('font-grid');
+  LUZID_FONTS.forEach(f=>{
+    const card = document.createElement('div');
+    card.className = 'font-card' + (f.recommended ? ' recommended' : '');
+    card.onclick = ()=>chooseFont(f.name);
+    card.innerHTML = (f.recommended ? '<span class="fc-badge">Standard</span>' : '')
+      + `<div class="fc-sample" style="font-family:'${f.name}', serif">Aa</div>`
+      + `<div class="fc-name">${f.name.replace('Luzid ','')}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+function showFontPick() {
+  document.getElementById('intro-step1').style.display = 'none';
+  document.getElementById('font-pick').classList.add('show');
+}
+
+function chooseFont(name) {
+  sessionStorage.setItem('ll_font', name);
+  document.documentElement.style.setProperty('--brand-font', `'${name}'`);
+  startExperience();
+}
+
 function startExperience() {
   sessionStorage.setItem('ll_entered','1');
   document.getElementById('intro').classList.add('out');
@@ -528,7 +647,14 @@ function startExperience() {
   for(let i=0;i<28;i++){const b=document.createElement('div');b.className='f-bar';b.style.height='2px';c.appendChild(b);}
 })();
 
+buildFontGrid();
 resize(); render();
+
+// ── Gewählte Schrift dieses Besuchs sofort anwenden ─────────────────────
+const storedFont = sessionStorage.getItem('ll_font');
+if(storedFont){
+  document.documentElement.style.setProperty('--brand-font', `'${storedFont}'`);
+}
 
 // ── SKIP INTRO wenn zurück von Unterseite ────────────────────────────────
 if(new URLSearchParams(location.search).get('entered')==='1'){
@@ -565,5 +691,6 @@ document.querySelectorAll('a, button, .dest, .enter-ring, [onclick]').forEach(el
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
 });
 </script>
+<script src="schriftwahl.js" defer></script>
 </body>
 </html>
