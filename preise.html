@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Preise — LuZiD LaYeRs</title>
+<meta name="description" content="Was alles kostet: Fusionwarp, krom-A, Mac-Tools, Artframe, Prints — alle Preise auf einen Blick.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LuZiD LaYeRs">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Preise — LuZiD LaYeRs">
+<meta property="og:description" content="Was alles kostet: Fusionwarp, krom-A, Mac-Tools, Artframe, Prints — alle Preise auf einen Blick.">
+<meta property="og:url" content="https://luzidlayers.de/preise.html">
+<meta property="og:image" content="https://luzidlayers.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Preise — LuZiD LaYeRs">
+<meta name="twitter:description" content="Was alles kostet: Fusionwarp, krom-A, Mac-Tools, Artframe, Prints — alle Preise auf einen Blick.">
+<meta name="twitter:image" content="https://luzidlayers.de/og-image.jpg">
+<meta name="theme-color" content="#07090C">
+<link rel="stylesheet" href="fonts.css">
+<script>if(sessionStorage.getItem("ll_font")){document.documentElement.style.setProperty("--brand-font","'"+sessionStorage.getItem("ll_font")+"'")}</script>
+<style>
+  :root{
+    --black:#07090C; --black2:#0B0F14;
+    --cyan:#00E5FF; --violet:#8B5CF6; --green:#39FF7A; --white:#F5FBFF;
+    --grad:linear-gradient(100deg,var(--cyan),var(--violet));
+    --muted:rgba(200,225,255,.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;cursor:none}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--white);
+    font-family:var(--brand-font),'C1st Font',system-ui,sans-serif;font-weight:300;
+    overflow-x:hidden;line-height:1.6;}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  section{position:relative;z-index:2}
+
+  #bg{position:fixed;inset:0;z-index:0;opacity:.4}
+  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(7,9,12,.1) 0%,rgba(7,9,12,.5) 60%,var(--black) 100%)}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:30;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;backdrop-filter:blur(12px);
+    background:rgba(7,9,12,.4);border-bottom:1px solid rgba(0,229,255,.1)}
+  .nav-links{display:flex;gap:24px;align-items:center;font-weight:600;font-size:14px}
+  .nav-links a{color:var(--muted);transition:.2s}.nav-links a:hover{color:var(--white)}
+  @media(max-width:760px){.nav-links a{display:none}}
+
+  header{min-height:52vh;display:flex;flex-direction:column;justify-content:center;
+    padding-top:120px;padding-bottom:40px;position:relative;z-index:2}
+  .eyebrow{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:5px;color:var(--green);
+    margin-bottom:22px;text-transform:uppercase;opacity:.9}
+  h1{font-size:clamp(44px,9vw,110px);font-weight:900;line-height:.92;letter-spacing:-2px}
+  .tagline{font-size:clamp(19px,3vw,28px);font-weight:300;margin:26px 0 14px;max-width:720px;color:rgba(245,251,255,.9)}
+  .sub{color:var(--muted);max-width:640px;margin-bottom:8px;font-size:16px}
+
+  .label{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:4px;
+    text-transform:uppercase;margin:0 0 22px;color:var(--muted)}
+  .pad{padding:60px 0}
+
+  /* Feature-Kachel (Artframe) */
+  .feature{border:1px solid rgba(57,255,122,.25);border-radius:24px;padding:48px 44px;margin-bottom:16px;
+    background:linear-gradient(135deg,rgba(57,255,122,.08),rgba(0,229,255,.04));position:relative;overflow:hidden}
+  @media(max-width:600px){.feature{padding:34px 24px}}
+  .feature .kick{font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+  .feature h2{font-size:clamp(32px,6vw,58px);font-weight:900;line-height:1;letter-spacing:-1px;margin-bottom:16px}
+  .feature p{color:rgba(245,251,255,.82);max-width:680px;font-size:16px;margin-bottom:22px}
+  .feature .fprice{font-family:var(--brand-font),'C1st Font';font-size:clamp(34px,5vw,52px);font-weight:800;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px}
+  .feature .fprice-sub{color:var(--muted);font-size:13px;margin-bottom:22px;display:block}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-family:var(--brand-font),'C1st Font';font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:7px 13px;border-radius:30px;border:1px solid rgba(57,255,122,.25);color:rgba(200,255,215,.85)}
+
+  /* Preistabelle */
+  .plist{border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;
+    background:linear-gradient(160deg,rgba(255,255,255,.03),rgba(255,255,255,.008))}
+  .prow{display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:20px 26px;border-bottom:1px solid rgba(255,255,255,.06);transition:.2s}
+  .prow:last-child{border-bottom:none}
+  .prow:hover{background:rgba(255,255,255,.025)}
+  .prow .pname{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .prow h3{font-size:16px;font-weight:800;font-family:var(--brand-font),'C1st Font';letter-spacing:.2px}
+  .prow .pdesc{color:var(--muted);font-size:13px}
+  .prow .pdesc-full{color:var(--muted);font-size:13px;flex-basis:100%;margin-top:2px}
+  .ptag{font-family:var(--brand-font),'C1st Font';font-size:16px;font-weight:800;white-space:nowrap;color:var(--white)}
+  .ptag small{display:block;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:2px;text-align:right}
+  .badge{font-family:var(--brand-font),'C1st Font';font-size:9px;letter-spacing:2px;text-transform:uppercase;
+    padding:3px 8px;border-radius:20px;white-space:nowrap;font-weight:700}
+  .b-live{background:rgba(57,255,122,.14);color:var(--green);border:1px solid rgba(57,255,122,.3)}
+  .b-wip {background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.3)}
+  .b-idea{background:rgba(139,92,246,.14);color:var(--violet);border:1px solid rgba(139,92,246,.35)}
+
+  @media(max-width:600px){
+    .prow{flex-direction:column;align-items:flex-start;gap:8px}
+    .ptag{text-align:left}.ptag small{text-align:left}
+  }
+
+  .note{color:var(--muted);font-size:13px;margin-top:16px;font-style:italic;max-width:640px}
+
+  footer{border-top:1px solid rgba(255,255,255,.07);padding:56px 0 40px;color:var(--muted);position:relative;z-index:2}
+  .foot-links{display:flex;gap:24px;font-size:14px;justify-content:center;flex-wrap:wrap}
+  .foot-links a:hover{color:var(--cyan)}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  a,button{cursor:none}
+  #cursor-dot{position:fixed;z-index:9999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:rgba(57,255,122,.9);box-shadow:0 0 8px rgba(57,255,122,.9),0 0 20px rgba(57,255,122,.4);transform:translate(-50%,-50%);transition:width .15s,height .15s}
+  #cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(57,255,122,.35);transform:translate(-50%,-50%)}
+  body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(57,255,122,1),0 0 40px rgba(0,229,255,.6)}
+  body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(57,255,122,.6)}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<canvas id="bg"></canvas>
+<div class="veil"></div>
+
+<nav>
+  <a href="home.html?entered=1" style="font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:rgba(57,255,122,.6);transition:color .2s"
+     onmouseover="this.style.color='rgba(57,255,122,1)'"
+     onmouseout="this.style.color='rgba(57,255,122,.6)'">← Universum</a>
+  <div class="nav-links">
+    <a href="#artframe">Artframe</a>
+    <a href="#fusionwarp">Fusionwarp</a>
+    <a href="#tools">Mac-Tools</a>
+    <a href="#kunst">Kunst</a>
+    <a href="#konzepte">Konzepte</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="eyebrow reveal">Preise · by LuZiD LaYeRs</div>
+  <h1 class="reveal">Was alles<br><span class="grad-text">kostet.</span></h1>
+  <p class="tagline reveal">Software, Hardware, Kunst — ein Preis für jedes Stück Universum.</p>
+  <p class="sub reveal">Alles auf dieser Seite ist ein aktueller Vorschlag, kein festgeschriebener Preis. Manches ist heute schon kaufbar (siehe <a href="shop.html" style="color:var(--cyan);text-decoration:underline">Shop</a>), vieles ist noch in Arbeit oder erst eine Idee.</p>
+</header>
+
+<!-- ARTFRAME -->
+<section id="artframe" class="wrap pad" style="padding-top:0">
+  <div class="feature reveal">
+    <div class="kick">Neu · Physisches Kunstobjekt</div>
+    <h2>Luzid Artframe</h2>
+    <p>Ein fertig eingerichteter Mac mini, ein großer Bildschirm, Fusionwarp läuft rund um die Uhr — aufhängen, einstecken, fertig. Kein Aufbau, keine Technik-Sorgen: ein lebendiges Kunstwerk als Möbelstück.</p>
+    <div class="fprice">6.969 €</div>
+    <span class="fprice-sub">Komplettpaket · Mac mini + Bildschirm + Fusionwarp-Lizenz + Einrichtung · zzgl. Versand/Montage</span>
+    <div class="chips">
+      <span class="chip">Mac mini</span>
+      <span class="chip">Großer Bildschirm</span>
+      <span class="chip">Fusionwarp vorinstalliert</span>
+      <span class="chip">Plug &amp; Play</span>
+      <span class="chip">Individuelles Preset</span>
+    </div>
+    <p class="note">Idee vom 08.09. — Preis als erster Ankerpunkt gesetzt. Deckt Hardware (Mac mini + Display), Lizenz und Einrichtung/Kalibrierung; bei größeren Bildschirmen oder individueller Rahmung nach oben offen.</p>
+  </div>
+</section>
+
+<!-- FUSIONWARP -->
+<section id="fusionwarp" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Fusionwarp-Familie · einmaliger Kauf, kein Abo</div>
+  <div class="plist reveal" data-section="fusionwarp"></div>
+</section>
+
+<!-- SYNTH & VJ -->
+<section class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Visual Synthesizer &amp; Instrumente</div>
+  <div class="plist reveal" data-section="synth"></div>
+</section>
+
+<!-- MAC-TOOLS -->
+<section id="tools" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Mac-Tools</div>
+  <div class="plist reveal" data-section="tools"></div>
+</section>
+
+<!-- KUNST -->
+<section id="kunst" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Kunst &amp; Prints — schon im Shop kaufbar</div>
+  <div class="plist reveal">
+    <div class="prow">
+      <div class="pname"><h3>Art Print</h3><span class="badge b-live">Läuft</span><span class="pdesc">Giclée, limitiert /30, A5–A3</span></div>
+      <div class="ptag">45–125 €</div>
+    </div>
+    <div class="prow">
+      <div class="pname"><h3>Original Artwork</h3><span class="badge b-live">Läuft</span><span class="pdesc">Unikat, signiert, Echtheitszertifikat</span></div>
+      <div class="ptag">auf Anfrage</div>
+    </div>
+    <div class="prow">
+      <div class="pname"><h3>Digital Art Pack</h3><span class="badge b-live">Läuft</span><span class="pdesc">4K-Wallpaper, Sofort-Download</span></div>
+      <div class="ptag">ab 12 €</div>
+    </div>
+    <div class="prow">
+      <div class="pname"><h3>Fusionwarp Screensaver</h3><span class="badge b-live">Läuft</span><span class="pdesc">Promo gratis, Vollversion freigeschaltet</span></div>
+      <div class="ptag">9,99 €<small>Promo gratis</small></div>
+    </div>
+  </div>
+  <p class="note">→ direkt bestellbar im <a href="shop.html" style="color:var(--cyan);text-decoration:underline">Shop</a>.</p>
+</section>
+
+<!-- KONZEPTE -->
+<section id="konzepte" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Noch Konzept — Preisrahmen, kein Fixpreis</div>
+  <div class="plist reveal">
+    <div class="prow">
+      <div class="pname"><h3>3D Layered Print</h3><span class="badge b-idea">Idee</span><span class="pdesc">4 Bild-Schichten physisch auf Acryl/Glas</span></div>
+      <div class="ptag">150–400 €<small>je nach Größe</small></div>
+    </div>
+    <div class="prow">
+      <div class="pname"><h3>Living Artwork</h3><span class="badge b-idea">Idee</span><span class="pdesc">Print + QR → Signatur-Animation in Fusionwarp</span></div>
+      <div class="ptag">Preis folgt</div>
+    </div>
+    <div class="prow">
+      <div class="pname"><h3>LUZ-ID</h3><span class="badge b-idea">Idee</span><span class="pdesc">Bürgerpass mit generativem Kunstwerk</span></div>
+      <div class="ptag">Preis folgt</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-links">
+    <a href="home.html">LuZiD LaYeRs</a>
+    <a href="labor.html">Labor</a>
+    <a href="shop.html">Shop</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </div>
+</footer>
+
+<script>
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const c = document.getElementById('bg');
+const ctx = c.getContext('2d');
+let W, H, pts;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight;init()}
+function init(){
+  const cols=['rgba(0,229,255,.6)','rgba(139,92,246,.6)','rgba(57,255,122,.55)'];
+  pts=Array.from({length:52},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.32, vy:(Math.random()-.5)*.32,
+    r:Math.random()*2.1+1, col:cols[Math.floor(Math.random()*cols.length)]
+  }))
+}
+function draw(){
+  ctx.fillStyle='rgba(7,9,12,.18)';ctx.fillRect(0,0,W,H);
+  pts.forEach((a,i)=>{
+    pts.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<130){ctx.strokeStyle='rgba(150,200,255,'+(.10*(1-d/130))+')';ctx.lineWidth=.5;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+    });
+  });
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col;ctx.fill();
+  });
+  if(!REDUCED_MOTION)requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);resize();draw();
+
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+<script>
+/* Preise kommen aus prices.json, damit LuzidPanel sie ohne HTML-Bearbeitung
+   ändern kann (schreibt die Datei, committet, pusht). */
+const BADGE_LABEL = { live: 'Läuft', wip: 'In Arbeit', idea: 'Idee' };
+fetch('prices.json?_=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    const bySection = {};
+    (data.items || []).forEach(it => {
+      (bySection[it.section] ||= []).push(it);
+    });
+    document.querySelectorAll('.plist[data-section]').forEach(container => {
+      const items = bySection[container.dataset.section] || [];
+      container.innerHTML = items.map(it => `
+        <div class="prow">
+          <div class="pname"><h3>${it.href ? `<a href="${it.href}" style="color:inherit;text-decoration:underline">${it.name}</a>` : it.name}</h3><span class="badge b-${it.badge}">${BADGE_LABEL[it.badge] || it.badge}</span><span class="pdesc">${it.desc}</span></div>
+          <div class="ptag">${it.price}${it.note ? `<small>${it.note}</small>` : ''}</div>
+        </div>`).join('');
+    });
+  })
+  .catch(() => {
+    document.querySelectorAll('.plist[data-section]').forEach(c => {
+      c.innerHTML = '<div class="prow"><span class="pdesc">Preise konnten nicht geladen werden.</span></div>';
+    });
+  });
+</script>
+<script>
+const _cd=document.getElementById('cursor-dot'),_cr=document.getElementById('cursor-ring');
+let _mx=0,_my=0,_rx=0,_ry=0;
+document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
+(function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+<script src="schriftwahl.js" defer></script>
+</body>
+</html>
