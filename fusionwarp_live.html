@@ -739,7 +739,7 @@
   <div class="prices">
     <div class="price feat reveal">
       <div class="tier">FusionWarp</div>
-      <div class="amt" style="font-size:26px">In Arbeit <small>Preis folgt</small></div>
+      <div class="amt" id="price-fw-basis" style="font-size:26px">In Arbeit <small>Preis folgt</small></div>
       <p>Der vollständige Visual Synthesizer. Alle Engines, alle Effekte, kein Abo.</p>
       <ul>
         <li>46 Effekte, 27 Körper-Bewegungen</li>
@@ -756,7 +756,7 @@
     </div>
     <div class="price reveal">
       <div class="tier">Projection Mapping</div>
-      <div class="amt" style="font-size:26px">Add-on <small>Preis folgt</small></div>
+      <div class="amt" id="price-fw-map" style="font-size:26px">Add-on <small>Preis folgt</small></div>
       <p>Bühnen- und Objekt-Mapping direkt aus FusionWarp. Kein extra Tool nötig.</p>
       <ul>
         <li>Mehrere Ausgabe-Fenster</li>
@@ -768,7 +768,7 @@
     </div>
     <div class="price reveal">
       <div class="tier">Aufnahme</div>
-      <div class="amt" style="font-size:26px">Add-on <small>Preis folgt</small></div>
+      <div class="amt" id="price-fw-stream" style="font-size:26px">Add-on <small>Preis folgt</small></div>
       <p>Bild und Ton gemeinsam mitschneiden, ohne zweites Programm.</p>
       <ul>
         <li>Video mit Ton als Datei</li>
@@ -989,6 +989,19 @@ document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseent
     io.observe(v);
   } else { laden(); }
 })();
+</script>
+<script>
+/* Preise kommen aus prices.json, damit LuzidPanel sie ändern kann. */
+fetch('prices.json?_=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    const byId = Object.fromEntries((data.items || []).map(it => [it.id, it]));
+    [['price-fw-basis','fw-basis'],['price-fw-map','fw-map'],['price-fw-stream','fw-stream']].forEach(([elId, itemId]) => {
+      const el = document.getElementById(elId), it = byId[itemId];
+      if (el && it) el.innerHTML = it.price + (it.note ? ` <small>${it.note}</small>` : '');
+    });
+  })
+  .catch(() => {});
 </script>
 <script src="schriftwahl.js" defer></script>
 </body>

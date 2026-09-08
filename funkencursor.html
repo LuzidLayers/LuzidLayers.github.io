@@ -153,7 +153,7 @@
   <span class="badge b-live reveal">macOS · 204 KB · v1.0</span>
   <div class="dl-box reveal" style="margin-top:20px">
     <div class="dl-info">
-      <span class="amount">Gratis</span>
+      <span class="amount" id="price-amt">Gratis</span>
       <span class="slabel">Direkt-Download</span>
     </div>
     <a href="FunkenCursor.zip" download class="btn btn-primary">Herunterladen</a>
@@ -238,6 +238,15 @@ let _mx=0,_my=0,_rx=0,_ry=0;
 document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+<script>
+fetch('prices.json?_=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    const it = (data.items || []).find(i => i.id === 'funkencursor');
+    if (it) document.getElementById('price-amt').textContent = it.price;
+  })
+  .catch(() => {});
 </script>
 <script src="schriftwahl.js" defer></script>
 </body>

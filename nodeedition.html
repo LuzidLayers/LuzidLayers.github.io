@@ -186,6 +186,7 @@
     <a href="#konzept">Konzept</a>
     <a href="#nodes">Nodes</a>
     <a href="#produkte">Produkte</a>
+    <a href="#preis">Preis</a>
     <a href="#timeline">Status</a>
   </div>
 </nav>
@@ -314,6 +315,19 @@
   </div>
 </section>
 
+<!-- PREIS -->
+<section id="preis" class="wrap pad" style="padding-top:0">
+  <div class="label reveal">Preis</div>
+  <h2 class="reveal">Was der Node-Editor <span class="grad-text">kostet.</span></h2>
+  <div class="contact-box reveal" style="text-align:left;padding:44px 40px;margin-top:34px">
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+      <span id="price-amt" style="font-family:var(--brand-font),'C1st Font';font-size:44px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">…</span>
+      <span id="price-note" style="color:var(--muted);font-size:14px"></span>
+    </div>
+    <p style="color:var(--muted);margin-top:14px;font-size:15px;max-width:520px">Einmaliger Kauf, kein Abo. Als eigenständiges Add-on oder im Bundle mit FusionWarp.</p>
+  </div>
+</section>
+
 <!-- VISION -->
 <section class="wrap vision">
   <h2 class="reveal">Nicht nur Bilder mischen.<br><span class="grad-text">Den Graph komponieren.</span></h2>
@@ -411,6 +425,17 @@ let _mx=0,_my=0,_rx=0,_ry=0;
 document.addEventListener('mousemove',e=>{_mx=e.clientX;_my=e.clientY;_cd.style.left=_mx+'px';_cd.style.top=_my+'px';});
 (function _rl(){_rx+=(_mx-_rx)*.12;_ry+=(_my-_ry)*.12;_cr.style.left=_rx+'px';_cr.style.top=_ry+'px';requestAnimationFrame(_rl);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+</script>
+<script>
+fetch('prices.json?_=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    const it = (data.items || []).find(i => i.id === 'fw-node');
+    if (!it) return;
+    document.getElementById('price-amt').textContent = it.price;
+    document.getElementById('price-note').textContent = it.note || '';
+  })
+  .catch(() => {});
 </script>
 <script src="schriftwahl.js" defer></script>
 </body>

@@ -3,10 +3,11 @@
     {
       "badge" : "live",
       "desc" : "Basisversion, alle Engines &amp; Effekte",
+      "href" : "fusionwarp_live.html",
       "id" : "fw-basis",
       "name" : "Fusionwarp",
       "note" : "einmalig",
-      "price" : "129€",
+      "price" : "129 €",
       "section" : "fusionwarp"
     },
     {
@@ -123,10 +124,11 @@
     {
       "badge" : "live",
       "desc" : "Funken-Cursor systemweit",
+      "href" : "funkencursor.html",
       "id" : "funkencursor",
       "name" : "FunkenCursor",
-      "note" : "optional, sonst gratis",
-      "price" : "4,99 €",
+      "note" : "",
+      "price" : "Gratis",
       "section" : "tools"
     },
     {
