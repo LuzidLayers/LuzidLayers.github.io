@@ -1,0 +1,152 @@
+{
+  "items" : [
+    {
+      "badge" : "live",
+      "desc" : "Basisversion, alle Engines &amp; Effekte",
+      "id" : "fw-basis",
+      "name" : "Fusionwarp",
+      "note" : "einmalig",
+      "price" : "129€",
+      "section" : "fusionwarp"
+    },
+    {
+      "badge" : "live",
+      "desc" : "Corner-Pin-Warping, Bühnen-Mapping",
+      "id" : "fw-map",
+      "name" : "Projection Mapping Add-on",
+      "note" : "Unlock",
+      "price" : "39 €",
+      "section" : "fusionwarp"
+    },
+    {
+      "badge" : "wip",
+      "desc" : "Aufnahme &amp; Streaming direkt aus Fusionwarp",
+      "id" : "fw-stream",
+      "name" : "Stream-Erweiterung",
+      "note" : "Unlock",
+      "price" : "19,99 €",
+      "section" : "fusionwarp"
+    },
+    {
+      "badge" : "wip",
+      "desc" : "Node-Editor für Visuals, frei verkabelbar",
+      "href" : "nodeedition.html",
+      "id" : "fw-node",
+      "name" : "Node Edition",
+      "note" : "solo · 229 € im Bundle",
+      "price" : "149 €",
+      "section" : "fusionwarp"
+    },
+    {
+      "badge" : "wip",
+      "desc" : "iPhone-Fernsteuerung, XY-Pads &amp; Gyro",
+      "id" : "fw-remote",
+      "name" : "Fusionwarp Remote",
+      "note" : "Pro-Unlock 9,99 €",
+      "price" : "gratis",
+      "section" : "fusionwarp"
+    },
+    {
+      "badge" : "wip",
+      "desc" : "Läuft auf Apple TV, gleiche Engine",
+      "id" : "fw-tv",
+      "name" : "Fusionwarp Apple TV",
+      "note" : "bei Kauf",
+      "price" : "inklusive",
+      "section" : "fusionwarp"
+    },
+    {
+      "badge" : "idea",
+      "desc" : "6 Engines, 15 Module, MPC\/Moog-Mapping",
+      "href" : "kroma.html",
+      "id" : "kroma",
+      "name" : "krom-A",
+      "note" : "einmalig",
+      "price" : "179 €",
+      "section" : "synth"
+    },
+    {
+      "badge" : "wip",
+      "desc" : "Node-Editor, Rack, Quellen &amp; Matrix in einem Instrument",
+      "href" : "engine44.html",
+      "id" : "engine44",
+      "name" : "Engine44 (Perception Base)",
+      "note" : "einmalig",
+      "price" : "249 €",
+      "section" : "synth"
+    },
+    {
+      "badge" : "live",
+      "desc" : "Randlose A4\/A3-Poster-Kacheln",
+      "id" : "posterwarp",
+      "name" : "PosterWarp",
+      "note" : "",
+      "price" : "14,99 €",
+      "section" : "tools"
+    },
+    {
+      "badge" : "live",
+      "desc" : "Schärfe-Ausgleich hinter Schutzfolie",
+      "id" : "klarsicht",
+      "name" : "KlarSicht",
+      "note" : "",
+      "price" : "9,99 €",
+      "section" : "tools"
+    },
+    {
+      "badge" : "live",
+      "desc" : "Schneller Seiten-Scan zu PDF",
+      "id" : "schnellscan",
+      "name" : "Schnellscan",
+      "note" : "",
+      "price" : "12,99 €",
+      "section" : "tools"
+    },
+    {
+      "badge" : "live",
+      "desc" : "Mac + iPhone, Steuerung für WiSA SoundSend",
+      "id" : "klangzentrale",
+      "name" : "Klangzentrale (SoundSend)",
+      "note" : "",
+      "price" : "19,99 €",
+      "section" : "tools"
+    },
+    {
+      "badge" : "live",
+      "desc" : "USB-Stick als physischer Mac-Schlüssel",
+      "id" : "keyguard",
+      "name" : "KeyGuard",
+      "note" : "",
+      "price" : "9,99 €",
+      "section" : "tools"
+    },
+    {
+      "badge" : "live",
+      "desc" : "Funken-Cursor systemweit",
+      "id" : "funkencursor",
+      "name" : "FunkenCursor",
+      "note" : "optional, sonst gratis",
+      "price" : "4,99 €",
+      "section" : "tools"
+    },
+    {
+      "badge" : "wip",
+      "desc" : "iPhone-Scherz-App",
+      "id" : "luzidlines",
+      "name" : "Luzid Lines",
+      "note" : "",
+      "price" : "1,99 €",
+      "section" : "tools"
+    },
+    {
+      "badge" : "wip",
+      "desc" : "Zeichen-Physik-Spiel",
+      "id" : "nestco",
+      "name" : "Nest&amp;Co",
+      "note" : "",
+      "price" : "7,99 €",
+      "section" : "tools"
+    }
+  ],
+  "updatedAt" : "2026-09-08"
+}
