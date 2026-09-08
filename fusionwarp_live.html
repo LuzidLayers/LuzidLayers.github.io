@@ -49,7 +49,20 @@
   /* app screenshot section */
   .screenshot-wrap{position:relative;margin:70px 0 0;border-radius:20px;overflow:hidden;
     box-shadow:0 0 80px -20px rgba(57,255,122,.35);border:1px solid rgba(57,255,122,.2)}
-  .screenshot-wrap img{width:100%;display:block}
+  .screenshot-wrap img,.screenshot-wrap video{width:100%;display:block;height:auto}
+  .hero-loop{aspect-ratio:16/9;object-fit:cover;background:var(--black2)}
+  /* fuer dichte Screenshots: Unterschrift unter das Bild, damit sie nichts verdeckt */
+  .screenshot-wrap.cap-below .scr-label{position:static;transform:none;background:none;
+    backdrop-filter:none;max-width:100%;text-align:left;padding:9px 16px 11px;
+    border-top:1px solid rgba(57,255,122,.15)}
+  .gal{display:grid;grid-template-columns:1fr;gap:12px;margin-top:40px}
+  @media(min-width:720px){.gal{grid-template-columns:repeat(3,1fr)}}
+  .gal .screenshot-wrap{margin:0}
+  .gal img{aspect-ratio:3/2;object-fit:cover}
+  .duo{display:grid;grid-template-columns:1fr;gap:28px;align-items:center;margin-top:54px}
+  @media(min-width:820px){.duo{grid-template-columns:.85fr 1.15fr;gap:38px}}
+  .duo .shot-note{color:var(--muted);font-size:15px}
+  .duo .shot-note h3{font-size:19px;font-weight:700;color:var(--white);margin-bottom:10px}
   .screenshot-wrap .scr-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
     font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:3px;color:rgba(57,255,122,.7);
     background:rgba(8,12,9,.6);padding:7px 18px;border-radius:30px;backdrop-filter:blur(6px);
@@ -87,7 +100,10 @@
   @media(max-width:760px){.nav-links a:not(.lang-wrap){display:none}}
 
   /* hero */
-  header{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;padding-bottom:60px}
+  /* header.wrap statt header — die Klasse .wrap setzt padding:0 28px und schlaegt den Typselektor.
+     "safe center" faellt auf flex-start zurueck, sobald der Inhalt hoeher wird als der Schirm;
+     sonst rutscht die oberste Zeile hinter die fixe Navigation. */
+  header.wrap{min-height:100vh;display:flex;flex-direction:column;justify-content:safe center;padding-top:120px;padding-bottom:60px}
   .eyebrow{font-family:var(--brand-font),'C1st Font';font-size:12px;letter-spacing:5px;color:var(--green);margin-bottom:22px;text-transform:uppercase;opacity:.9}
   h1{font-size:clamp(46px,9vw,120px);font-weight:900;line-height:.95;letter-spacing:-1px;color:var(--white)}
   .tagline{font-size:clamp(20px,3vw,30px);font-weight:300;margin:26px 0 14px;max-width:680px;color:rgba(240,255,244,.9)}
@@ -208,6 +224,25 @@
   body.ch #cursor-dot{width:12px;height:12px;box-shadow:0 0 16px rgba(57,255,122,1),0 0 40px rgba(198,241,53,.6)}
   body.ch #cursor-ring{width:50px;height:50px;border-color:rgba(57,255,122,.6)}
 
+/* ---- Schmale Schirme ---- */
+@media(max-width:760px){
+  /* Der zentrierte Flex laeuft aus dem Bild, sobald der Hero hoeher wird als
+     der Schirm — dann verschwindet die Eyebrow hinter der fixen Navigation. */
+  /* .wrap (Klasse) schlaegt header (Typ) — darum header.wrap, sonst bleibt das Padding wirkungslos */
+  header.wrap{justify-content:flex-start;padding-top:116px;padding-bottom:40px}
+  .screenshot-wrap{margin-top:44px}
+}
+@media(max-width:760px){
+  /* Bildunterschrift unter das Bild statt darueber: als Pille verdeckt sie
+     auf schmalen Schirmen das halbe Motiv. */
+  .screenshot-wrap .scr-label{position:static;transform:none;background:none;backdrop-filter:none;
+    padding:9px 14px 11px;text-align:left;font-size:10px;letter-spacing:2px;
+    max-width:100%;border-top:1px solid rgba(57,255,122,.15)}
+  .gal .scr-label{display:none}
+  h1{font-size:clamp(38px,11vw,64px)}
+  .pad{padding:80px 0}
+}
+
 /* Reduced Motion — Nutzer-Praeferenz respektieren */
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -256,8 +291,14 @@
     <a href="#products" class="btn btn-ghost">Verfügbarkeit</a>
   </div>
   <div class="screenshot-wrap reveal">
-    <img src="img/fusionwarp/app-ui.jpg" alt="FuSioNWaRp App Screenshot" loading="lazy">
-    <div class="scr-label" data-t="scr_label">Echtzeit-Visual · Portrait Engine · deine Visuals sehen anders aus</div>
+    <video class="hero-loop" width="1600" height="900"
+           poster="img/fw/fw-hero-poster-1600.webp"
+           autoplay muted loop playsinline preload="metadata"
+           aria-label="FuSioNWaRp — Echtzeit-Output als Endlosschleife">
+      <source src="video/fw-hero-loop.webm" type="video/webm">
+      <source src="video/fw-hero-loop.mp4" type="video/mp4">
+    </video>
+    <div class="scr-label" data-t="scr_label">Echtzeit-Output · unbearbeitet · Endlosschleife</div>
   </div>
   <div class="scroll-hint" style="margin-top:40px">↓ SCROLL</div>
 </header>
@@ -270,10 +311,11 @@
     <p class="reveal" data-t="prob_p">Ob Wohnzimmer-TV, Club-LED-Wall oder Festival-Stage — Visuals und Musik laufen aneinander vorbei. FuSioNWaRp bringt beides zusammen.</p>
     <p class="pull-quote reveal" data-t="prob_quote"><span>Nicht jeder zockt. Nicht jeder streamt.</span><br>Aber Musik läuft immer.</p>
     <div class="stats">
+      <div class="stat reveal"><div class="num">46</div><div class="desc">Bild-Effekte</div></div>
+      <div class="stat reveal"><div class="num">27</div><div class="desc">Körper-Bewegungen</div></div>
       <div class="stat reveal"><div class="num">4</div><div class="desc">Ebenen, frei mischbar</div></div>
-      <div class="stat reveal"><div class="num">4</div><div class="desc">eigene Generatoren</div></div>
-      <div class="stat reveal"><div class="num">5</div><div class="desc">Slots mit Kreuzblende</div></div>
-      <div class="stat reveal"><div class="num">3</div><div class="desc">Modi: MIDI · AUTO · MUSIK</div></div>
+      <div class="stat reveal"><div class="num">10</div><div class="desc">Slots für ganze Looks</div></div>
+      <div class="stat reveal"><div class="num">4</div><div class="desc">Betriebsarten</div></div>
     </div>
   </div>
 </section>
@@ -282,49 +324,94 @@
 <section id="engines" class="wrap pad">
   <div class="label reveal" data-t="eng_label">Die Technologie</div>
   <h2 class="reveal">Vier Ebenen. <span class="grad-text">Und alles darf eine sein.</span></h2>
-  <p class="reveal" style="color:var(--muted);max-width:640px;font-size:17px;margin-top:16px">Auf jeder der vier Ebenen liegt eine Quelle — ein Video, die Kamera, ein Bildschirmausschnitt, eine Fläche, ein Stream oder das Bild einer anderen App. Darüber laufen die Effektgruppen. Jede Ebene hat ihre eigene Deckkraft und ihren eigenen Effekt-Anteil.</p>
-  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
+  <p class="reveal" style="color:var(--muted);max-width:640px;font-size:17px;margin-top:16px">Auf jeder der vier Ebenen liegt eine Quelle — ein Video, die Kamera, ein Bildschirmausschnitt, eine Fläche, ein Stream oder das Bild einer anderen App. Darüber laufen die Effektgruppen. Jede Ebene hat ihre eigene Deckkraft, ihren eigenen Effekt-Anteil und einen von sechzehn Mischmodi — von Multiplizieren über Differenz bis Strahlend. Ebene 1 ist bewusst der Untergrund.</p>
+  <div class="duo reveal">
+    <div class="screenshot-wrap" style="margin:0"><img
+      src="img/fw/fw-ui-warp-600.webp"
+      srcset="img/fw/fw-ui-warp-600.webp 600w, img/fw/fw-ui-warp-900.webp 900w"
+      sizes="(max-width:820px) 100vw, 420px" width="900" height="1137"
+      alt="Die Bedienoberfläche von FusionWarp: fünf Slots, die Ebenen mit ihren Quellen, die Effektgruppen und die Generatoren untereinander" loading="lazy"></div>
+    <div class="shot-note">
+      <h3>Alles auf einer Fläche</h3>
+      <p>Die fünf Slots oben, darunter die Ebenen mit ihren Quellen, die Effektgruppen und die
+      Generatoren — kein verschachteltes Menü, nichts, wonach man während eines Sets suchen muss.
+      Was du siehst, ist der komplette Zustand des Bildes.</p>
+    </div>
+  </div>
+  <div class="screenshot-wrap cap-below reveal" style="margin-top:20px"><img
+    src="img/fw/fw-ui-fenster-1800.webp"
+    srcset="img/fw/fw-ui-fenster-1200.webp 1200w, img/fw/fw-ui-fenster-1800.webp 1800w, img/fw/fw-ui-fenster-2400.webp 2400w"
+    sizes="(max-width:1180px) 100vw, 1124px" width="2400" height="495"
+    alt="FusionWarp im Fenster-Modus: alle Rubriken nebeneinander — Video, Ebenen, Motion, Warp, FX, Musik, Map, Stream und App" loading="lazy">
+    <div class="scr-label">Fenster-Modus · jede Rubrik ein eigenes Fenster, hier alle gleichzeitig</div>
+  </div>
+  <div class="label reveal" style="margin-top:64px">Effektkatalog</div>
+  <h2 class="reveal">46 Effekte. <span class="grad-text">In sechs Gruppen.</span></h2>
+  <p class="reveal" style="color:var(--muted);max-width:640px;font-size:17px;margin-top:16px">Jeder einzelne Regler lässt sich per Rechtsklick festlegen: von Hand, von der Automatik, von einem Frequenzband oder von einem der drei Modulatoren geführt. Und jeder ist per MIDI erreichbar.</p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
     <div class="card reveal">
       <div class="ico">↻</div>
       <h3>Motion</h3>
       <ul>
-        <li>Tempo · Rotation · Zoom</li>
-        <li>Tunnel mit X/Y-Versatz</li>
-        <li>Kaleidoskop · Wave</li>
-        <li>Boxinator · Schach-Puls</li>
+        <li>Tempo · Rotation · Zoom ∞</li>
+        <li>Tunnel · Kaleidoskop · Spiegel</li>
+        <li>Atmen · Schütteln · Nicken</li>
+        <li>Drift · Pump auf dem Kick</li>
       </ul>
     </div>
     <div class="card reveal">
       <div class="ico">≋</div>
       <h3>Warp</h3>
       <ul>
-        <li>Verzerrung (Displacement)</li>
-        <li>Lens · Liquid · Heat</li>
-        <li>Emboss — Relief-Prägung</li>
-        <li>Strobe: Stärke und Tempo getrennt</li>
+        <li>Noise-Warp · Lens · Liquid</li>
+        <li>Heat Waves · Wave Tunnel</li>
+        <li>TD-Wirbel · TD-Bulge · Pump-Riss</li>
+        <li>Boxinator · Maus-Wölbung</li>
       </ul>
     </div>
     <div class="card reveal">
-      <div class="ico">✦</div>
-      <h3>FX</h3>
+      <div class="ico">⬡</div>
+      <h3>Space-Warp</h3>
       <ul>
-        <li>Feedback · Echo · Glow</li>
-        <li>RGB-Shift · Edge · Slice · VHS</li>
-        <li>TD-Wirbel · TD-Bulge · TD-Streifen</li>
-        <li>Farb-Schichten (Hue)</li>
+        <li>Zoom-Rush · 3D-Tunnel</li>
+        <li>Parallax-3D — Helligkeit wird Tiefe</li>
+        <li>Negativzoom · Dematerial</li>
+        <li>Räumliche Tiefe statt Flächenverzerrung</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <div class="ico">◉</div>
+      <h3>Signal</h3>
+      <ul>
+        <li>Feedback bis 0,99 — das Bild fließt in sich zurück</li>
+        <li>Echo — Geister früherer Bilder</li>
+        <li>Glow — Leuchthof um die hellen Stellen</li>
+        <li>Hier entsteht der eigentliche Look</li>
       </ul>
     </div>
     <div class="card reveal">
       <div class="ico">◑</div>
-      <h3>Color</h3>
+      <h3>Farbe</h3>
       <ul>
-        <li>Kontrast · Invert · Thresh</li>
-        <li>Pixel · Mono · Mirror</li>
-        <li>Reaktivität &amp; Empfindlichkeit</li>
-        <li>Jeder Wert per OSC erreichbar</li>
+        <li>Farb-Schichten durchs ganze Spektrum</li>
+        <li>Kontrast 0,5 – 2,0</li>
+        <li>RGB-Shift — Chromatische Aberration</li>
+        <li>S/W · Film-Grade mit Vignette</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <div class="ico">✦</div>
+      <h3>Effekte</h3>
+      <ul>
+        <li>Edge · Emboss · Schach-Puls</li>
+        <li>VHS · Invert-Blitz · Thresh · Pixel</li>
+        <li>TD-Streifen · Neon-Edge · Prisma</li>
+        <li>Spectrum-Break · Slice-Glitch</li>
+        <li>Strobe · fünf animierte Masken</li>
       </ul>
     </div>
   </div>
+  <p class="reveal" style="color:var(--muted);font-size:14px;margin-top:26px">Fast jeder Effekt ist gedeckelt, damit das Bild nicht reißt. Der <strong style="color:var(--white);font-weight:600">Overdrive</strong> hebt den Deckel — pro Effekt, oder über alles mit einem Faktor von 0,2× bis 4×. Die TAB-Taste rastet ein oder wirkt nur solange gedrückt; ein Not-Aus überbrückt alles in einem Zug.</p>
 </section>
 
 <!-- GENERATOREN -->
@@ -348,7 +435,7 @@
       <h3>Physarum</h3>
       <ul>
         <li>Schleimpilz-Simulation</li>
-        <li>Zehntausende Agenten mit Fühlern</li>
+        <li>Bis zu 500 000 Agenten mit Fühlern</li>
         <li>Ablagern, Verfallen, Spuren folgen</li>
         <li>Symmetrie-Modi &amp; Versatz</li>
       </ul>
@@ -378,7 +465,7 @@
 
 <!-- MODI -->
 <section id="modi" class="wrap pad" style="padding-top:0">
-  <div class="label reveal">Drei Modi</div>
+  <div class="label reveal">Vier Betriebsarten</div>
   <h2 class="reveal">Wer führt — <span class="grad-text">du oder die Musik?</span></h2>
   <div class="steps" style="margin-top:44px">
     <div class="step reveal">
@@ -393,14 +480,19 @@
       <h3>MUSIK</h3>
       <p>Jetzt steuern die Regler nur noch, <em>wie stark</em> die Musik durchschlägt — 50 % heißt halbe Reaktion. Für maximale Synchronität.</p>
     </div>
+    <div class="step reveal">
+      <h3>AMBIENT</h3>
+      <p>Ruhige Bildfolge, die stundenlang von allein weiterzieht — ohne Strobe, ohne Sprünge. Zwölf feste Szenen von Nebel bis Spektrum, oder frei gewürfelt. Für Installation, Ausstellung, Wohnzimmer.</p>
+    </div>
   </div>
+  <p class="reveal" style="color:var(--muted);font-size:14px;margin-top:30px">Darunter liegt die feinere Ebene: Jeder einzelne Regler bekommt per Rechtsklick seine eigene Quelle — Hand, Automatik, ein Frequenzband oder einer von <strong style="color:var(--white);font-weight:600">drei Modulatoren</strong> mit Kurvenform, Tiefe und Startversatz. Deren Rate läuft wahlweise in Zyklen pro Sekunde oder in Vierteln im Takt der erkannten Musik — und auch in völliger Stille weiter.</p>
 </section>
 
 <!-- QUELLEN -->
 <section id="quellen" class="wrap pad" style="padding-top:0">
   <div class="label reveal">Woher das Bild kommt</div>
   <h2 class="reveal">Sechs Quellen. <span class="grad-text">Pro Ebene wählbar.</span></h2>
-  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
     <div class="card reveal"><h3>Video</h3><ul><li>MP4, MOV und was sonst noch geht</li><li>Loop, Vor/Zurück, Shuffle</li></ul></div>
     <div class="card reveal"><h3>Kamera</h3><ul><li>Eingebaut oder extern</li><li>Auch das iPhone per WLAN</li></ul></div>
     <div class="card reveal"><h3>Bildschirm</h3><ul><li>Eigener Desktop oder ein Fenster</li><li>Was du zeigst, wird zum Material</li></ul></div>
@@ -413,8 +505,8 @@
 <!-- STEUERUNG -->
 <section id="steuerung" class="wrap pad" style="padding-top:0">
   <div class="label reveal">Steuerung</div>
-  <h2 class="reveal">Fünf Wege, <span class="grad-text">dasselbe zu spielen.</span></h2>
-  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+  <h2 class="reveal">Sechs Wege, <span class="grad-text">dasselbe zu spielen.</span></h2>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
     <div class="card reveal">
       <div class="ico">◎</div>
       <h3>Launch Control XL</h3>
@@ -439,7 +531,7 @@
       <div class="ico">⌨</div>
       <h3>Tastatur</h3>
       <ul>
-        <li>20 Tasten als Trigger</li>
+        <li>18 Tasten als Trigger</li>
         <li>Halten = an, loslassen = aus</li>
         <li>1–5 wechselt die Slots</li>
         <li>Leertaste blendet über</li>
@@ -456,6 +548,16 @@
       </ul>
     </div>
     <div class="card reveal">
+      <div class="ico">⌖</div>
+      <h3>Maus</h3>
+      <ul>
+        <li>Der Zeiger wird zum Werkzeug</li>
+        <li>Unter ihm wölbt sich das Bild</li>
+        <li>Ziehen verschiebt den Farbton</li>
+        <li>Ohne jede Hardware spielbar</li>
+      </ul>
+    </div>
+    <div class="card reveal">
       <div class="ico">◍</div>
       <h3>Orb <small style="font-size:11px;opacity:.6">neu</small></h3>
       <ul>
@@ -466,17 +568,17 @@
       </ul>
     </div>
   </div>
-  <p class="reveal" style="color:var(--muted);font-size:14px;margin-top:26px">Fünf Slots halten je einen kompletten Stand aller Regler fest — der Wechsel dazwischen ist eine weiche Kreuzblende, kein Sprung.</p>
+  <p class="reveal" style="color:var(--muted);font-size:14px;margin-top:26px">Zehn Slots halten je einen kompletten Stand aller Regler fest — mit Vorschaubild und eigenem Namen. Die Tasten 1–5 und die MIDI-Buttons rufen sie ab.</p>
 </section>
 
 <!-- HOW IT WORKS -->
 <section id="how" class="wrap pad" style="padding-top:0">
   <div class="label reveal">Audio-Reaktivität</div>
   <h2 class="reveal">Die Engine <span class="grad-text">versteht die Energie.</span></h2>
-  <div class="steps">
+  <div class="steps" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
     <div class="step reveal">
       <h3>Bass & Kick</h3>
-      <p>Transient-Detection erkennt jeden Kick. Zoom-Pulse, Tunnel-Sog, PumpTear — das Bild atmet mit dem Beat.</p>
+      <p>Transient-Detection erkennt jeden Kick. Zoom-Puls, Tunnel-Sog, Pump-Riss — das Bild atmet mit dem Beat.</p>
     </div>
     <div class="step reveal">
       <h3>16-Band-Analyse</h3>
@@ -484,12 +586,28 @@
     </div>
     <div class="step reveal">
       <h3>BPM & Beat-Phase</h3>
-      <p>Automatische Tempo-Erkennung. Effekte wechseln im Takt, Übergänge passieren exakt auf der Eins.</p>
+      <p>Automatische Tempo-Erkennung samt Verlässlichkeitswert. Effekte wechseln im Takt, Übergänge passieren exakt auf der Eins.</p>
     </div>
     <div class="step reveal">
-      <h3>Genre-Intelligenz</h3>
-      <p>Die Engine erkennt den Musikstil und lädt automatisch passende Effekte — ohne einen Knopf zu drücken.</p>
+      <h3>Tonart</h3>
+      <p>Zwölf Chroma-Filter über vier Oktaven bestimmen die Tonart live mit — nicht nur wie laut es ist, sondern was gespielt wird.</p>
     </div>
+    <div class="step reveal">
+      <h3>Musikalisches Vorwissen</h3>
+      <p>Tabellen aus 912 annotierten Songs liefern Phrasen-Uhr und Songform und korrigieren Tonart und Tempo. Die Engine weiß, wo im Stück sie steht.</p>
+    </div>
+    <div class="step reveal">
+      <h3>Genre-Erkennung</h3>
+      <p>Bleibt der Musikstil drei Sekunden stabil, schlägt die Engine einen passenden Look vor. Ein Klick übernimmt ihn — die Entscheidung bleibt bei dir.</p>
+    </div>
+  </div>
+  <div class="screenshot-wrap cap-below reveal" style="margin-top:44px"><img
+    src="img/fw/fw-ui-eq-900.webp"
+    srcset="img/fw/fw-ui-eq-600.webp 600w, img/fw/fw-ui-eq-900.webp 900w, img/fw/fw-ui-eq-1178.webp 1178w"
+    sizes="(max-width:1180px) 100vw, 1124px" width="1178" height="531"
+    alt="Das EQ-Fenster: 16 Bänder von 20 Hz bis 20 kHz, darunter die groben Bänder Sub, Bass, Mid, High und Kick sowie der Overdrive-Hauptregler"
+    loading="lazy">
+    <div class="scr-label">16 Bänder · fünf grobe Bänder · Overdrive mit Not-Aus</div>
   </div>
 </section>
 
@@ -499,7 +617,10 @@
   <h2 class="reveal">Der Node-Editor. <span class="grad-text">Direkt in FusionWarp.</span></h2>
   <p class="reveal" style="color:var(--muted);max-width:640px;font-size:17px;margin-top:16px">Ein Knopf in der Leiste öffnet ihn — nichts einrichten, nichts verbinden. Wer tiefer will, verkabelt dort Video, FX, Audio und Ausgang frei als Graph; sein Bild kommt sofort als ganz normale Ebene in FusionWarp zurück.</p>
   <div class="screenshot-wrap reveal">
-    <img src="img/fusionwarp/fw-node-editor.png" alt="Screenshot des FusionWarp Node-Editors: dunkler Canvas mit verkabelten Audio-, Video-, FX- und Output-Nodes" loading="lazy">
+    <img src="img/fw/fw-ui-node-1200.webp"
+         srcset="img/fw/fw-ui-node-800.webp 800w, img/fw/fw-ui-node-1200.webp 1200w, img/fw/fw-ui-node-1600.webp 1600w"
+         sizes="(max-width:1180px) 100vw, 1124px" width="1600" height="902"
+         alt="Screenshot des FusionWarp Node-Editors: dunkler Canvas mit verkabelten Audio-, Video-, FX- und Output-Nodes" loading="lazy">
     <div class="scr-label">Node-Editor · läuft bereits in FusionWarp</div>
   </div>
   <p class="reveal" style="color:var(--muted);font-size:14px;margin-top:22px"><a href="nodeedition.html" style="color:var(--cyan);text-decoration:underline">→ Wie der Node-Editor aufgebaut ist</a></p>
@@ -526,32 +647,69 @@
   <div class="label reveal">Visuals</div>
   <h2 class="reveal">Jede Session. <span class="grad-text">Einmalig.</span></h2>
   <p class="reveal" style="color:var(--muted);max-width:560px;font-size:15px;margin-top:12px">Unbearbeitete Outputs aus aktuellen Sessions — keine zwei sehen gleich aus.</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:40px">
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-01.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-02.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-03.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-04.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-05.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-06.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-07.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-08.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-09.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-10.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-11.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-    <div class="screenshot-wrap reveal" style="margin:0"><img src="screens/fw-galerie-12.jpg" alt="FusionWarp Visual-Output" loading="lazy"></div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-top:12px">
-    <div class="screenshot-wrap reveal" style="margin:0">
-      <img src="screens/fw-screen-01.jpg" alt="FusionWarp im Vollbild auf dem Mac" loading="lazy">
-      <div class="scr-label">Live-Screenshot · Vollbild auf dem Mac</div>
-    </div>
-    <div class="screenshot-wrap reveal" style="margin:0">
-      <img src="screens/fw-screen-02.jpg" alt="FusionWarp im Vollbild auf dem Mac" loading="lazy">
-      <div class="scr-label">Live-Screenshot · Vollbild auf dem Mac</div>
-    </div>
+  <!-- BILDUNTERSCHRIFTEN NOCH EINTRAGEN — Herkunft je Kachel:
+       fw-gal-01  <-  Video 0:01 · Tunnel
+       fw-gal-02  <-  fw-physarum.png · Physarum
+       fw-gal-03  <-  fw-galerie-06.jpg · Kaleidoskop
+       fw-gal-04  <-  Video 0:17 · Warp
+       fw-gal-05  <-  fw-vis-eye.png
+       fw-gal-06  <-  fw-galerie-02.jpg · Mono
+       fw-gal-07  <-  Video 0:27 · Portrait
+       fw-gal-08  <-  fw-vis-cells.png
+       fw-gal-09  <-  fw-galerie-11.jpg · Hue
+       Sobald die Shotlist (A1-A4) abgedreht ist, hier je Kachel den Engine-Namen ergänzen. -->
+  <div class="gal">
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-01-600.webp"
+      srcset="img/fw/fw-gal-01-600.webp 600w, img/fw/fw-gal-01-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-02-600.webp"
+      srcset="img/fw/fw-gal-02-600.webp 600w, img/fw/fw-gal-02-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-03-600.webp"
+      srcset="img/fw/fw-gal-03-600.webp 600w, img/fw/fw-gal-03-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-04-600.webp"
+      srcset="img/fw/fw-gal-04-600.webp 600w, img/fw/fw-gal-04-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-05-600.webp"
+      srcset="img/fw/fw-gal-05-600.webp 600w, img/fw/fw-gal-05-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-06-600.webp"
+      srcset="img/fw/fw-gal-06-600.webp 600w, img/fw/fw-gal-06-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-07-600.webp"
+      srcset="img/fw/fw-gal-07-600.webp 600w, img/fw/fw-gal-07-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-08-600.webp"
+      srcset="img/fw/fw-gal-08-600.webp 600w, img/fw/fw-gal-08-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
+    <div class="screenshot-wrap reveal"><img
+      src="img/fw/fw-gal-09-600.webp"
+      srcset="img/fw/fw-gal-09-600.webp 600w, img/fw/fw-gal-09-900.webp 900w"
+      sizes="(max-width:720px) 100vw, 360px" width="900" height="600"
+      alt="Unbearbeiteter Bild-Output aus FuSioNWaRp" loading="lazy"></div>
   </div>
   <div class="screenshot-wrap reveal" style="margin-top:12px">
-    <img src="img/fusionwarp/face.jpg" alt="FuSioNWaRp Portrait Engine" loading="lazy">
+    <img src="img/fw/fw-gen-portrait-1200.webp"
+         srcset="img/fw/fw-gen-portrait-800.webp 800w, img/fw/fw-gen-portrait-1200.webp 1200w, img/fw/fw-gen-portrait-1600.webp 1600w"
+         sizes="(max-width:1180px) 100vw, 1124px" width="1600" height="670"
+         alt="Portrait Engine: ein Gesicht wird in Echtzeit zur Musik verzerrt" loading="lazy">
     <div class="scr-label">Portrait Engine — Live Face-Warp synchron zur Musik</div>
   </div>
 </section>
@@ -563,8 +721,9 @@
   <div class="screenshot-wrap reveal" style="margin-top:54px;border-radius:24px;overflow:hidden;
     box-shadow:0 0 100px -20px rgba(57,255,122,.4);border:1px solid rgba(57,255,122,.25)">
     <video id="fw-demo"
-      poster="img/fw-poster.jpg"
+      poster="img/fw/fw-demo-poster-1280.webp"
       data-src="video/fusionwarp_demo.mp4"
+      width="1280" height="800"
       preload="none" muted loop playsinline
       style="width:100%;display:block;max-height:600px;object-fit:cover">
     </video>
@@ -583,13 +742,14 @@
       <div class="amt" style="font-size:26px">In Arbeit <small>Preis folgt</small></div>
       <p>Der vollständige Visual Synthesizer. Alle Engines, alle Effekte, kein Abo.</p>
       <ul>
-        <li>Vier Ebenen, sechs Quellen</li>
+        <li>46 Effekte, 27 Körper-Bewegungen</li>
+        <li>Vier Ebenen, 16 Mischmodi</li>
         <li>Flora · Physarum · Particles · Portrait</li>
-        <li>Motion · Warp · FX · Color</li>
         <li>MIDI-Mapping &amp; MIDI-Learn</li>
         <li>Node-Editor auf Knopfdruck</li>
-        <li>Fünf Slots mit Kreuzblende</li>
+        <li>Zehn Slots für ganze Looks</li>
         <li>Screensaver &amp; Druckexport</li>
+        <li>Eigene Apple-TV-Fassung</li>
         <li>iPhone Remote &amp; Orb (in Ausbau)</li>
       </ul>
       <a href="mailto:andreas.deflorin@luzidlayers.de?subject=FusionWarp%20-%20auf%20die%20Liste" class="btn btn-primary">Auf die Liste</a>
@@ -606,6 +766,22 @@
       </ul>
       <a href="mailto:andreas.deflorin@luzidlayers.de?subject=Projection%20Mapping%20-%20Interesse" class="btn btn-ghost">Auf die Liste</a>
     </div>
+    <div class="price reveal">
+      <div class="tier">Aufnahme</div>
+      <div class="amt" style="font-size:26px">Add-on <small>Preis folgt</small></div>
+      <p>Bild und Ton gemeinsam mitschneiden, ohne zweites Programm.</p>
+      <ul>
+        <li>Video mit Ton als Datei</li>
+        <li>Mikrofon und Systemton mischbar</li>
+        <li>Direkt in den Filme-Ordner</li>
+        <li>Benötigt FusionWarp-Lizenz</li>
+      </ul>
+      <a href="mailto:andreas.deflorin@luzidlayers.de?subject=Aufnahme%20-%20Interesse" class="btn btn-ghost">Auf die Liste</a>
+    </div>
+  </div>
+  <div class="reveal" style="border:1px solid rgba(57,255,122,.25);border-radius:16px;padding:26px 30px;margin-top:34px;background:rgba(57,255,122,.04)">
+    <div style="font-family:var(--brand-font),'C1st Font';font-size:11px;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:10px">Lizenz</div>
+    <p style="color:rgba(240,255,244,.9);font-size:16px;margin:0;max-width:660px">Die Prüfung läuft <strong style="font-weight:600">vollständig offline — kein Server, kein Konto</strong>. Der Schlüssel aus der Kauf-Mail wird eingefügt, kryptografisch geprüft, fertig. In der App steckt nur der öffentliche Prüfschlüssel; erzeugen kann damit niemand etwas. Keine Aktivierungsgrenze, keine Verbindung, die eines Tages abgeschaltet wird.</p>
   </div>
   <p class="reveal" style="text-align:center;color:var(--muted);font-size:13px;margin-top:24px">macOS · Apple Silicon · kein Abo geplant · Preise stehen noch nicht fest</p>
 </section>
@@ -614,7 +790,7 @@
 <section id="ausgabe" class="wrap pad" style="padding-top:0">
   <div class="label reveal">Was rausgeht</div>
   <h2 class="reveal">Nicht nur auf den Schirm. <span class="grad-text">Auch an die Wand.</span></h2>
-  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
     <div class="card reveal">
       <div class="ico">📐</div>
       <h3>Projection Mapping</h3>
@@ -652,9 +828,36 @@
         <li>Das Bild geht als Syphon-Quelle raus</li>
         <li>Aufnehmen, weiterverarbeiten, streamen</li>
         <li>Läuft ohne Umweg über die Festplatte</li>
-        <li>Apple TV als Ziel ist vorbereitet</li>
+        <li>In beide Richtungen — rein wie raus</li>
       </ul>
     </div>
+    <div class="card reveal">
+      <div class="ico">📺</div>
+      <h3>Apple TV</h3>
+      <ul>
+        <li>Eigene tvOS-Fassung für den Fernseher</li>
+        <li>Zwei Betriebsarten: Live und Ambient</li>
+        <li>16 Effektmodi, je zwei Parameter</li>
+        <li>Gespielt über die Fernbedienung</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <div class="ico">⏺</div>
+      <h3>Aufnahme</h3>
+      <ul>
+        <li>Bild und Ton gemeinsam als Videodatei</li>
+        <li>Mikrofon und Systemton mischbar</li>
+        <li>Landet direkt im Filme-Ordner</li>
+        <li>Add-on „STREAM“</li>
+      </ul>
+    </div>
+  </div>
+  <div class="screenshot-wrap reveal"><img
+    src="img/fw/fw-ui-mapping-1200.webp"
+    srcset="img/fw/fw-ui-mapping-800.webp 800w, img/fw/fw-ui-mapping-1200.webp 1200w, img/fw/fw-ui-mapping-1600.webp 1600w"
+    sizes="(max-width:1180px) 100vw, 1124px" width="1600" height="681"
+    alt="Der Mapping-Editor: zwei Flächen frei im Raum verzogen, rechts die Parameter" loading="lazy">
+    <div class="scr-label">Mapping-Editor · zwei Flächen gleichzeitig, Punkte frei ziehbar</div>
   </div>
 </section>
 
@@ -697,275 +900,45 @@
 // Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // ---- translations ----
-const T = {
-  de: {
-    scr_label:"Echtzeit-Visual · Beispiel-Input · deine Visuals sehen anders aus",
-    nav_engines:"Engine", nav_products:"Produkte", nav_impressum:"Impressum", nav_datenschutz:"Datenschutz",
-    hero_eyebrow:"Echtzeit Audio-Reaktive Visual Engine",
-    hero_tagline:"FuSioNWaRp verwandelt deine Videos und Bilder in Echtzeit in lebendige, audio-reaktive Welten.",
-    hero_sub:"Pure GPU engine. Every experience is unique — endless, reactive, limitless.",
-    hero_cta1:"Produkte entdecken", hero_cta2:"Die Technologie",
-    prob_label:"Das Problem",
-    prob_h2:"See your music. Without Albert's help.",
-    prob_quote:"Nicht jeder zockt. Nicht jeder streamt. Aber Musik läuft immer.",
-    prob_p:"FuSioNWaRp verwandelt ungenutzte Screens in reaktive visuelle Räume, die auf Musik reagieren, statt nur stumm im Standby zu hängen.",
-    stat1:"Engine-Module", stat2:"Einzigartige Visuals", stat3:"Presets", stat4:"Echtzeit GPU-Rendering",
-    eng_label:"Die Technologie",
-    eng1_h:"Layer Engine", eng1_1:"Bis zu 4 parallele Videoebenen", eng1_2:"Live-Crossfade & Blend-Modi", eng1_3:"Pro-Ebene Opazität & Mix", eng1_4:"Eigene Videos oder Artpacks",
-    eng2_h:"Motion Engine", eng2_1:"Infinite Zoom & Rotation", eng2_2:"Tunnel Worlds", eng2_3:"Pendel & Sway", eng2_4:"Mirror Worlds / Kaleidoskop",
-    eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Glass & Lens Distortion", eng3_3:"Noise Fields", eng3_4:"Heat Waves",
-    eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Edge Detection", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Threshold · Invert", eng4_4:"Echo · Pixel · Tunnel",
-    how_label:"Audio-Reaktivität", how_h2span:"versteht die Energie.",
-    how1_h:"Bass", how1_p:"Nickt das Bild im Takt. Treibt Zoom-Pulse und Tunnel-Sog. Bei jedem Kick kommt das Bild einen Schritt näher.",
-    how2_h:"Mitten", how2_p:"Lassen das Bild schwingen und drehen. Steuern Rotationsgeschwindigkeit und Warp-Stärke in Echtzeit.",
-    how3_h:"Höhen", how3_p:"Funkeln im Detail. RGB-Split, Glow und Edge-Intensität folgen den Höhen — je mehr Energie, desto mehr Glitzer.",
-    how4_h:"Stille", how4_p:"Friert die Welt fast ein. Nur ein feines Grundwabern bleibt — die Engine atmet mit der Musik.",
-    prod_label:"Produkte", prod_h2:"Für jeden Raum ",
-    per_month:"/ Monat", one_time:"einmalig",
-    home_desc:"Für Wohnzimmer-TVs & Smart Displays. Aus jedem Bildschirm wird lebendige Kunst — automatisch, audio-reaktiv.",
-    home_f1:"Eigene Videos & Bilder", home_f2:"Automatischer Visuals-Modus", home_f3:"Art-Packs by LuZiD", home_f4:"macOS · Windows · iOS",
-    core_desc:"Die HDMI-Hardware-Box. Lüfterlos, 4K, lautlos. HDMI-Kabel rein, Musik an — die Welt startet.",
-    core_f1:"Kein PC nötig", core_f2:"4K · 60fps · lüfterlos", core_f3:"Plug & Play Setup", core_f4:"Automatische Updates",
-    pro_desc:"Für Clubs, Bars, Festivals & DJs. MIDI-Controller-Support, volle manuelle Kontrolle, bühnentauglich.",
-    pro_f1:"MIDI-Controller Mapping", pro_f2:"8 Ebenen · volle Kontrolle", pro_f3:"Live-Performance Modus", pro_f4:"Preset-Slots & Szenen",
-    btn_waitlist:"Vormerken", badge_plug:"PLUG & PLAY", price_note:"Preise vorläufig — finale Tarife folgen beim Launch.",
-    hw_badge:"COMING SOON",
-    hw_h2:"FuSioNWaRp Hardware",
-    hw_sub:"Ein Gerät. Jeder Bildschirm. Kein PC nötig.",
-    hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Kein PC", hw_s4:"WiFi · Bluetooth", hw_s5:"App-Steuerung",
-    hw_cta:"Auf die Warteliste",
-    hw_badge:"COMING SOON",
-    hw_h2:"FuSioNWaRp Hardware",
-    hw_sub:"One device. Any screen. No PC needed.",
-    hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"No PC", hw_s4:"WiFi · Bluetooth", hw_s5:"App Control",
-    hw_cta:"Join the Waitlist",
-    hw_badge:"MUY PRONTO",
-  hw_h2:"FuSioNWaRp Hardware",
-  hw_sub:"Un dispositivo. Cualquier pantalla. Sin PC.",
-  hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Sin PC", hw_s4:"WiFi · Bluetooth", hw_s5:"Control App",
-  hw_cta:"Unirse a la lista de espera",
-  hw_badge:"BIENTÔT",
-  hw_h2:"FuSioNWaRp Hardware",
-  hw_sub:"Un appareil. N'importe quel écran. Sans PC.",
-  hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Sans PC", hw_s4:"WiFi · Bluetooth", hw_s5:"Contrôle App",
-  hw_cta:"Rejoindre la liste d'attente",
-  hw_badge:"PROSSIMAMENTE",
-  hw_h2:"FuSioNWaRp Hardware",
-  hw_sub:"Un dispositivo. Qualsiasi schermo. Nessun PC.",
-  hw_s1:"HDMI · 4K · 60fps", hw_s2:"Plug & Play", hw_s3:"Nessun PC", hw_s4:"WiFi · Bluetooth", hw_s5:"Controllo App",
-  hw_cta:"Unisciti alla lista d'attesa",
-  rm_label:"Roadmap", rm_h2:"Was bereits läuft — ", rm_h2span:"was kommt.",
-    rm1_h:"4 Engine-Module", rm1_p:"Layer, Motion, Warp & FX vollständig implementiert",
-    rm2_h:"Audio-Reaktivität", rm2_p:"Bass, Mid, High, Kick — Echtzeit-Analyse & Mapping",
-    rm3_h:"MIDI Launch Control XL", rm3_p:"Vollständiges Hardware-Mapping & MIDI-Learn",
-    rm4_h:"macOS Native App", rm4_p:"Metal GPU-Rendering, SwiftUI, läuft auf Apple Silicon",
-    rm5_h:"Video-Navigation", rm5_p:"Pro-Ebene Video-Auswahl, Loop, Vor/Zurück",
-    rm6_h:"Trend-Reaktivität", rm6_p:"Langsame Audio-Envelopes triggern Effekte automatisch",
-    rm7_h:"Bildschirmschoner", rm7_p:"macOS Screensaver auf Basis der Visual Engine",
-    rm8_h:"iOS & Windows", rm8_p:"Cross-Platform Release geplant",
-    vis_h2:"The universe does not repeat. ",
-    contact_label:"Kontakt & Kooperationen",
-    contact_h2:"Interesse? ", contact_h2span:"Lass uns reden.",
-    contact_p:"Ob Investor, Club-Betreiber, DJ oder Festival-Veranstalter — wir freuen uns auf spannende Gespräche.",
-  },
-  en: {
-    scr_label:"Real-time visual · example input · your visuals will look different",
-    nav_engines:"Engine", nav_products:"Products", nav_impressum:"Imprint", nav_datenschutz:"Privacy",
-    hero_eyebrow:"Real-Time Audio-Reactive Visual Engine",
-    hero_tagline:"FuSioNWaRp turns your videos and images into living, audio-reactive worlds — in real time.",
-    hero_sub:"Pure GPU engine. Every experience is unique — endless, reactive, limitless.",
-    hero_cta1:"Explore Products", hero_cta2:"The Technology",
-    prob_label:"The Problem",
-    prob_h2:"Too many screens stay black while the music is already playing.",
-    prob_quote:"Not everyone games. Not everyone streams. But music is always playing.",
-    prob_p:"FuSioNWaRp turns unused screens into reactive visual spaces that respond to music instead of sitting silently in standby.",
-    stat1:"Engine Modules", stat2:"Unique Visuals", stat3:"Presets", stat4:"Real-Time GPU Rendering",
-    eng_label:"The Technology",
-    eng1_h:"Layer Engine", eng1_1:"Up to 4 parallel video layers", eng1_2:"Live crossfade & blend modes", eng1_3:"Per-layer opacity & mix", eng1_4:"Your own videos or art packs",
-    eng2_h:"Motion Engine", eng2_1:"Infinite Zoom & Rotation", eng2_2:"Tunnel Worlds", eng2_3:"Pendulum & Sway", eng2_4:"Mirror Worlds / Kaleidoscope",
-    eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Glass & Lens Distortion", eng3_3:"Noise Fields", eng3_4:"Heat Waves",
-    eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Edge Detection", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Threshold · Invert", eng4_4:"Echo · Pixel · Tunnel",
-    how_label:"Audio Reactivity", how_h2span:"understands the energy.",
-    how1_h:"Bass", how1_p:"Nods the image to the beat. Drives zoom pulses and tunnel pull. Every kick brings the image one step closer.",
-    how2_h:"Mids", how2_p:"Make the image swing and spin. Control rotation speed and warp intensity in real time.",
-    how3_h:"Highs", how3_p:"Sparkle in the details. RGB split, glow and edge intensity follow the highs — more energy means more glitter.",
-    how4_h:"Silence", how4_p:"Nearly freezes the world. Only a faint base shimmer remains — the engine breathes with the music.",
-    prod_label:"Products", prod_h2:"A world for every space. ",
-    per_month:"/ month", one_time:"one-time",
-    home_desc:"For living-room TVs & smart displays. Every screen becomes living art — automatic, audio-reactive.",
-    home_f1:"Your own videos & images", home_f2:"Automatic visuals mode", home_f3:"Art packs by LuZiD", home_f4:"macOS · Windows · iOS",
-    core_desc:"The HDMI hardware box. Fanless, 4K, silent. Plug in the HDMI cable, turn on music — the world starts.",
-    core_f1:"No PC required", core_f2:"4K · 60fps · fanless", core_f3:"Plug & Play setup", core_f4:"Automatic updates",
-    pro_desc:"For clubs, bars, festivals & DJs. MIDI controller support, full manual control, stage-ready.",
-    pro_f1:"MIDI controller mapping", pro_f2:"8 layers · full control", pro_f3:"Live performance mode", pro_f4:"Preset slots & scenes",
-    btn_waitlist:"Join Waitlist", badge_plug:"PLUG & PLAY", price_note:"Prices preliminary — final pricing announced at launch.",
-    rm_label:"Roadmap", rm_h2:"What's live — ", rm_h2span:"what's coming.",
-    rm1_h:"4 Engine Modules", rm1_p:"Layer, Motion, Warp & FX fully implemented",
-    rm2_h:"Audio Reactivity", rm2_p:"Bass, Mid, High, Kick — real-time analysis & mapping",
-    rm3_h:"MIDI Launch Control XL", rm3_p:"Full hardware mapping & MIDI learn",
-    rm4_h:"macOS Native App", rm4_p:"Metal GPU rendering, SwiftUI, runs on Apple Silicon",
-    rm5_h:"Video Navigation", rm5_p:"Per-layer video selection, loop, next/prev",
-    rm6_h:"Trend Reactivity", rm6_p:"Slow audio envelopes trigger effects automatically",
-    rm7_h:"Screen Saver", rm7_p:"macOS screensaver powered by the visual engine",
-    rm8_h:"iOS & Windows", rm8_p:"Cross-platform release planned",
-    vis_h2:"The universe does not repeat. ",
-    contact_label:"Contact & Partnerships",
-    contact_h2:"Interested? ", contact_h2span:"Let's talk.",
-    contact_p:"Whether you're an investor, club owner, DJ or festival organiser — we'd love to hear from you.",
-  }
-};
+const I18N = {"en":{"ucfh59":"FuSioNWaRp turns music into visual worlds — in real time, on your GPU, different every session.","xklws4":"The technology","arl7z3":"Availability","zuj84v":"Real-time output · ungraded · endless loop","z49ipj":"↓ SCROLL","akzmjo":"The problem","1unz73u":"Seeing music without Albert's help.","ayyb9j":"Living-room TV, club LED wall or festival stage — visuals and music run past each other. FuSioNWaRp brings them together.","1es2wyl":"<span>Not everyone games. Not everyone streams.</span><br>But music is always on.","1int4q1":"image effects","2l30zd":"body movements","6jqaxx":"layers, freely mixed","1pttuzp":"slots for whole looks","68io8b":"operating modes","13m8l55":"Four layers. <span class=\"grad-text\">And any of them can be anything.</span>","zl0ygn":"Each of the four layers carries a source — a video, the camera, a screen region, a solid colour, a stream or another app's output. The effect groups run on top. Every layer has its own opacity, its own effect amount and one of sixteen blend modes — from Multiply through Difference to Vivid. Layer 1 is deliberately the ground.","sojqod":"Everything on one surface","4hanku":"The five slots along the top, below them the layers with their sources, the effect groups and the generators — no nested menus, nothing to hunt for mid-set. What you see is the complete state of the image.","16261a3":"Effect catalogue","1m1cg6f":"46 effects. <span class=\"grad-text\">In six groups.</span>","mcgt2h":"Right-click any single control to decide who drives it: your hand, the automation, a frequency band or one of the three modulators. And every one of them is reachable over MIDI.","8te3xl":"Tempo · Rotation · Infinite zoom","cgoceq":"Tunnel · Kaleidoscope · Mirror","oqnaa9":"Breathe · Shake · Nod","10w3w63":"Drift · Pump on the kick","1bfcfqx":"TD-Wirbel · TD-Bulge · Pump-Riss","13o7ze":"Boxinator · Mouse bulge","fkquyt":"Parallax-3D — brightness becomes depth","1cs2o6h":"Negative zoom · Dematerialise","1t8fv63":"Spatial depth instead of surface warp","1ityr1l":"Feedback up to 0.99 — the image flows back into itself","1gfci2d":"Echo — ghosts of earlier frames","sdebup":"Glow — halo around the highlights","up9wx":"This is where the look actually comes from","1riudrn":"Colour","y7hw3h":"Hue layers across the whole spectrum","1yi70zr":"Contrast 0.5 – 2.0","1l6juh6":"RGB shift — chromatic aberration","1eqdr0l":"B/W · film grade with vignette","1tk98zv":"Effects","1bspztq":"Edge · Emboss · Checker pulse","9duulz":"VHS · Invert flash · Thresh · Pixel","691rgg":"Strobe · five animated masks","fprl7o":"Almost every effect is capped so the image doesn't tear. <strong style=\"color:var(--white);font-weight:600\">Overdrive</strong> lifts the cap — per effect, or across everything with a factor from 0.2× to 4×. The TAB key latches or works only while held; an emergency off bypasses all of it at once.","19ffo8g":"Own generators","p62gso":"Four image engines <span class=\"grad-text\">that paint by themselves.</span>","ko44hk":"They need no source material — they make their own image in their own window, then drop into the stack as a layer. You decide the opacity and the position.","9bnbdm":"Grows over your images","wpv9va":"Wind strength &amp; leaf flutter","wyrsj6":"Sway speed","1w2axhi":"Automatic image change","1iayzq7":"Slime-mould simulation","l7y864":"Up to 500,000 agents with sensors","5075ps":"Deposit, decay, follow the trails","1ltooq0":"Symmetry modes &amp; offset","d5g4kp":"GPU particle system","usbvmx":"Reacts to the beat","12lcaob":"Own window, own set of controls","fbx5eq":"As a layer or an overlay","1td99ek":"Face landmarks via Vision","1wtnyu7":"Live face warp to the music","yd02bs":"Its own MIDI control","11wpmxi":"Free to sit anywhere in the stack","16r0t97":"Four operating modes","18p34ek":"Who leads — <span class=\"grad-text\">you or the music?</span>","151g2n":"The controls stay where you put them. Full manual control, nothing moves on its own. For DJ sets, installations, the studio.","1c6qa6z":"The material moves on by itself, the effects stay under your hand. For long evenings without constant intervention.","13gq5cs":"MUSIC","ouqjs":"Now the controls only set <em>how strongly</em> the music comes through — 50 % means half the reaction. For maximum sync.","1pwnqe0":"A calm sequence that drifts on for hours — no strobe, no jumps. Twelve fixed scenes from Fog to Spectrum, or freely shuffled. For installations, exhibitions, the living room.","n95pvd":"Underneath sits the finer layer: right-click any single control to give it its own source — hand, automation, a frequency band, or one of <strong style=\"color:var(--white);font-weight:600\">three modulators</strong> with waveform, depth and phase offset. Their rate runs either in cycles per second or in quarter notes locked to the detected tempo — and keeps running in complete silence.","1oxi2fz":"Where the image comes from","1yv699x":"Six sources. <span class=\"grad-text\">Selectable per layer.</span>","6qzv7l":"MP4, MOV and whatever else works","iw81nv":"Loop, back/forward, shuffle","1xu78qu":"Camera","11egy1":"Built in or external","409tm2":"Your iPhone over Wi-Fi too","t0z8dk":"Screen","1wsmwdd":"Your own desktop or a single window","1p7bg0o":"What you show becomes material","1vpk2xv":"HLS, RTMP or a URL","1hqlzxh":"Live from outside into the image","o93plh":"From the node editor, TouchDesigner, Resolume","o4guaw":"Arrives as an ordinary layer","i197sd":"Solid","1qvr9ja":"A colour as the ground","pda4r4":"So the generators have room to work","a7gn8d":"Control","f6yxqr":"Recognised over USB on its own","gmi9se":"24 knobs, 8 faders, buttons","7rv7a8":"MIDI learn for every parameter","in2ke1":"Assignments visible at a glance","skvz7g":"16 pads, your own assignment","1k9113a":"Tap fires a burst, hold works momentary","1voniei":"Aftertouch: more pressure, more effect","o9gywi":"Step sequencer fires effects in time","12smfmj":"Keyboard","noebxp":"18 keys as triggers","1jkp5mz":"Hold = on, release = off","1u3e8rw":"1–5 switches the slots","1z4lwn":"Space bar crossfades","1dblczq":"Every parameter as a slider","1nsjpdl":"12 XY pads for two values each","6dykj2":"iPhone camera straight into the visual","kb1333":"Finds the Mac over Bonjour","jj8uwr":"Mouse","xg1ite":"The pointer becomes the tool","1ghcdao":"The image bulges beneath it","ha38hy":"Dragging shifts the hue","o9cagj":"Playable without any hardware","1yph8jm":"Orb <small style=\"font-size:11px;opacity:.6\">new</small>","1xqupzi":"Grooves along the screen edge instead of knobs","klk5pj":"Six worlds with ten states each","2d4lb7":"Keeps running in time when you let go","f4y3ee":"<a href=\"orb.html\" style=\"color:var(--cyan);text-decoration:underline\">See the model →</a>","1swip6p":"Ten slots each hold a complete state of every control — with a thumbnail and a name of your own. Keys 1–5 and the MIDI buttons recall them.","1ktdqgd":"Audio reactivity","1p3kbyd":"The engine <span class=\"grad-text\">understands the energy.</span>","tigjoe":"Transient detection catches every kick. Zoom pulse, tunnel pull, Pump-Riss — the image breathes with the beat.","sd1cgu":"16-band analysis","165dopk":"The whole spectrum is split into 16 bands. Each band drives its own parameters — precisely, in real time.","ikc4ur":"Automatic tempo detection with a confidence value. Effects change in time, transitions land exactly on the one.","1tsq37f":"Key","ggstzf":"Twelve chroma filters across four octaves determine the key live — not just how loud it is, but what is being played.","1c9b5gs":"Musical prior knowledge","18xc1qu":"Tables from 912 annotated songs supply a phrase clock and song form and correct key and tempo. The engine knows where in the track it is.","1e1oq0o":"Genre detection","enrokb":"If the style stays stable for three seconds, the engine suggests a matching look. One click takes it — the decision stays yours.","151qlqm":"Built in now","ba0weo":"The node editor. <span class=\"grad-text\">Right inside FusionWarp.</span>","knah8w":"One button in the bar opens it — nothing to set up, nothing to connect. If you want to go deeper, patch video, FX, audio and output freely as a graph; the result comes straight back into FusionWarp as an ordinary layer.","ows760":"Node editor · already running in FusionWarp","12au2cu":"<a href=\"nodeedition.html\" style=\"color:var(--cyan);text-decoration:underline\">→ How the node editor is built</a>","zxiq6b":"In progress","12x9bg6":"The iPhone <span class=\"grad-text\">becomes the controller.</span>","yrabqu":"The FusionWarp Orb: no menu, no controls with numbers. Three grooves run as tracks along the screen edge, six pads fill the middle — and a second module sweeps effect points with freely placed rotors. It finds the Mac by itself over Bonjour and sends OSC over Wi-Fi, with no cable at all. If no Mac is there, the iPhone runs the engine itself.","1f8gmok":"modules · rings &amp; rotor","1qn7vpa":"states · 6 worlds × 10","thugs1":"cables — Wi-Fi &amp; OSC only","gf5wj0":"A model of the real surface — tap to try it","eb4126":"Visuals","1kca03h":"Every session. <span class=\"grad-text\">One of a kind.</span>","51s7ou":"Ungraded output from recent sessions — no two look alike.","gj29fi":"Portrait engine — live face warp in sync with the music","1x4lymw":"In action","q2urvx":"Music becomes <span class=\"grad-text\">living worlds.</span>","vauisr":"FuSioNWaRp — audio-reactive visuals in real time","17auh6d":"FusionWarp is in active development. All core functions are running — launch is close. Interested? Get in touch.","w4ps0n":"In progress <small>price to follow</small>","136qhsv":"The complete visual synthesizer. Every engine, every effect, no subscription.","18k4rx2":"46 effects, 27 body movements","1u6iaim":"Four layers, 16 blend modes","r202w8":"Node editor at the push of a button","khw0s8":"Ten slots for whole looks","7o255y":"Screensaver &amp; print export","1pa42fz":"Its own Apple TV edition","1aj8v3p":"iPhone remote &amp; Orb (in progress)","3lizxm":"Join the list","16qgmb6":"Add-on <small>price to follow</small>","1fbz7r3":"Stage and object mapping straight out of FusionWarp. No extra tool needed.","zhh1db":"Several output windows","1iexgi2":"Perspective correction","1ou0ve":"Live warp onto any surface","1frzvbj":"Requires a FusionWarp licence","jo2iso":"Recording","nkbk5":"Capture picture and sound together, without a second program.","1tag4ti":"Video with sound as a file","119jh6u":"Microphone and system audio mixable","nvtclc":"Straight into the Movies folder","1cyq5ho":"Verification runs <strong style=\"font-weight:600\">entirely offline — no server, no account</strong>. Paste the key from your purchase mail, it is checked cryptographically, done. Only the public verification key sits in the app; nobody can generate anything with it. No activation limit, no connection that gets switched off one day.","1q5nty3":"macOS · Apple Silicon · no subscription planned · prices not yet fixed","1d01sff":"Where it goes","1x86z1p":"Not just onto the screen. <span class=\"grad-text\">Onto the wall as well.</span>","1qvx4jy":"Drag the points until the surface fits","q2yhll":"For crooked walls and stage builds","vb4h3w":"Several output windows","16f2tpw":"No second program needed","spv22m":"Print export","125iy4n":"A still frame as an A3 art print","jq614r":"Front side black and white","kbs1xm":"Reverse side in colour","1kjwnoj":"Built for backlit frames","vldnk0":"Screensaver","tx9cxt":"The same engine on the lock screen","1x4j559":"Choose your own image folder","1e9f9gb":"Computed in real time","1q9hcgr":"<a href=\"screensaver.html\" style=\"color:var(--cyan);text-decoration:underline\">Download free →</a>","1j84jrp":"Syphon output","1icsov":"The image goes out as a Syphon source","1iv2wy2":"Record it, process it, stream it","17opj6":"Runs without a detour via the disk","1j2uesw":"Both directions — in as well as out","k1k5c9":"Its own tvOS edition for the television","1vf9ihd":"Two modes: Live and Ambient","1jpokcd":"16 effect modes, two parameters each","dltlij":"Played with the remote","1ltdejs":"Picture and sound together as a video file","81d96k":"Lands straight in the Movies folder","r2yeb4":"“STREAM” add-on","th79y3":"Mapping editor · two surfaces at once, points freely draggable","1jn5j4i":"Contact &amp; collaboration","1b7krti":"Interested? <span class=\"grad-text\">Let's talk.</span>","1w6ghip":"Investor, club owner, DJ or festival organiser — we look forward to the conversation.","10y3901":"Six ways <span class=\"grad-text\">to play the same thing.</span>","15rdqb7":"BPM &amp; beat phase","65h2pb":"Bass &amp; kick","5rj0nd":"← Universe","1ucxxm9":"Generators","cwzrb7":"Products"},"es":{"ucfh59":"FuSioNWaRp convierte la música en mundos visuales — en tiempo real, en tu GPU, distinto en cada sesión.","xklws4":"La tecnología","arl7z3":"Disponibilidad","zuj84v":"Salida en tiempo real · sin retocar · bucle continuo","z49ipj":"↓ DESLIZA","akzmjo":"El problema","1unz73u":"Ver la música sin la ayuda de Albert.","ayyb9j":"Televisor del salón, pared LED de club o escenario de festival — los visuales y la música van cada uno por su lado. FuSioNWaRp los junta.","1es2wyl":"<span>No todo el mundo juega. No todo el mundo hace streaming.</span><br>Pero la música siempre suena.","1int4q1":"efectos de imagen","2l30zd":"movimientos corporales","6jqaxx":"capas, libremente mezclables","1pttuzp":"slots para looks completos","68io8b":"modos de funcionamiento","13m8l55":"Cuatro capas. <span class=\"grad-text\">Y cualquiera puede ser cualquier cosa.</span>","zl0ygn":"Cada una de las cuatro capas lleva una fuente — un vídeo, la cámara, una región de pantalla, un color plano, un stream o la imagen de otra aplicación. Encima corren los grupos de efectos. Cada capa tiene su propia opacidad, su propia dosis de efecto y uno de dieciséis modos de fusión — de Multiplicar a Diferencia y Intenso. La capa 1 es deliberadamente el fondo.","sojqod":"Todo en una sola superficie","4hanku":"Los cinco slots arriba, debajo las capas con sus fuentes, los grupos de efectos y los generadores — sin menús anidados, sin nada que buscar en mitad de un set. Lo que ves es el estado completo de la imagen.","16261a3":"Catálogo de efectos","1m1cg6f":"46 efectos. <span class=\"grad-text\">En seis grupos.</span>","mcgt2h":"Haz clic derecho en cualquier control para decidir quién lo lleva: tu mano, la automatización, una banda de frecuencia o uno de los tres moduladores. Y todos son accesibles por MIDI.","8te3xl":"Tempo · Rotación · Zoom infinito","cgoceq":"Túnel · Caleidoscopio · Espejo","oqnaa9":"Respirar · Sacudir · Cabecear","10w3w63":"Deriva · Pump sobre el bombo","1bfcfqx":"TD-Wirbel · TD-Bulge · Pump-Riss","13o7ze":"Boxinator · Abombado con el ratón","fkquyt":"Parallax-3D — el brillo se vuelve profundidad","1cs2o6h":"Zoom negativo · Desmaterializar","1t8fv63":"Profundidad espacial en vez de deformación plana","1ityr1l":"Feedback hasta 0,99 — la imagen vuelve sobre sí misma","1gfci2d":"Echo — fantasmas de fotogramas anteriores","sdebup":"Glow — halo alrededor de las luces","up9wx":"Aquí nace el look de verdad","1riudrn":"Color","y7hw3h":"Capas de tono por todo el espectro","1yi70zr":"Contraste 0,5 – 2,0","1l6juh6":"RGB-Shift — aberración cromática","1eqdr0l":"B/N · Film-Grade con viñeta","1tk98zv":"Efectos","1bspztq":"Edge · Emboss · Pulso de damero","9duulz":"VHS · Destello invertido · Thresh · Pixel","691rgg":"Estrobo · cinco máscaras animadas","fprl7o":"Casi todos los efectos están limitados para que la imagen no se rompa. El <strong style=\"color:var(--white);font-weight:600\">Overdrive</strong> levanta ese límite — por efecto, o sobre todo con un factor de 0,2× a 4×. La tecla TAB se engancha o actúa solo mientras la mantienes; un paro de emergencia lo anula todo de golpe.","19ffo8g":"Generadores propios","p62gso":"Cuatro máquinas de imagen <span class=\"grad-text\">que pintan solas.</span>","ko44hk":"No necesitan material de partida — crean su propia imagen en su propia ventana y luego se colocan como capa en la pila. Tú decides la opacidad y el sitio.","9bnbdm":"Crece sobre tus imágenes","wpv9va":"Fuerza del viento &amp; aleteo de hojas","wyrsj6":"Velocidad de balanceo","1w2axhi":"Cambio automático de imagen","1iayzq7":"Simulación de moho mucilaginoso","l7y864":"Hasta 500 000 agentes con sensores","5075ps":"Depositar, decaer, seguir los rastros","1ltooq0":"Modos de simetría &amp; desfase","d5g4kp":"Sistema de partículas en la GPU","usbvmx":"Reacciona al beat","12lcaob":"Ventana propia, juego de controles propio","fbx5eq":"Como capa o como superposición","1td99ek":"Puntos faciales mediante Vision","1wtnyu7":"Face-warp en vivo con la música","yd02bs":"Control MIDI propio","11wpmxi":"Libre en cualquier punto de la pila","16r0t97":"Cuatro modos de funcionamiento","18p34ek":"¿Quién manda — <span class=\"grad-text\">tú o la música?</span>","151g2n":"Los controles se quedan donde los pongas. Control manual completo, nada se mueve solo. Para sesiones de DJ, instalaciones, estudio.","1c6qa6z":"El material avanza por su cuenta, los efectos siguen en tu mano. Para noches largas sin estar interviniendo.","13gq5cs":"MÚSICA","ouqjs":"Ahora los controles solo fijan <em>con qué fuerza</em> entra la música — 50 % es media reacción. Para la máxima sincronía.","1pwnqe0":"Una secuencia tranquila que avanza sola durante horas — sin estrobo, sin saltos. Doce escenas fijas, de Niebla a Espectro, o barajadas libremente. Para instalación, exposición, salón.","n95pvd":"Debajo hay un nivel más fino: cada control recibe con clic derecho su propia fuente — mano, automatización, una banda de frecuencia o uno de los <strong style=\"color:var(--white);font-weight:600\">tres moduladores</strong> con forma de onda, profundidad y desfase inicial. Su velocidad corre en ciclos por segundo o en negras al tempo detectado — y sigue corriendo en completo silencio.","1oxi2fz":"De dónde viene la imagen","1yv699x":"Seis fuentes. <span class=\"grad-text\">Elegibles por capa.</span>","6qzv7l":"MP4, MOV y lo que haga falta","iw81nv":"Bucle, atrás/adelante, aleatorio","1xu78qu":"Cámara","11egy1":"Integrada o externa","409tm2":"También el iPhone por wifi","t0z8dk":"Pantalla","1wsmwdd":"Tu escritorio o una sola ventana","1p7bg0o":"Lo que muestras se vuelve material","1vpk2xv":"HLS, RTMP o una URL","1hqlzxh":"En directo desde fuera a la imagen","o93plh":"Del editor de nodos, TouchDesigner, Resolume","o4guaw":"Llega como una capa normal","i197sd":"Plano","1qvr9ja":"Un color como fondo","pda4r4":"Para que los generadores tengan sitio","a7gn8d":"Control","10y3901":"Seis maneras <span class=\"grad-text\">de tocar lo mismo.</span>","f6yxqr":"Se reconoce solo por USB","gmi9se":"24 potenciómetros, 8 faders, botones","7rv7a8":"MIDI-Learn para cada parámetro","in2ke1":"Asignación consultable de un vistazo","skvz7g":"16 pads, asignación propia","1k9113a":"Un toque dispara, mantener actúa momentáneo","1voniei":"Aftertouch: más presión, más efecto","o9gywi":"El secuenciador dispara efectos a compás","12smfmj":"Teclado","noebxp":"18 teclas como disparadores","1jkp5mz":"Mantener = activo, soltar = apagado","1u3e8rw":"1–5 cambia de slot","1z4lwn":"La barra espaciadora funde","1vxrb12":"iPhone Remote","1dblczq":"Todos los parámetros como deslizadores","1nsjpdl":"12 pads XY, dos valores cada uno","6dykj2":"La cámara del iPhone directa al visual","kb1333":"Encuentra el Mac por Bonjour","jj8uwr":"Ratón","xg1ite":"El puntero se convierte en herramienta","1ghcdao":"Debajo de él la imagen se abomba","ha38hy":"Arrastrar desplaza el tono","o9cagj":"Se toca sin ningún hardware","1yph8jm":"Orb <small style=\"font-size:11px;opacity:.6\">nuevo</small>","1xqupzi":"Ranuras en el borde de la pantalla en vez de mandos","klk5pj":"Seis mundos con diez estados cada uno","2d4lb7":"Sigue a compás cuando lo sueltas","f4y3ee":"<a href=\"orb.html\" style=\"color:var(--cyan);text-decoration:underline\">Ver el modelo →</a>","1swip6p":"Diez slots guardan cada uno el estado completo de todos los controles — con miniatura y nombre propio. Las teclas 1–5 y los botones MIDI los recuperan.","1ktdqgd":"Reactividad al audio","1p3kbyd":"El motor <span class=\"grad-text\">entiende la energía.</span>","65h2pb":"Graves &amp; bombo","tigjoe":"La detección de transitorios capta cada bombo. Pulso de zoom, succión del túnel, Pump-Riss — la imagen respira con el beat.","sd1cgu":"Análisis de 16 bandas","165dopk":"Todo el espectro se divide en 16 bandas. Cada banda mueve sus propios parámetros — con precisión, en tiempo real.","15rdqb7":"BPM &amp; fase del beat","ikc4ur":"Detección automática de tempo con valor de fiabilidad. Los efectos cambian a compás, las transiciones caen exactas en el uno.","1tsq37f":"Tonalidad","ggstzf":"Doce filtros de croma sobre cuatro octavas determinan la tonalidad en vivo — no solo cuánto suena, sino qué se está tocando.","1c9b5gs":"Conocimiento musical previo","18xc1qu":"Tablas de 912 canciones anotadas aportan reloj de frase y forma de la canción y corrigen tonalidad y tempo. El motor sabe en qué punto del tema está.","1e1oq0o":"Detección de género","enrokb":"Si el estilo se mantiene estable tres segundos, el motor propone un look adecuado. Un clic lo adopta — la decisión sigue siendo tuya.","151qlqm":"Ya integrado","ba0weo":"El editor de nodos. <span class=\"grad-text\">Dentro de FusionWarp.</span>","knah8w":"Un botón en la barra lo abre — nada que configurar, nada que conectar. Quien quiera ir más lejos conecta vídeo, FX, audio y salida libremente como grafo; su imagen vuelve enseguida a FusionWarp como una capa normal.","ows760":"Editor de nodos · ya funcionando en FusionWarp","12au2cu":"<a href=\"nodeedition.html\" style=\"color:var(--cyan);text-decoration:underline\">→ Cómo está construido el editor de nodos</a>","zxiq6b":"En desarrollo","12x9bg6":"El iPhone <span class=\"grad-text\">se convierte en controlador.</span>","yrabqu":"El FusionWarp Orb: sin menú, sin mandos con números. Tres ranuras recorren el borde de la pantalla, seis pads llenan el centro — y un segundo módulo hace que rotores libres barran puntos de efecto. Encuentra el Mac solo por Bonjour y envía OSC por wifi, sin ningún cable. Si no hay Mac, el iPhone calcula el motor por su cuenta.","1f8gmok":"módulos · anillos &amp; rotor","1qn7vpa":"estados · 6 mundos × 10","thugs1":"cables — solo wifi &amp; OSC","gf5wj0":"Modelo de la superficie real — toca para probar","eb4126":"Visuales","1kca03h":"Cada sesión. <span class=\"grad-text\">Única.</span>","51s7ou":"Salidas sin retocar de sesiones recientes — no hay dos iguales.","gj29fi":"Portrait Engine — face-warp en vivo sincronizado con la música","1x4lymw":"En acción","q2urvx":"La música se vuelve <span class=\"grad-text\">mundos vivos.</span>","vauisr":"FuSioNWaRp — visuales reactivos al audio en tiempo real","17auh6d":"FusionWarp está en desarrollo activo. Todas las funciones centrales funcionan — el lanzamiento está cerca. ¿Te interesa? Escríbenos.","w4ps0n":"En curso <small>precio por definir</small>","136qhsv":"El sintetizador visual completo. Todos los motores, todos los efectos, sin suscripción.","18k4rx2":"46 efectos, 27 movimientos corporales","1u6iaim":"Cuatro capas, 16 modos de fusión","r202w8":"Editor de nodos con un botón","khw0s8":"Diez slots para looks completos","7o255y":"Salvapantallas &amp; exportación para impresión","1pa42fz":"Versión propia para Apple TV","1aj8v3p":"iPhone Remote &amp; Orb (en desarrollo)","3lizxm":"Apúntate a la lista","16qgmb6":"Add-on <small>precio por definir</small>","1fbz7r3":"Mapeo de escenario y objetos directamente desde FusionWarp. Sin herramienta extra.","zhh1db":"Varias ventanas de salida","1iexgi2":"Corrección de perspectiva","1ou0ve":"Warp en vivo sobre cualquier superficie","1frzvbj":"Requiere licencia de FusionWarp","jo2iso":"Grabación","nkbk5":"Graba imagen y sonido juntos, sin un segundo programa.","1tag4ti":"Vídeo con sonido como archivo","119jh6u":"Micrófono y audio del sistema mezclables","nvtclc":"Directo a la carpeta Películas","1cyq5ho":"La comprobación funciona <strong style=\"font-weight:600\">totalmente sin conexión — sin servidor, sin cuenta</strong>. Pegas la clave del correo de compra, se verifica criptográficamente y listo. En la app solo está la clave pública de verificación; con ella nadie puede generar nada. Sin límite de activaciones, sin una conexión que un día se apague.","1q5nty3":"macOS · Apple Silicon · sin suscripción prevista · precios aún por fijar","1d01sff":"Por dónde sale","1x86z1p":"No solo a la pantalla. <span class=\"grad-text\">También a la pared.</span>","1qvx4jy":"Arrastra los puntos hasta que encaje","q2yhll":"Para paredes torcidas y estructuras de escenario","vb4h3w":"Varias ventanas de salida","16f2tpw":"Sin necesidad de un segundo programa","spv22m":"Exportación para impresión","125iy4n":"Un fotograma como lámina A3","jq614r":"Anverso en blanco y negro","kbs1xm":"Reverso en color","1kjwnoj":"Pensado para marcos retroiluminados","vldnk0":"Salvapantallas","tx9cxt":"El mismo motor en la pantalla de bloqueo","1x4j559":"Carpeta de imágenes a tu elección","1e9f9gb":"Calculado en tiempo real","1q9hcgr":"<a href=\"screensaver.html\" style=\"color:var(--cyan);text-decoration:underline\">Descarga gratis →</a>","1j84jrp":"Salida Syphon","1icsov":"La imagen sale como fuente Syphon","1iv2wy2":"Grabar, procesar, emitir","17opj6":"Sin pasar por el disco","1j2uesw":"En ambos sentidos — entrada y salida","k1k5c9":"Versión propia de tvOS para el televisor","1vf9ihd":"Dos modos: Live y Ambient","1jpokcd":"16 modos de efecto, dos parámetros cada uno","dltlij":"Se toca con el mando a distancia","1ltdejs":"Imagen y sonido juntos como archivo de vídeo","81d96k":"Va directo a la carpeta Películas","r2yeb4":"Add-on «STREAM»","th79y3":"Editor de mapeo · dos superficies a la vez, puntos arrastrables","1jn5j4i":"Contacto &amp; colaboraciones","1b7krti":"¿Te interesa? <span class=\"grad-text\">Hablemos.</span>","1w6ghip":"Inversor, dueño de club, DJ u organizador de festival — nos alegra la conversación.","5rj0nd":"← Universo","1ucxxm9":"Generadores","cwzrb7":"Productos"},"fr":{"ucfh59":"FuSioNWaRp traduit la musique en mondes visuels — en temps réel, sur votre GPU, unique à chaque session.","xklws4":"La technologie","arl7z3":"Disponibilité","zuj84v":"Sortie en temps réel · brute · boucle continue","z49ipj":"↓ FAITES DÉFILER","akzmjo":"Le problème","1unz73u":"Voir la musique sans l'aide d'Albert.","ayyb9j":"Téléviseur du salon, mur de LED en club ou scène de festival — les visuels et la musique se croisent sans se rencontrer. FuSioNWaRp les réunit.","1es2wyl":"<span>Tout le monde ne joue pas. Tout le monde ne streame pas.</span><br>Mais la musique tourne toujours.","1int4q1":"effets d'image","2l30zd":"mouvements de corps","6jqaxx":"couches, librement mélangeables","1pttuzp":"slots pour des looks entiers","68io8b":"modes de fonctionnement","13m8l55":"Quatre couches. <span class=\"grad-text\">Et chacune peut tout être.</span>","zl0ygn":"Chacune des quatre couches porte une source — une vidéo, la caméra, une zone d'écran, un aplat de couleur, un flux ou l'image d'une autre application. Par-dessus tournent les groupes d'effets. Chaque couche a son opacité, sa dose d'effet et l'un des seize modes de fusion — de Produit à Différence en passant par Lumière vive. La couche 1 est délibérément le fond.","sojqod":"Tout sur une seule surface","4hanku":"Les cinq slots en haut, en dessous les couches avec leurs sources, les groupes d'effets et les générateurs — aucun menu imbriqué, rien à chercher en plein set. Ce que vous voyez, c'est l'état complet de l'image.","16261a3":"Catalogue d'effets","1m1cg6f":"46 effets. <span class=\"grad-text\">En six groupes.</span>","mcgt2h":"Un clic droit sur n'importe quel réglage décide qui le pilote : votre main, l'automatisme, une bande de fréquence ou l'un des trois modulateurs. Et chacun est accessible en MIDI.","8te3xl":"Tempo · Rotation · Zoom infini","cgoceq":"Tunnel · Kaléidoscope · Miroir","oqnaa9":"Respirer · Secouer · Hocher","10w3w63":"Dérive · Pump sur le kick","1bfcfqx":"TD-Wirbel · TD-Bulge · Pump-Riss","13o7ze":"Boxinator · Bombement à la souris","fkquyt":"Parallax-3D — la luminosité devient profondeur","1cs2o6h":"Zoom négatif · Dématérialisation","1t8fv63":"Profondeur spatiale plutôt que déformation de surface","1ityr1l":"Feedback jusqu'à 0,99 — l'image se reverse en elle-même","1gfci2d":"Echo — fantômes des images précédentes","sdebup":"Glow — halo autour des hautes lumières","up9wx":"C'est ici que naît vraiment le look","1riudrn":"Couleur","y7hw3h":"Couches de teinte sur tout le spectre","1yi70zr":"Contraste 0,5 – 2,0","1l6juh6":"RGB-Shift — aberration chromatique","1eqdr0l":"N/B · Film-Grade avec vignettage","1tk98zv":"Effets","1bspztq":"Edge · Emboss · Pulsation damier","9duulz":"VHS · Éclair inversé · Thresh · Pixel","691rgg":"Stroboscope · cinq masques animés","fprl7o":"Presque chaque effet est plafonné pour que l'image ne se déchire pas. L'<strong style=\"color:var(--white);font-weight:600\">Overdrive</strong> lève ce plafond — par effet, ou sur l'ensemble avec un facteur de 0,2× à 4×. La touche TAB s'enclenche ou n'agit que maintenue ; un arrêt d'urgence court-circuite le tout d'un coup.","19ffo8g":"Générateurs maison","p62gso":"Quatre machines à images <span class=\"grad-text\">qui peignent d'elles-mêmes.</span>","ko44hk":"Elles n'ont besoin d'aucune source — elles fabriquent leur image dans leur propre fenêtre, puis viennent se poser dans la pile comme une couche. L'opacité et la place, c'est vous qui décidez.","9bnbdm":"Pousse par-dessus vos images","wpv9va":"Force du vent &amp; frémissement des feuilles","wyrsj6":"Vitesse de balancement","1w2axhi":"Changement d'image automatique","1iayzq7":"Simulation de myxomycète","l7y864":"Jusqu'à 500 000 agents à capteurs","5075ps":"Déposer, s'estomper, suivre les traces","1ltooq0":"Modes de symétrie &amp; décalage","d5g4kp":"Système de particules sur le GPU","usbvmx":"Réagit au beat","12lcaob":"Fenêtre propre, jeu de réglages propre","fbx5eq":"En couche ou en surimpression","1td99ek":"Points du visage via Vision","1wtnyu7":"Face-warp en direct sur la musique","yd02bs":"Commande MIDI dédiée","11wpmxi":"Libre dans la pile de couches","16r0t97":"Quatre modes de fonctionnement","18p34ek":"Qui mène — <span class=\"grad-text\">vous ou la musique ?</span>","151g2n":"Les réglages restent où vous les posez. Contrôle manuel total, rien ne bouge tout seul. Pour les sets DJ, les installations, le studio.","1c6qa6z":"Le matériau avance tout seul, les effets restent sous votre main. Pour les longues soirées sans intervenir sans cesse.","13gq5cs":"MUSIQUE","ouqjs":"Les réglages ne décident plus que <em>de la force</em> avec laquelle la musique passe — 50 %, c'est une demi-réaction. Pour une synchronisation maximale.","1pwnqe0":"Une suite d'images calme qui avance seule pendant des heures — sans stroboscope, sans à-coups. Douze scènes fixes, de Brume à Spectre, ou tirées au hasard. Pour l'installation, l'exposition, le salon.","n95pvd":"En dessous se trouve le niveau plus fin : un clic droit donne à chaque réglage sa propre source — la main, l'automatisme, une bande de fréquence ou l'un des <strong style=\"color:var(--white);font-weight:600\">trois modulateurs</strong> avec forme d'onde, profondeur et décalage de départ. Leur vitesse tourne en cycles par seconde ou en noires au tempo détecté — et continue même dans le silence complet.","1oxi2fz":"D'où vient l'image","1yv699x":"Six sources. <span class=\"grad-text\">Au choix par couche.</span>","6qzv7l":"MP4, MOV et le reste","iw81nv":"Boucle, avant/arrière, aléatoire","1xu78qu":"Caméra","11egy1":"Intégrée ou externe","409tm2":"L'iPhone aussi, par Wi-Fi","t0z8dk":"Écran","1wsmwdd":"Votre bureau ou une seule fenêtre","1p7bg0o":"Ce que vous montrez devient la matière","1vpk2xv":"HLS, RTMP ou une URL","1hqlzxh":"En direct, de l'extérieur vers l'image","o93plh":"Depuis l'éditeur de nœuds, TouchDesigner, Resolume","o4guaw":"Arrive comme une couche ordinaire","i197sd":"Aplat","1qvr9ja":"Une couleur comme fond","pda4r4":"Pour laisser le champ libre aux générateurs","a7gn8d":"Commande","10y3901":"Six façons <span class=\"grad-text\">de jouer la même chose.</span>","f6yxqr":"Reconnu tout seul en USB","gmi9se":"24 potentiomètres, 8 faders, boutons","7rv7a8":"MIDI-Learn pour chaque paramètre","in2ke1":"Affectations consultables d'un coup d'œil","skvz7g":"16 pads, affectation personnelle","1k9113a":"Une tape déclenche, maintenir agit en momentané","1voniei":"Aftertouch : plus de pression, plus d'effet","o9gywi":"Le séquenceur déclenche les effets en mesure","12smfmj":"Clavier","noebxp":"18 touches comme déclencheurs","1jkp5mz":"Maintenir = actif, relâcher = coupé","1u3e8rw":"1–5 change de slot","1z4lwn":"La barre d'espace fait le fondu","1vxrb12":"iPhone Remote","1dblczq":"Tous les paramètres en curseurs","1nsjpdl":"12 pads XY, deux valeurs chacun","6dykj2":"La caméra de l'iPhone directement dans le visuel","kb1333":"Trouve le Mac via Bonjour","jj8uwr":"Souris","xg1ite":"Le pointeur devient l'outil","1ghcdao":"Sous lui, l'image se bombe","ha38hy":"Glisser décale la teinte","o9cagj":"Jouable sans le moindre matériel","1yph8jm":"Orb <small style=\"font-size:11px;opacity:.6\">nouveau</small>","1xqupzi":"Des rainures au bord de l'écran plutôt que des boutons","klk5pj":"Six mondes, dix états chacun","2d4lb7":"Continue en mesure quand vous lâchez","f4y3ee":"<a href=\"orb.html\" style=\"color:var(--cyan);text-decoration:underline\">Voir le modèle →</a>","1swip6p":"Dix slots conservent chacun l'état complet de tous les réglages — avec vignette et nom personnel. Les touches 1–5 et les boutons MIDI les rappellent.","1ktdqgd":"Réactivité audio","1p3kbyd":"Le moteur <span class=\"grad-text\">comprend l'énergie.</span>","65h2pb":"Basses &amp; kick","tigjoe":"La détection de transitoires attrape chaque kick. Pulsation de zoom, aspiration du tunnel, Pump-Riss — l'image respire avec le beat.","sd1cgu":"Analyse en 16 bandes","165dopk":"Tout le spectre est découpé en 16 bandes. Chaque bande pilote ses propres paramètres — précisément, en temps réel.","15rdqb7":"BPM &amp; phase du beat","ikc4ur":"Détection automatique du tempo avec indice de fiabilité. Les effets changent en mesure, les transitions tombent exactement sur le premier temps.","1tsq37f":"Tonalité","ggstzf":"Douze filtres de chroma sur quatre octaves déterminent la tonalité en direct — pas seulement le volume, mais ce qui est joué.","1c9b5gs":"Savoir musical préalable","18xc1qu":"Des tables issues de 912 morceaux annotés fournissent une horloge de phrase et la forme du morceau, et corrigent tonalité et tempo. Le moteur sait où il en est dans le titre.","1e1oq0o":"Reconnaissance du genre","enrokb":"Si le style reste stable trois secondes, le moteur propose un look adapté. Un clic l'applique — la décision reste la vôtre.","151qlqm":"Désormais intégré","ba0weo":"L'éditeur de nœuds. <span class=\"grad-text\">Directement dans FusionWarp.</span>","knah8w":"Un bouton dans la barre l'ouvre — rien à installer, rien à connecter. Pour aller plus loin, on y câble librement vidéo, FX, audio et sortie sous forme de graphe ; l'image revient aussitôt dans FusionWarp comme une couche ordinaire.","ows760":"Éditeur de nœuds · déjà actif dans FusionWarp","12au2cu":"<a href=\"nodeedition.html\" style=\"color:var(--cyan);text-decoration:underline\">→ Comment l'éditeur de nœuds est construit</a>","zxiq6b":"En cours","12x9bg6":"L'iPhone <span class=\"grad-text\">devient le contrôleur.</span>","yrabqu":"Le FusionWarp Orb : pas de menu, pas de réglages chiffrés. Trois rainures courent le long du bord de l'écran, six pads occupent le centre — et un second module fait balayer des points d'effet par des rotors placés librement. Il trouve le Mac tout seul via Bonjour et envoie de l'OSC par Wi-Fi, sans le moindre câble. S'il n'y en a pas, l'iPhone calcule le moteur lui-même.","1f8gmok":"modules · anneaux &amp; rotor","1qn7vpa":"états · 6 mondes × 10","thugs1":"câbles — Wi-Fi &amp; OSC seulement","gf5wj0":"Modèle de l'interface réelle — touchez pour essayer","eb4126":"Visuels","1kca03h":"Chaque session. <span class=\"grad-text\">Unique.</span>","51s7ou":"Sorties brutes de sessions récentes — il n'y en a pas deux pareilles.","gj29fi":"Portrait Engine — face-warp en direct, synchrone avec la musique","1x4lymw":"En action","q2urvx":"La musique devient <span class=\"grad-text\">des mondes vivants.</span>","vauisr":"FuSioNWaRp — visuels réactifs à l'audio en temps réel","17auh6d":"FusionWarp est en développement actif. Toutes les fonctions centrales tournent — le lancement est proche. Intéressé ? Écrivez-nous.","w4ps0n":"En cours <small>prix à venir</small>","136qhsv":"Le synthétiseur visuel complet. Tous les moteurs, tous les effets, sans abonnement.","18k4rx2":"46 effets, 27 mouvements de corps","1u6iaim":"Quatre couches, 16 modes de fusion","r202w8":"Éditeur de nœuds en un bouton","khw0s8":"Dix slots pour des looks entiers","7o255y":"Économiseur d'écran &amp; export d'impression","1pa42fz":"Version Apple TV dédiée","1aj8v3p":"iPhone Remote &amp; Orb (en cours)","3lizxm":"S'inscrire à la liste","16qgmb6":"Add-on <small>prix à venir</small>","1fbz7r3":"Mapping de scène et d'objets directement depuis FusionWarp. Aucun autre outil nécessaire.","zhh1db":"Plusieurs fenêtres de sortie","1iexgi2":"Correction de perspective","1ou0ve":"Warp en direct sur n'importe quelle surface","1frzvbj":"Nécessite une licence FusionWarp","jo2iso":"Enregistrement","nkbk5":"Capture l'image et le son ensemble, sans second logiciel.","1tag4ti":"Vidéo avec son, en fichier","119jh6u":"Micro et son système mixables","nvtclc":"Directement dans le dossier Films","1cyq5ho":"La vérification fonctionne <strong style=\"font-weight:600\">entièrement hors ligne — sans serveur, sans compte</strong>. On colle la clé reçue par mail, elle est vérifiée cryptographiquement, c'est fait. Seule la clé publique de vérification se trouve dans l'application ; personne ne peut rien générer avec. Aucune limite d'activation, aucune connexion qu'on éteindra un jour.","1q5nty3":"macOS · Apple Silicon · aucun abonnement prévu · tarifs pas encore fixés","1d01sff":"Par où ça sort","1x86z1p":"Pas seulement sur l'écran. <span class=\"grad-text\">Sur le mur aussi.</span>","1qvx4jy":"Tirez les points jusqu'à ce que la surface tombe juste","q2yhll":"Pour les murs de travers et les constructions de scène","vb4h3w":"Plusieurs fenêtres de sortie","16f2tpw":"Aucun second logiciel nécessaire","spv22m":"Export d'impression","125iy4n":"Une image fixe en tirage d'art A3","jq614r":"Recto en noir et blanc","kbs1xm":"Verso en couleur","1kjwnoj":"Conçu pour les cadres rétroéclairés","vldnk0":"Économiseur d'écran","tx9cxt":"Le même moteur sur l'écran de verrouillage","1x4j559":"Dossier d'images au choix","1e9f9gb":"Calculé en temps réel","1q9hcgr":"<a href=\"screensaver.html\" style=\"color:var(--cyan);text-decoration:underline\">Télécharger gratuitement →</a>","1j84jrp":"Sortie Syphon","1icsov":"L'image sort comme source Syphon","1iv2wy2":"Enregistrer, retravailler, diffuser","17opj6":"Sans détour par le disque","1j2uesw":"Dans les deux sens — entrée comme sortie","k1k5c9":"Version tvOS dédiée pour le téléviseur","1vf9ihd":"Deux modes : Live et Ambient","1jpokcd":"16 modes d'effet, deux paramètres chacun","dltlij":"Joué à la télécommande","1ltdejs":"Image et son ensemble, en fichier vidéo","81d96k":"Atterrit directement dans le dossier Films","r2yeb4":"Add-on « STREAM »","th79y3":"Éditeur de mapping · deux surfaces à la fois, points librement déplaçables","1jn5j4i":"Contact &amp; collaborations","1b7krti":"Intéressé ? <span class=\"grad-text\">Parlons-en.</span>","1w6ghip":"Investisseur, patron de club, DJ ou organisateur de festival — la conversation nous intéresse.","5rj0nd":"← Univers","1ucxxm9":"Générateurs","cwzrb7":"Produits"},"it":{"ucfh59":"FuSioNWaRp traduce la musica in mondi visivi — in tempo reale, sulla tua GPU, diverso a ogni sessione.","xklws4":"La tecnologia","arl7z3":"Disponibilità","zuj84v":"Uscita in tempo reale · non ritoccata · loop continuo","z49ipj":"↓ SCORRI","akzmjo":"Il problema","1unz73u":"Vedere la musica senza l'aiuto di Albert.","ayyb9j":"TV del salotto, parete LED di un club o palco di un festival — visual e musica si sfiorano soltanto. FuSioNWaRp li mette insieme.","1es2wyl":"<span>Non tutti giocano. Non tutti fanno streaming.</span><br>Ma la musica c'è sempre.","1int4q1":"effetti immagine","2l30zd":"movimenti del corpo","6jqaxx":"livelli, liberamente miscelabili","1pttuzp":"slot per interi look","68io8b":"modalità operative","13m8l55":"Quattro livelli. <span class=\"grad-text\">E ognuno può essere tutto.</span>","zl0ygn":"Ognuno dei quattro livelli porta una sorgente — un video, la camera, una porzione di schermo, un colore pieno, uno stream o l'immagine di un'altra applicazione. Sopra girano i gruppi di effetti. Ogni livello ha la sua opacità, la sua dose di effetto e uno dei sedici metodi di fusione — da Moltiplica a Differenza fino a Luce vivida. Il livello 1 è di proposito lo sfondo.","sojqod":"Tutto su un'unica superficie","4hanku":"I cinque slot in alto, sotto i livelli con le loro sorgenti, i gruppi di effetti e i generatori — nessun menu annidato, niente da cercare in mezzo a un set. Quello che vedi è lo stato completo dell'immagine.","16261a3":"Catalogo effetti","1m1cg6f":"46 effetti. <span class=\"grad-text\">In sei gruppi.</span>","mcgt2h":"Un clic destro su qualsiasi comando decide chi lo guida: la tua mano, l'automatismo, una banda di frequenza o uno dei tre modulatori. E ognuno è raggiungibile via MIDI.","8te3xl":"Tempo · Rotazione · Zoom infinito","cgoceq":"Tunnel · Caleidoscopio · Specchio","oqnaa9":"Respiro · Scossa · Cenno","10w3w63":"Deriva · Pump sul kick","1bfcfqx":"TD-Wirbel · TD-Bulge · Pump-Riss","13o7ze":"Boxinator · Rigonfiamento col mouse","fkquyt":"Parallax-3D — la luminosità diventa profondità","1cs2o6h":"Zoom negativo · Smaterializza","1t8fv63":"Profondità spaziale invece di deformazione piana","1ityr1l":"Feedback fino a 0,99 — l'immagine rientra in sé stessa","1gfci2d":"Echo — fantasmi dei fotogrammi precedenti","sdebup":"Glow — alone attorno alle alte luci","up9wx":"È qui che nasce davvero il look","1riudrn":"Colore","y7hw3h":"Strati di tinta su tutto lo spettro","1yi70zr":"Contrasto 0,5 – 2,0","1l6juh6":"RGB-Shift — aberrazione cromatica","1eqdr0l":"B/N · Film-Grade con vignettatura","1tk98zv":"Effetti","1bspztq":"Edge · Emboss · Pulsazione a scacchi","9duulz":"VHS · Lampo invertito · Thresh · Pixel","691rgg":"Strobo · cinque maschere animate","fprl7o":"Quasi ogni effetto ha un tetto, così l'immagine non si strappa. L'<strong style=\"color:var(--white);font-weight:600\">Overdrive</strong> alza quel tetto — per singolo effetto, o su tutto con un fattore da 0,2× a 4×. Il tasto TAB si aggancia oppure agisce solo finché lo tieni premuto; un arresto d'emergenza scavalca tutto in un colpo.","19ffo8g":"Generatori propri","p62gso":"Quattro macchine d'immagine <span class=\"grad-text\">che dipingono da sole.</span>","ko44hk":"Non hanno bisogno di materiale di partenza — creano la loro immagine in una finestra propria e poi si posano nella pila come un livello. Opacità e posizione le decidi tu.","9bnbdm":"Cresce sopra le tue immagini","wpv9va":"Forza del vento &amp; fremito delle foglie","wyrsj6":"Velocità di oscillazione","1w2axhi":"Cambio immagine automatico","1iayzq7":"Simulazione di muffa mucillaginosa","l7y864":"Fino a 500 000 agenti con sensori","5075ps":"Depositare, svanire, seguire le tracce","1ltooq0":"Modi di simmetria &amp; sfasamento","d5g4kp":"Sistema di particelle sulla GPU","usbvmx":"Reagisce al beat","12lcaob":"Finestra propria, set di comandi proprio","fbx5eq":"Come livello o come sovrapposizione","1td99ek":"Punti del volto tramite Vision","1wtnyu7":"Face-warp dal vivo sulla musica","yd02bs":"Controllo MIDI dedicato","11wpmxi":"Libero in qualsiasi punto della pila","16r0t97":"Quattro modalità operative","18p34ek":"Chi guida — <span class=\"grad-text\">tu o la musica?</span>","151g2n":"I comandi restano dove li metti. Controllo manuale totale, niente si muove da solo. Per set da DJ, installazioni, studio.","1c6qa6z":"Il materiale prosegue da sé, gli effetti restano nelle tue mani. Per serate lunghe senza intervenire di continuo.","13gq5cs":"MUSICA","ouqjs":"Ora i comandi stabiliscono solo <em>quanto forte</em> passa la musica — 50 % significa mezza reazione. Per la massima sincronia.","1pwnqe0":"Una sequenza calma che avanza da sola per ore — senza strobo, senza scatti. Dodici scene fisse, da Nebbia a Spettro, oppure estratte a caso. Per installazione, mostra, salotto.","n95pvd":"Sotto c'è il livello più fine: ogni singolo comando riceve con un clic destro la sua sorgente — mano, automatismo, una banda di frequenza o uno dei <strong style=\"color:var(--white);font-weight:600\">tre modulatori</strong> con forma d'onda, profondità e sfasamento iniziale. La loro velocità corre in cicli al secondo oppure in quarti sul tempo rilevato — e continua anche nel silenzio totale.","1oxi2fz":"Da dove arriva l'immagine","1yv699x":"Sei sorgenti. <span class=\"grad-text\">Scelte per ogni livello.</span>","6qzv7l":"MP4, MOV e quel che serve","iw81nv":"Loop, avanti/indietro, casuale","1xu78qu":"Camera","11egy1":"Integrata o esterna","409tm2":"Anche l'iPhone via Wi-Fi","t0z8dk":"Schermo","1wsmwdd":"La tua scrivania o una singola finestra","1p7bg0o":"Quello che mostri diventa materiale","1vpk2xv":"HLS, RTMP o un URL","1hqlzxh":"Dal vivo, da fuori dentro l'immagine","o93plh":"Dall'editor a nodi, TouchDesigner, Resolume","o4guaw":"Arriva come un livello qualsiasi","i197sd":"Tinta piena","1qvr9ja":"Un colore come sfondo","pda4r4":"Così i generatori hanno campo libero","a7gn8d":"Controllo","10y3901":"Sei modi <span class=\"grad-text\">di suonare la stessa cosa.</span>","f6yxqr":"Riconosciuto da solo via USB","gmi9se":"24 manopole, 8 fader, pulsanti","7rv7a8":"MIDI-Learn per ogni parametro","in2ke1":"Assegnazioni consultabili a colpo d'occhio","skvz7g":"16 pad, assegnazione personale","1k9113a":"Un tocco spara un burst, tenendo agisce momentaneo","1voniei":"Aftertouch: più pressione, più effetto","o9gywi":"Lo step sequencer spara gli effetti a tempo","12smfmj":"Tastiera","noebxp":"18 tasti come trigger","1jkp5mz":"Tenere = acceso, rilasciare = spento","1u3e8rw":"1–5 cambia slot","1z4lwn":"La barra spaziatrice dissolve","1vxrb12":"iPhone Remote","1dblczq":"Tutti i parametri come cursori","1nsjpdl":"12 pad XY, due valori ciascuno","6dykj2":"La camera dell'iPhone dritta nel visual","kb1333":"Trova il Mac tramite Bonjour","jj8uwr":"Mouse","xg1ite":"Il puntatore diventa lo strumento","1ghcdao":"Sotto di lui l'immagine si gonfia","ha38hy":"Trascinare sposta la tinta","o9cagj":"Si suona senza alcun hardware","1yph8jm":"Orb <small style=\"font-size:11px;opacity:.6\">nuovo</small>","1xqupzi":"Scanalature sul bordo dello schermo invece di manopole","klk5pj":"Sei mondi con dieci stati ciascuno","2d4lb7":"Continua a tempo quando lasci","f4y3ee":"<a href=\"orb.html\" style=\"color:var(--cyan);text-decoration:underline\">Guarda il modello →</a>","1swip6p":"Dieci slot conservano ciascuno lo stato completo di tutti i comandi — con anteprima e nome personale. I tasti 1–5 e i pulsanti MIDI li richiamano.","1ktdqgd":"Reattività audio","1p3kbyd":"Il motore <span class=\"grad-text\">capisce l'energia.</span>","65h2pb":"Bassi &amp; kick","tigjoe":"Il rilevamento dei transienti prende ogni kick. Pulsazione di zoom, risucchio del tunnel, Pump-Riss — l'immagine respira col beat.","sd1cgu":"Analisi a 16 bande","165dopk":"L'intero spettro viene diviso in 16 bande. Ogni banda guida i propri parametri — con precisione, in tempo reale.","15rdqb7":"BPM &amp; fase del beat","ikc4ur":"Rilevamento automatico del tempo con valore di affidabilità. Gli effetti cambiano a tempo, le transizioni cadono esatte sull'uno.","1tsq37f":"Tonalità","ggstzf":"Dodici filtri di croma su quattro ottave determinano la tonalità dal vivo — non solo quanto suona forte, ma cosa viene suonato.","1c9b5gs":"Conoscenza musicale pregressa","18xc1qu":"Tabelle ricavate da 912 brani annotati forniscono un orologio di frase e la forma del brano e correggono tonalità e tempo. Il motore sa a che punto del pezzo si trova.","1e1oq0o":"Riconoscimento del genere","enrokb":"Se lo stile resta stabile per tre secondi, il motore propone un look adatto. Un clic lo adotta — la decisione resta tua.","151qlqm":"Ora integrato","ba0weo":"L'editor a nodi. <span class=\"grad-text\">Dentro FusionWarp.</span>","knah8w":"Un pulsante nella barra lo apre — niente da configurare, niente da collegare. Chi vuole andare più a fondo cabla liberamente video, FX, audio e uscita come grafo; la sua immagine torna subito in FusionWarp come un livello qualsiasi.","ows760":"Editor a nodi · già attivo in FusionWarp","12au2cu":"<a href=\"nodeedition.html\" style=\"color:var(--cyan);text-decoration:underline\">→ Com'è costruito l'editor a nodi</a>","zxiq6b":"In sviluppo","12x9bg6":"L'iPhone <span class=\"grad-text\">diventa il controller.</span>","yrabqu":"Il FusionWarp Orb: nessun menu, nessun comando con i numeri. Tre scanalature corrono lungo il bordo dello schermo, sei pad riempiono il centro — e un secondo modulo fa spazzare punti di effetto da rotori posizionati liberamente. Trova il Mac da solo tramite Bonjour e manda OSC via Wi-Fi, senza un cavo. Se il Mac non c'è, l'iPhone calcola il motore per conto suo.","1f8gmok":"moduli · anelli &amp; rotore","1qn7vpa":"stati · 6 mondi × 10","thugs1":"cavi — solo Wi-Fi &amp; OSC","gf5wj0":"Modello dell'interfaccia reale — tocca per provare","eb4126":"Visual","1kca03h":"Ogni sessione. <span class=\"grad-text\">Irripetibile.</span>","51s7ou":"Uscite non ritoccate da sessioni recenti — non ce ne sono due uguali.","gj29fi":"Portrait Engine — face-warp dal vivo in sincrono con la musica","1x4lymw":"In azione","q2urvx":"La musica diventa <span class=\"grad-text\">mondi vivi.</span>","vauisr":"FuSioNWaRp — visual reattivi all'audio in tempo reale","17auh6d":"FusionWarp è in sviluppo attivo. Tutte le funzioni centrali girano — il lancio è vicino. Ti interessa? Scrivici.","w4ps0n":"In corso <small>prezzo da definire</small>","136qhsv":"Il sintetizzatore visivo completo. Tutti i motori, tutti gli effetti, nessun abbonamento.","18k4rx2":"46 effetti, 27 movimenti del corpo","1u6iaim":"Quattro livelli, 16 metodi di fusione","r202w8":"Editor a nodi con un pulsante","khw0s8":"Dieci slot per interi look","7o255y":"Salvaschermo &amp; esportazione per la stampa","1pa42fz":"Versione dedicata per Apple TV","1aj8v3p":"iPhone Remote &amp; Orb (in sviluppo)","3lizxm":"Iscriviti alla lista","16qgmb6":"Add-on <small>prezzo da definire</small>","1fbz7r3":"Mapping di palco e oggetti direttamente da FusionWarp. Nessuno strumento in più.","zhh1db":"Più finestre di uscita","1iexgi2":"Correzione della prospettiva","1ou0ve":"Warp dal vivo su qualsiasi superficie","1frzvbj":"Richiede una licenza FusionWarp","jo2iso":"Registrazione","nkbk5":"Registra immagine e suono insieme, senza un secondo programma.","1tag4ti":"Video con audio come file","119jh6u":"Microfono e audio di sistema miscelabili","nvtclc":"Dritto nella cartella Filmati","1cyq5ho":"La verifica funziona <strong style=\"font-weight:600\">completamente offline — nessun server, nessun account</strong>. Incolli la chiave ricevuta con la mail d'acquisto, viene verificata crittograficamente, fatto. Nell'app c'è solo la chiave pubblica di verifica; con quella nessuno può generare nulla. Nessun limite di attivazioni, nessuna connessione che un giorno verrà spenta.","1q5nty3":"macOS · Apple Silicon · nessun abbonamento previsto · prezzi non ancora fissati","1d01sff":"Dove va a finire","1x86z1p":"Non solo sullo schermo. <span class=\"grad-text\">Anche sul muro.</span>","1qvx4jy":"Trascina i punti finché la superficie non torna","q2yhll":"Per muri storti e strutture di palco","vb4h3w":"Più finestre di uscita","16f2tpw":"Nessun secondo programma necessario","spv22m":"Esportazione per la stampa","125iy4n":"Un fermo immagine come stampa d'arte A3","jq614r":"Fronte in bianco e nero","kbs1xm":"Retro a colori","1kjwnoj":"Pensato per cornici retroilluminate","vldnk0":"Salvaschermo","tx9cxt":"Lo stesso motore sulla schermata di blocco","1x4j559":"Cartella di immagini a tua scelta","1e9f9gb":"Calcolato in tempo reale","1q9hcgr":"<a href=\"screensaver.html\" style=\"color:var(--cyan);text-decoration:underline\">Scarica gratis →</a>","1j84jrp":"Uscita Syphon","1icsov":"L'immagine esce come sorgente Syphon","1iv2wy2":"Registrare, rielaborare, trasmettere","17opj6":"Senza passare dal disco","1j2uesw":"In entrambe le direzioni — dentro e fuori","k1k5c9":"Versione tvOS dedicata per il televisore","1vf9ihd":"Due modalità: Live e Ambient","1jpokcd":"16 modalità di effetto, due parametri ciascuna","dltlij":"Si suona col telecomando","1ltdejs":"Immagine e suono insieme come file video","81d96k":"Finisce dritto nella cartella Filmati","r2yeb4":"Add-on «STREAM»","th79y3":"Editor di mapping · due superfici insieme, punti trascinabili liberamente","1jn5j4i":"Contatto &amp; collaborazioni","1b7krti":"Ti interessa? <span class=\"grad-text\">Parliamone.</span>","1w6ghip":"Investitore, gestore di club, DJ o organizzatore di festival — ci fa piacere parlarne.","5rj0nd":"← Universo","1ucxxm9":"Generatori","cwzrb7":"Prodotti"}};
+const I18N_META = {"de":["FuSioNWaRp — Turn Sound Into Living Worlds","Echtzeit-Visuals, die auf Musik reagieren. GPU-Engine für Mac — in Entwicklung."],"en":["FuSioNWaRp — Turn Sound Into Living Worlds","Real-time visuals that react to music. A GPU engine for the Mac — in development."],"es":["FuSioNWaRp — Turn Sound Into Living Worlds","Visuales en tiempo real que reaccionan a la música. Motor GPU para Mac — en desarrollo."],"fr":["FuSioNWaRp — Turn Sound Into Living Worlds","Des visuels en temps réel qui réagissent à la musique. Moteur GPU pour Mac — en développement."],"it":["FuSioNWaRp — Turn Sound Into Living Worlds","Visual in tempo reale che reagiscono alla musica. Motore GPU per Mac — in sviluppo."]};
 
-// Spanish
-T.es = {
-  scr_label:"Visual en tiempo real · entrada de ejemplo · tus visuales se verán diferentes",
-  nav_engines:"Motor", nav_products:"Productos", nav_impressum:"Aviso legal", nav_datenschutz:"Privacidad",
-  hero_eyebrow:"Motor Visual Reactivo al Audio en Tiempo Real",
-  hero_tagline:"FuSioNWaRp convierte tus vídeos e imágenes en mundos vivos y reactivos al audio — en tiempo real.",
-  hero_sub:"Motor GPU puro. Cada experiencia es única — infinita, reactiva, ilimitada.",
-  hero_cta1:"Descubrir productos", hero_cta2:"La tecnología",
-  prob_label:"El problema",
-  prob_h2:"Demasiadas pantallas permanecen negras mientras la música ya suena.",
-  prob_quote:"No todos juegan. No todos hacen streaming. Pero la música siempre suena.",
-  prob_p:"Ya sea un TV de salón, una pantalla LED de club o un escenario de festival — los visuales y la música no se comunican. FuSioNWaRp los une.",
-  stat1:"Módulos de motor", stat2:"Visuales únicos", stat3:"Vídeos pregrabados", stat4:"Renderizado GPU en tiempo real",
-  eng_label:"La tecnología",
-  eng1_h:"Layer Engine", eng1_1:"Hasta 4 capas de vídeo en paralelo", eng1_2:"Crossfade en vivo & modos de mezcla", eng1_3:"Opacidad & mezcla por capa", eng1_4:"Tus vídeos o art packs",
-  eng2_h:"Motion Engine", eng2_1:"Zoom infinito & rotación", eng2_2:"Tunnel Worlds", eng2_3:"Péndulo & Sway", eng2_4:"Mirror Worlds / Caleidoscopio",
-  eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Distorsión de cristal & lente", eng3_3:"Campos de ruido", eng3_4:"Ondas de calor",
-  eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Detección de bordes", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Threshold · Inversión", eng4_4:"Echo · Pixel · Tunnel",
-  how_label:"Reactividad al audio", how_h2span:"entiende la energía.",
-  how1_h:"Graves", how1_p:"Sincroniza la imagen con el ritmo. Impulsa pulsos de zoom y atracción del túnel.",
-  how2_h:"Medios", how2_p:"Hacen oscilar y girar la imagen. Controlan la velocidad de rotación en tiempo real.",
-  how3_h:"Agudos", how3_p:"Brillan en los detalles. RGB split, brillo e intensidad de borde siguen los agudos.",
-  how4_h:"Silencio", how4_p:"Casi congela el mundo. Solo queda un leve brillo base — el motor respira con la música.",
-  prod_label:"Productos", prod_h2:"Un mundo para cada espacio. ",
-  per_month:"/ mes", one_time:"pago único",
-  home_desc:"Para TVs de salón y pantallas inteligentes. Cada pantalla se convierte en arte vivo — automático, reactivo al audio.",
-  home_f1:"Tus vídeos e imágenes", home_f2:"Modo visual automático", home_f3:"Art packs by LuZiD", home_f4:"macOS · Windows · iOS",
-  core_desc:"La caja hardware HDMI. Sin ventilador, 4K, silenciosa. Conecta el cable HDMI, pon música — el mundo comienza.",
-  core_f1:"Sin PC necesario", core_f2:"4K · 60fps · sin ventilador", core_f3:"Configuración Plug & Play", core_f4:"Actualizaciones automáticas",
-  pro_desc:"Para clubs, bares, festivales y DJs. Soporte para controladores MIDI, control manual completo, listo para el escenario.",
-  pro_f1:"Mapeo de controlador MIDI", pro_f2:"8 capas · control total", pro_f3:"Modo actuación en directo", pro_f4:"Slots de presets y escenas",
-  btn_waitlist:"Registrarse", badge_plug:"PLUG & PLAY", price_note:"Precios provisionales — precios finales anunciados en el lanzamiento.",
-  rm_label:"Hoja de ruta", rm_h2:"Lo que ya funciona — ", rm_h2span:"lo que viene.",
-  rm1_h:"4 Módulos de motor", rm1_p:"Layer, Motion, Warp & FX completamente implementados",
-  rm2_h:"Reactividad al audio", rm2_p:"Bass, Mid, High, Kick — análisis y mapeo en tiempo real",
-  rm3_h:"MIDI Launch Control XL", rm3_p:"Mapeo completo de hardware y MIDI learn",
-  rm4_h:"App nativa macOS", rm4_p:"Metal GPU rendering, SwiftUI, funciona en Apple Silicon",
-  rm5_h:"Navegación de vídeo", rm5_p:"Selección de vídeo por capa, bucle, siguiente/anterior",
-  rm6_h:"Reactividad de tendencias", rm6_p:"Los envolventes de audio lentos activan efectos automáticamente",
-  rm7_h:"Salvapantallas", rm7_p:"Salvapantallas macOS impulsado por el motor visual",
-  rm8_h:"iOS & Windows", rm8_p:"Lanzamiento multiplataforma planificado",
-  vis_h2:"The universe does not repeat. ",
-  contact_label:"Contacto & Colaboraciones",
-  contact_h2:"¿Interesado? ", contact_h2span:"Hablemos.",
-  contact_p:"Tanto si eres inversor, propietario de club, DJ u organizador de festivales — nos encantaría conocerte.",
-};
-
-// French
-T.fr = {
-  scr_label:"Visuel temps réel · exemple d'entrée · vos visuels seront différents",
-  nav_engines:"Moteur", nav_products:"Produits", nav_impressum:"Mentions légales", nav_datenschutz:"Confidentialité",
-  hero_eyebrow:"Moteur Visuel Réactif Audio en Temps Réel",
-  hero_tagline:"FuSioNWaRp transforme vos vidéos et images en mondes vivants et réactifs à l'audio — en temps réel.",
-  hero_sub:"Pur moteur GPU. Chaque expérience est unique — infinie, réactive, sans limites.",
-  hero_cta1:"Découvrir les produits", hero_cta2:"La technologie",
-  prob_label:"Le problème",
-  prob_h2:"Trop d'écrans restent noirs alors que la musique joue déjà.",
-  prob_quote:"Tout le monde ne joue pas. Tout le monde ne streame pas. Mais la musique tourne toujours.",
-  prob_p:"FuSioNWaRp transforme les écrans inutilisés en espaces visuels réactifs qui répondent à la musique au lieu de rester muets en veille.",
-  stat1:"Modules moteur", stat2:"Visuels uniques", stat3:"Vidéos préenregistrées", stat4:"Rendu GPU temps réel",
-  eng_label:"La technologie",
-  eng1_h:"Layer Engine", eng1_1:"Jusqu'à 4 couches vidéo parallèles", eng1_2:"Crossfade live & modes de fusion", eng1_3:"Opacité & mix par couche", eng1_4:"Vos vidéos ou art packs",
-  eng2_h:"Motion Engine", eng2_1:"Zoom infini & rotation", eng2_2:"Tunnel Worlds", eng2_3:"Pendule & Sway", eng2_4:"Mirror Worlds / Kaléidoscope",
-  eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Distorsion verre & lentille", eng3_3:"Champs de bruit", eng3_4:"Vagues de chaleur",
-  eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Détection de contours", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Seuil · Inversion", eng4_4:"Echo · Pixel · Tunnel",
-  how_label:"Réactivité audio", how_h2span:"comprend l'énergie.",
-  how1_h:"Basses", how1_p:"Synchronise l'image avec le rythme. Pilote les impulsions de zoom et l'attraction du tunnel.",
-  how2_h:"Médiums", how2_p:"Font osciller et tourner l'image. Contrôlent la vitesse de rotation en temps réel.",
-  how3_h:"Aigus", how3_p:"Scintillent dans les détails. RGB split, lueur et intensité de contour suivent les aigus.",
-  how4_h:"Silence", how4_p:"Gèle presque le monde. Il ne reste qu'un léger frémissement de base — le moteur respire avec la musique.",
-  prod_label:"Produits", prod_h2:"Un monde pour chaque espace. ",
-  per_month:"/ mois", one_time:"paiement unique",
-  home_desc:"Pour les TV de salon & écrans intelligents. Chaque écran devient de l'art vivant — automatique, réactif à l'audio.",
-  home_f1:"Vos vidéos & images", home_f2:"Mode visuals automatique", home_f3:"Art packs by LuZiD", home_f4:"macOS · Windows · iOS",
-  core_desc:"Le boîtier hardware HDMI. Sans ventilateur, 4K, silencieux. Branchez le câble HDMI, lancez la musique — le monde démarre.",
-  core_f1:"Sans PC requis", core_f2:"4K · 60fps · sans ventilateur", core_f3:"Configuration Plug & Play", core_f4:"Mises à jour automatiques",
-  pro_desc:"Pour les clubs, bars, festivals & DJs. Support contrôleurs MIDI, contrôle manuel complet, prêt pour la scène.",
-  pro_f1:"Mapping contrôleur MIDI", pro_f2:"8 couches · contrôle total", pro_f3:"Mode performance live", pro_f4:"Slots de presets & scènes",
-  btn_waitlist:"S'inscrire", badge_plug:"PLUG & PLAY", price_note:"Prix provisoires — tarifs définitifs annoncés au lancement.",
-  rm_label:"Feuille de route", rm_h2:"Ce qui fonctionne déjà — ", rm_h2span:"ce qui arrive.",
-  rm1_h:"4 Modules moteur", rm1_p:"Layer, Motion, Warp & FX entièrement implémentés",
-  rm2_h:"Réactivité audio", rm2_p:"Bass, Mid, High, Kick — analyse & mapping temps réel",
-  rm3_h:"MIDI Launch Control XL", rm3_p:"Mapping hardware complet & MIDI learn",
-  rm4_h:"App native macOS", rm4_p:"Metal GPU rendering, SwiftUI, fonctionne sur Apple Silicon",
-  rm5_h:"Navigation vidéo", rm5_p:"Sélection vidéo par couche, boucle, suivant/précédent",
-  rm6_h:"Réactivité de tendance", rm6_p:"Les enveloppes audio lentes déclenchent les effets automatiquement",
-  rm7_h:"Économiseur d'écran", rm7_p:"Économiseur d'écran macOS propulsé par le moteur visuel",
-  rm8_h:"iOS & Windows", rm8_p:"Lancement multiplateforme prévu",
-  vis_h2:"The universe does not repeat. ",
-  contact_label:"Contact & Partenariats",
-  contact_h2:"Intéressé ? ", contact_h2span:"Parlons-en.",
-  contact_p:"Que vous soyez investisseur, propriétaire de club, DJ ou organisateur de festival — nous serions ravis de vous rencontrer.",
-};
-
-// Italian
-T.it = {
-  scr_label:"Visual in tempo reale · input di esempio · i tuoi visual saranno diversi",
-  nav_engines:"Motore", nav_products:"Prodotti", nav_impressum:"Note legali", nav_datenschutz:"Privacy",
-  hero_eyebrow:"Motore Visivo Reattivo all'Audio in Tempo Reale",
-  hero_tagline:"FuSioNWaRp trasforma i tuoi video e immagini in mondi vivi e reattivi all'audio — in tempo reale.",
-  hero_sub:"Puro motore GPU. Ogni esperienza è unica — infinita, reattiva, senza limiti.",
-  hero_cta1:"Scopri i prodotti", hero_cta2:"La tecnologia",
-  prob_label:"Il problema",
-  prob_h2:"Troppi schermi restano neri mentre la musica sta già suonando.",
-  prob_quote:"Non tutti giocano. Non tutti guardano serie. Ma la musica suona sempre.",
-  prob_p:"FuSioNWaRp trasforma schermi inutilizzati in spazi visivi reattivi che rispondono alla musica invece di restare muti in standby.",
-  stat1:"Moduli motore", stat2:"Visual unici", stat3:"Preset", stat4:"Rendering GPU tempo reale",
-  eng_label:"La tecnologia",
-  eng1_h:"Layer Engine", eng1_1:"Fino a 4 livelli video paralleli", eng1_2:"Crossfade live & modalità di fusione", eng1_3:"Opacità & mix per livello", eng1_4:"I tuoi video o art pack",
-  eng2_h:"Motion Engine", eng2_1:"Zoom infinito & rotazione", eng2_2:"Tunnel Worlds", eng2_3:"Pendolo & Sway", eng2_4:"Mirror Worlds / Caleidoscopio",
-  eng3_h:"Warp Engine", eng3_1:"Liquid Warp", eng3_2:"Distorsione vetro & lente", eng3_3:"Campi di rumore", eng3_4:"Onde di calore",
-  eng4_h:"FX Engine", eng4_1:"Glow / Bloom · Rilevamento bordi", eng4_2:"RGB Split · Glitch · VHS", eng4_3:"Strobe · Soglia · Inversione", eng4_4:"Echo · Pixel · Tunnel",
-  how_label:"Reattività audio", how_h2span:"capisce l'energia.",
-  how1_h:"Bassi", how1_p:"Sincronizza l'immagine con il ritmo. Guida i pulse di zoom e l'attrazione del tunnel.",
-  how2_h:"Medi", how2_p:"Fanno oscillare e ruotare l'immagine. Controllano la velocità di rotazione in tempo reale.",
-  how3_h:"Alti", how3_p:"Scintillano nei dettagli. RGB split, glow e intensità dei bordi seguono gli alti.",
-  how4_h:"Silenzio", how4_p:"Congela quasi il mondo. Rimane solo un lieve fremito di base — il motore respira con la musica.",
-  prod_label:"Prodotti", prod_h2:"Un mondo per ogni spazio. ",
-  per_month:"/ mese", one_time:"pagamento unico",
-  home_desc:"Per TV da salotto & smart display. Ogni schermo diventa arte viva — automatico, reattivo all'audio.",
-  home_f1:"I tuoi video & immagini", home_f2:"Modalità visual automatica", home_f3:"Art pack by LuZiD", home_f4:"macOS · Windows · iOS",
-  core_desc:"Il box hardware HDMI. Senza ventola, 4K, silenzioso. Collega il cavo HDMI, metti la musica — il mondo inizia.",
-  core_f1:"Nessun PC necessario", core_f2:"4K · 60fps · senza ventola", core_f3:"Configurazione Plug & Play", core_f4:"Aggiornamenti automatici",
-  pro_desc:"Per club, bar, festival & DJ. Supporto controller MIDI, controllo manuale completo, pronto per il palco.",
-  pro_f1:"Mappatura controller MIDI", pro_f2:"8 livelli · controllo totale", pro_f3:"Modalità performance live", pro_f4:"Slot preset & scene",
-  btn_waitlist:"Registrati", badge_plug:"PLUG & PLAY", price_note:"Prezzi provvisori — tariffe finali annunciate al lancio.",
-  rm_label:"Roadmap", rm_h2:"Cosa funziona già — ", rm_h2span:"cosa arriva.",
-  rm1_h:"4 Moduli motore", rm1_p:"Layer, Motion, Warp & FX completamente implementati",
-  rm2_h:"Reattività audio", rm2_p:"Bass, Mid, High, Kick — analisi & mapping in tempo reale",
-  rm3_h:"MIDI Launch Control XL", rm3_p:"Mappatura hardware completa & MIDI learn",
-  rm4_h:"App nativa macOS", rm4_p:"Metal GPU rendering, SwiftUI, gira su Apple Silicon",
-  rm5_h:"Navigazione video", rm5_p:"Selezione video per livello, loop, successivo/precedente",
-  rm6_h:"Reattività di tendenza", rm6_p:"Le envelope audio lente attivano effetti automaticamente",
-  rm7_h:"Screen saver", rm7_p:"Screen saver macOS alimentato dal motore visivo",
-  rm8_h:"iOS & Windows", rm8_p:"Lancio multipiattaforma pianificato",
-  vis_h2:"The universe does not repeat. ",
-  contact_label:"Contatti & Partnership",
-  contact_h2:"Interessato? ", contact_h2span:"Parliamone.",
-  contact_p:"Che tu sia un investitore, proprietario di club, DJ o organizzatore di festival — siamo lieti di conoscerti.",
-};
-
-let lang = 'de';
-function setLang(l) {
-  lang = l;
-  document.documentElement.lang = l;
-  document.getElementById('lang-select').value = l;
-  document.querySelectorAll('[data-t]').forEach(el => {
-    const key = el.getAttribute('data-t');
-    if (T[l] && T[l][key] !== undefined) el.textContent = T[l][key];
-  });
+/* Sprachumschaltung — Schlüssel sind ein Hash des deutschen Textes.
+   Ändert sich der deutsche Text, greift automatisch wieder Deutsch,
+   statt eine veraltete Übersetzung anzuzeigen. */
+const I18N_SEL = 'h1,h2,h3,h4,p,li,.label,.eyebrow,.desc,.tier,.amt,.scr-label,.claim,.scroll-hint,.btn,.tagline,.sub,.pull-quote,nav a';
+function i18nHash(s){let x=2166136261;for(let i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619)}return (x>>>0).toString(36)}
+let I18N_NODES = null;
+function i18nCollect(){
+  const cand=[];
+  document.querySelectorAll('nav, header, section, footer').forEach(r=>r.querySelectorAll(I18N_SEL).forEach(e=>cand.push(e)));
+  const set=new Set(cand);
+  I18N_NODES=cand.filter(e=>![...e.querySelectorAll(I18N_SEL)].some(c=>set.has(c)))
+    .map(el=>{const de=el.innerHTML.replace(/\s+/g,' ').trim();
+              return (de && /[A-Za-zÀ-ÿ]/.test(de)) ? {el,de,key:i18nHash(de)} : null})
+    .filter(Boolean);
 }
+function setLang(l){
+  if(!I18N_NODES) i18nCollect();
+  const T = I18N[l] || null;
+  I18N_NODES.forEach(n=>{
+    const v = T && T[n.key];
+    n.el.innerHTML = v !== undefined && v !== null ? v : n.de;   // Fallback: Deutsch
+  });
+  const m = I18N_META[l] || I18N_META.de;
+  document.title = m[0];
+  const md = document.querySelector('meta[name=description]'); if(md) md.content = m[1];
+  document.documentElement.lang = l;
+  const sel = document.getElementById('lang-select'); if(sel) sel.value = l;
+  try{ localStorage.setItem('ll_lang', l) }catch(e){}
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+  i18nCollect();
+  let l=null;
+  try{ l = localStorage.getItem('ll_lang') }catch(e){}
+  if(!l){ const n=(navigator.language||'de').slice(0,2).toLowerCase(); if(I18N[n]||n==='de') l=n }
+  if(l && l!=='de') setLang(l); else { const s=document.getElementById('lang-select'); if(s) s.value='de' }
+});
 
 // ---- warp starfield ----
 const c=document.getElementById('warp'),x=c.getContext('2d');let W,H,cx,cy,stars=[];
