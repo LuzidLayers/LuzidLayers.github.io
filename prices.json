@@ -1,4 +1,43 @@
 {
+  "artPrints" : {
+    "formats" : [
+      {
+        "base" : 45,
+        "id" : "a5",
+        "label" : "A5"
+      },
+      {
+        "base" : 75,
+        "id" : "a4",
+        "label" : "A4"
+      },
+      {
+        "base" : 125,
+        "id" : "a3",
+        "label" : "A3"
+      }
+    ],
+    "tiers" : [
+      {
+        "factor" : 0.6,
+        "icon" : "🌱",
+        "id" : "knapp",
+        "label" : "Geht sich knapp aus"
+      },
+      {
+        "factor" : 1,
+        "icon" : "🌿",
+        "id" : "passt",
+        "label" : "Passt so"
+      },
+      {
+        "factor" : 1.5,
+        "icon" : "🌳",
+        "id" : "gut",
+        "label" : "Geht mir gut"
+      }
+    ]
+  },
   "items" : [
     {
       "badge" : "live",
@@ -150,17 +189,5 @@
       "section" : "tools"
     }
   ],
-  "artPrints" : {
-    "formats" : [
-      { "base" : 45, "id" : "a5", "label" : "A5" },
-      { "base" : 75, "id" : "a4", "label" : "A4" },
-      { "base" : 125, "id" : "a3", "label" : "A3" }
-    ],
-    "tiers" : [
-      { "factor" : 0.6, "icon" : "🌱", "id" : "knapp", "label" : "Geht sich knapp aus" },
-      { "factor" : 1.0, "icon" : "🌿", "id" : "passt", "label" : "Passt so" },
-      { "factor" : 1.5, "icon" : "🌳", "id" : "gut", "label" : "Geht mir gut" }
-    ]
-  },
   "updatedAt" : "2026-09-09"
 }
