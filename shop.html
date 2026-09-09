@@ -80,6 +80,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:30;
 .fmt-btn.active,.fmt-btn:hover{border-color:rgba(139,92,246,.6);color:rgba(139,92,246,.9);
   background:rgba(139,92,246,.06)}
 
+/* Solidaritätspreis: drei selbst gewählte Stufen, kein Nachweis */
+.tier-tabs{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+.tier-btn{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:30px;
+  font-family:var(--brand-font),'C1st Font',serif;font-size:10px;letter-spacing:.16em;
+  cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;
+  color:rgba(255,255,255,.4);transition:all .2s;text-align:left}
+.tier-btn .ico{font-size:14px;letter-spacing:0}
+.tier-btn.active,.tier-btn:hover{border-color:rgba(57,255,122,.55);color:rgba(57,255,122,.9);
+  background:rgba(57,255,122,.07)}
+.tier-note{font-size:11px;color:rgba(255,255,255,.32);line-height:1.6;margin:0 0 12px;max-width:340px}
+
 .price{font-family:var(--brand-font),'C1st Font',serif;font-size:28px;font-weight:700;
   background:linear-gradient(100deg,#8B5CF6,#00E5FF);
   -webkit-background-clip:text;background-clip:text;color:transparent}
@@ -182,18 +193,20 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 0;
           <button class="fmt-btn" onclick="selectFmt(this,'a4')">A4</button>
           <button class="fmt-btn" onclick="selectFmt(this,'a3')">A3</button>
         </div>
+        <div class="tier-tabs" id="tier-tabs"></div>
+        <p class="tier-note">Dasselbe Bild, drei Preise — du wählst selbst, keine Nachweise. Wer weniger hat, zahlt weniger; wer mehr geben kann, trägt mit.</p>
         <div id="fmt-a5">
-          <div class="price">45 €</div>
+          <div class="price"><span class="price-amt" data-fmt="a5">45 €</span></div>
           <span class="price-sub">inkl. 7 % MwSt. · zzgl. Versand</span>
           <p class="format-detail"><strong>148 × 210 mm</strong> · Hahnemühle Photo Rag 308g<br>Samtig matt, archivfest · signiert + nummeriert</p>
         </div>
         <div id="fmt-a4" style="display:none">
-          <div class="price">75 €</div>
+          <div class="price"><span class="price-amt" data-fmt="a4">75 €</span></div>
           <span class="price-sub">inkl. 7 % MwSt. · zzgl. Versand</span>
           <p class="format-detail"><strong>210 × 297 mm</strong> · Hahnemühle Photo Rag 308g<br>Samtig matt, archivfest · signiert + nummeriert</p>
         </div>
         <div id="fmt-a3" style="display:none">
-          <div class="price">125 €</div>
+          <div class="price"><span class="price-amt" data-fmt="a3">125 €</span></div>
           <span class="price-sub">inkl. 7 % MwSt. · zzgl. Versand</span>
           <p class="format-detail"><strong>297 × 420 mm</strong> · Hahnemühle Photo Rag 308g<br>Samtig matt, archivfest · signiert + nummeriert</p>
         </div>
@@ -281,20 +294,72 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 0;
 <script>
 // Reduced Motion: nur ein statisches Frame rendern statt Animations-Loop
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-// Format switcher
-const fmtLinks = {
-  a5: 'https://paypal.me/LuzidLayersWarngau/45EUR',
-  a4: 'https://paypal.me/LuzidLayersWarngau/75EUR',
-  a3: 'https://paypal.me/LuzidLayersWarngau/125EUR'
-};
+// Format- und Stufenwahl. Grundpreise und Stufen kommen aus prices.json,
+// damit LuzidPanel sie ändern kann, ohne den HTML-Code anzufassen.
+let artFormats = [
+  { id:'a5', base:45 }, { id:'a4', base:75 }, { id:'a3', base:125 }
+];
+let artTiers = [
+  { id:'knapp', icon:'🌱', label:'Geht sich knapp aus', factor:0.6 },
+  { id:'passt', icon:'🌿', label:'Passt so',            factor:1.0 },
+  { id:'gut',   icon:'🌳', label:'Geht mir gut',        factor:1.5 }
+];
+let aktFmt = 'a5';
+let aktTier = 'passt';
+
+function preisFuer(fmt, tierId) {
+  const f = artFormats.find(x => x.id === fmt);
+  const t = artTiers.find(x => x.id === tierId);
+  if (!f || !t) return null;
+  return Math.round(f.base * t.factor);
+}
+
+function preiseZeichnen() {
+  artFormats.forEach(f => {
+    const el = document.querySelector('.price-amt[data-fmt="' + f.id + '"]');
+    const p = preisFuer(f.id, aktTier);
+    if (el && p !== null) el.textContent = p + ' €';
+  });
+  const btn = document.getElementById('paypal-print-btn');
+  const p = preisFuer(aktFmt, aktTier);
+  if (btn && p !== null) btn.href = 'https://paypal.me/LuzidLayersWarngau/' + p + 'EUR';
+}
+
+function stufenZeichnen() {
+  const box = document.getElementById('tier-tabs');
+  if (!box) return;
+  box.innerHTML = artTiers.map(t =>
+    `<button class="tier-btn${t.id === aktTier ? ' active' : ''}" data-tier="${t.id}">
+       <span class="ico">${t.icon}</span>${t.label}
+     </button>`).join('');
+  box.querySelectorAll('.tier-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      aktTier = b.dataset.tier;
+      stufenZeichnen();
+      preiseZeichnen();
+    });
+  });
+}
+
 function selectFmt(btn, fmt) {
   document.querySelectorAll('.fmt-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  aktFmt = fmt;
   ['a5','a4','a3'].forEach(f => {
     document.getElementById('fmt-'+f).style.display = f===fmt ? 'block' : 'none';
   });
-  document.getElementById('paypal-print-btn').href = fmtLinks[fmt];
+  preiseZeichnen();
 }
+
+fetch('prices.json?_=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    if (data.artPrints && data.artPrints.formats) artFormats = data.artPrints.formats;
+    if (data.artPrints && data.artPrints.tiers)   artTiers   = data.artPrints.tiers;
+    if (!artTiers.some(t => t.id === aktTier)) aktTier = artTiers[Math.min(1, artTiers.length-1)].id;
+  })
+  .catch(() => {})
+  .finally(() => { stufenZeichnen(); preiseZeichnen(); });
 
 // Universe
 const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
